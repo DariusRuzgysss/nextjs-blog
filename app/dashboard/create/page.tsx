@@ -1,7 +1,6 @@
 import BlogForm from "@/components/rhf/BlogForm";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -17,7 +16,6 @@ const CreateBlogPostRoute = () => {
           <CardDescription>
             Create a new post to share with the world
           </CardDescription>
-          <CardAction>Card Action</CardAction>
         </CardHeader>
         <CardContent>
           <BlogForm />

@@ -16,7 +16,7 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
       <Link
         href={`post/${post.id}`}
         onClick={() => {
-          updateBlogPost({ ...post, isSeen: true });
+          updateBlogPost({ ...post, isSeen: true, updatedAt: new Date() });
         }}
         className="block w-full h-full"
       >

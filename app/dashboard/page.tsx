@@ -4,6 +4,8 @@ import { getBlogPostsByUserId } from "../actions";
 import { requireUser } from "@/lib/auth";
 import BlogPostCard from "@/components/general/BlogPostCard";
 
+export const revalidate = 60;
+
 const Dashboard = async () => {
   const user = await requireUser();
   const posts = await getBlogPostsByUserId(user.id);
