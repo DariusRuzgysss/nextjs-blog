@@ -1,0 +1,28 @@
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
+import { getBlogPostsByUserId } from "../actions";
+import { requireUser } from "@/lib/auth";
+import BlogPostCard from "@/components/general/BlogPostCard";
+
+const Dashboard = async () => {
+  const user = await requireUser();
+  const posts = await getBlogPostsByUserId(user.id);
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-medium">Your Blog Articles</h2>
+        <Link className={buttonVariants()} href="/dashboard/create">
+          Create Post
+        </Link>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {posts.map((post) => (
+          <BlogPostCard key={post.id} post={post} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

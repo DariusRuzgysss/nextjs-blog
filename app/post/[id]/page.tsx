@@ -1,0 +1,63 @@
+import { getBlogPostById } from "@/app/actions";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+
+type Params = Promise<{ id: string }>;
+
+const PostRoute = async ({ params }: { params: Params }) => {
+  const { id } = await params;
+  const post = await getBlogPostById(id);
+
+  return (
+    <div className="max-w-3xl mx-auto px-2 lg:px-0">
+      <Link className={buttonVariants({ variant: "outline" })} href="/">
+        Back to posts
+      </Link>
+      <div className="my-8">
+        <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+        <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
+            <div className="relative size-10 rounded-full overflow-hidden">
+              {post.authorImage && (
+                <Image
+                  src={post.authorImage}
+                  alt={post.authorName}
+                  fill
+                  loading="eager"
+                  sizes="48"
+                  className="object-cover"
+                />
+              )}
+            </div>
+            <p className="font-medium">{post.authorName}</p>
+          </div>
+          <time className="text-sm text-gray-500">
+            {new Intl.DateTimeFormat("lt", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }).format(post.createdAt)}
+          </time>
+        </div>
+      </div>
+      <div className="relative h-80 w-full overflow-hidden rounded-lg">
+        <Image
+          src={post.imageUrl}
+          alt="blog post"
+          loading="eager"
+          sizes="48"
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+      <Card>
+        <CardContent>{post.content}</CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default PostRoute;
