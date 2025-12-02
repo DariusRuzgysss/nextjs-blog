@@ -17,6 +17,7 @@ export type BlogPost = {
   authorId: string;
   authorName: string;
   authorImage: string;
+  isSeen: boolean;
   createdAt: Date;
   updatedAt: Date;
 };

@@ -9,7 +9,7 @@ const Dashboard = async () => {
   const posts = await getBlogPostsByUserId(user.id);
 
   return (
-    <div>
+    <div className="px-2 lg:px-0">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-medium">Your Blog Articles</h2>
         <Link className={buttonVariants()} href="/dashboard/create">

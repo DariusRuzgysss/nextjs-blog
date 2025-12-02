@@ -21,6 +21,7 @@ model BlogPost {
   authorId    String
   authorName  String
   authorImage String
+  isSeen      Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

@@ -1,11 +1,25 @@
+"use client";
 import { BlogPost } from "@/app/types";
 import Link from "next/link";
 import Image from "next/image";
+import { Badge } from "../ui/badge";
+import { updateBlogPost } from "@/app/actions";
 
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition-all hover:shadow-2xl">
-      <Link href={`post/${post.id}`} className="block w-full h-full">
+      {!post.isSeen && (
+        <Badge className="absolute z-10 left-1 top-1" variant="destructive">
+          New
+        </Badge>
+      )}
+      <Link
+        href={`post/${post.id}`}
+        onClick={() => {
+          updateBlogPost({ ...post, isSeen: true });
+        }}
+        className="block w-full h-full"
+      >
         <div className="relative h-80 w-full overflow-hidden">
           <Image
             src={post.imageUrl}

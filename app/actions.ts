@@ -4,6 +4,7 @@ import { BlogFormData } from "@/components/rhf/BlogForm";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/prisma/seed";
 import { notFound, redirect } from "next/navigation";
+import { BlogPost } from "./types";
 
 export const getBlogPosts = async () => {
   return await prisma.blogPost.findMany();
@@ -21,6 +22,15 @@ export const getBlogPostById = async (id: string) => {
   }
 
   return data;
+};
+
+export const updateBlogPost = async (post: BlogPost) => {
+  await prisma.blogPost.update({
+    where: {
+      id: post.id,
+    },
+    data: post,
+  });
 };
 
 export const createBlogPost = async (data: BlogFormData) => {

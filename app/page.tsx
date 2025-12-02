@@ -2,9 +2,11 @@ import BlogPostCard from "@/components/general/BlogPostCard";
 import { Suspense } from "react";
 import { getBlogPosts } from "./actions";
 
+export const revalidate = 60;
+
 export default function Home() {
   return (
-    <div>
+    <div className="px-2 lg:px-0">
       <h1 className="text-3xl font-bold tracking-tight mb-8">Latest posts</h1>
       <BlogPosts />
     </div>
