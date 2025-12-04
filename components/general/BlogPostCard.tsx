@@ -3,12 +3,13 @@ import { BlogPost } from "@/app/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { updateBlogPost } from "@/app/actions";
+import { markPostAsSeen } from "@/app/actions";
 
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
+  const isSeen = post.postSeens && !post.postSeens.length;
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition-all hover:shadow-2xl">
-      {!post.isSeen && (
+      {isSeen && (
         <Badge className="absolute z-10 left-1 top-1" variant="destructive">
           New
         </Badge>
@@ -16,7 +17,7 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
       <Link
         href={`post/${post.id}`}
         onClick={() => {
-          updateBlogPost({ ...post, isSeen: true, updatedAt: new Date() });
+          markPostAsSeen(post.id);
         }}
         className="block w-full h-full"
       >

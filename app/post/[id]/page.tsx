@@ -3,12 +3,14 @@ import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-
-type Params = Promise<{ id: string }>;
+import { requireUser } from "@/lib/auth";
+import { Params } from "@/app/types";
 
 const PostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
   const post = await getBlogPostById(id);
+  const user = await requireUser();
+  const isEditable = post.authorId === user.id;
 
   return (
     <div className="max-w-3xl mx-auto px-2 lg:px-0">
@@ -16,7 +18,17 @@ const PostRoute = async ({ params }: { params: Params }) => {
         Back to posts
       </Link>
       <div className="my-8">
-        <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+        <div className="flex flex-row justify-between">
+          <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
+          {isEditable && (
+            <Link
+              className={buttonVariants({ variant: "outline" })}
+              href={`/post/${id}/edit`}
+            >
+              Edit
+            </Link>
+          )}
+        </div>
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">
             <div className="relative size-10 rounded-full overflow-hidden">

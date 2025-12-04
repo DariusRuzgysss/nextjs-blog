@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -5,11 +6,11 @@ import {
   LoginLink,
   LogoutLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
-const Navbar = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+const Navbar = () => {
+  const { getUser, isLoading } = useKindeBrowserClient();
+  const user = getUser();
 
   return (
     <nav className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2 px-4 py-2 bg-amber-500 mb-4">
@@ -32,9 +33,10 @@ const Navbar = async () => {
                 Logout
               </LogoutLink>
             </>
-          ) : (
+          ) : isLoading ? null : (
             <>
               <LoginLink className={buttonVariants()}>Login</LoginLink>
+
               <RegisterLink
                 className={buttonVariants({ variant: "secondary" })}
               >
