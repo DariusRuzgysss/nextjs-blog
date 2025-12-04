@@ -4,21 +4,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { markPostAsSeen } from "@/app/actions";
+import { useCallback } from "react";
 
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
-  const isSeen = post.postSeens && !post.postSeens.length;
+  const isNew = post.postSeens && !post.postSeens.length;
+
+  const handleClick = useCallback(() => {
+    markPostAsSeen(post.id);
+  }, [post.id]);
+
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition-all hover:shadow-2xl">
-      {isSeen && (
+      {isNew && (
         <Badge className="absolute z-10 left-1 top-1" variant="destructive">
           New
         </Badge>
       )}
       <Link
         href={`post/${post.id}`}
-        onClick={() => {
-          markPostAsSeen(post.id);
-        }}
+        onClick={handleClick}
         className="block w-full h-full"
       >
         <div className="relative h-80 w-full overflow-hidden">
@@ -26,8 +30,8 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
             src={post.imageUrl}
             alt="blog post"
             loading="eager"
-            sizes="48"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover hover:scale-105 duration-300"
             priority
           />
@@ -45,8 +49,8 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
                     src={post.authorImage}
                     alt={post.authorName}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     loading="eager"
-                    sizes="48"
                     className="object-cover"
                   />
                 )}

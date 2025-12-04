@@ -8,6 +8,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -15,8 +16,7 @@ const navItems = [
 ];
 
 const Navbar = () => {
-  const { getUser, isLoading } = useKindeBrowserClient();
-  const user = getUser();
+  const { user, isLoading } = useKindeBrowserClient();
 
   return (
     <nav className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2 px-4 py-2 bg-amber-500 mb-4">
@@ -72,11 +72,12 @@ const MenuBar = () => {
           <Link
             key={item.href}
             href={item.href}
-            className={`text-sm lg:text-[18px] font-medium hover:text-blue-50 transition-colors ${
+            className={clsx(
+              "text-sm lg:text-[18px] font-medium transition-colors px-2 py-1 rounded-sm",
               isActive
-                ? "text-blue-50 bg-amber-700 border-amber-50 border rounded-sm p-2"
-                : "text-black"
-            }`}
+                ? "text-blue-50 bg-amber-700 border border-amber-50"
+                : "text-black hover:text-blue-50"
+            )}
           >
             {item.name}
           </Link>

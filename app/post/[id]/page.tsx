@@ -1,10 +1,11 @@
-import { getBlogPostById } from "@/app/actions";
+import { deletePost, getBlogPostById } from "@/app/actions";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { requireUser } from "@/lib/auth";
 import { Params } from "@/app/types";
+import { CustomDialog } from "@/components/general/Dialog";
 
 const PostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
@@ -21,12 +22,22 @@ const PostRoute = async ({ params }: { params: Params }) => {
         <div className="flex flex-row justify-between">
           <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
           {isEditable && (
-            <Link
-              className={buttonVariants({ variant: "outline" })}
-              href={`/post/${id}/edit`}
-            >
-              Edit
-            </Link>
+            <div className="flex flex-row gap-3 items-center">
+              <Link
+                className={buttonVariants({ variant: "secondary" })}
+                href={`/post/${id}/edit`}
+              >
+                Edit
+              </Link>
+              <CustomDialog
+                title={`Are you sure want to delete "${post.title}" ?`}
+                description="Couldn't be recovered after deletion"
+                onConfirm={async () => {
+                  "use server";
+                  await deletePost(id, user.id);
+                }}
+              />
+            </div>
           )}
         </div>
         <div className="flex items-center space-x-4">

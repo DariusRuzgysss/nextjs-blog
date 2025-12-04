@@ -70,6 +70,23 @@ export const getBlogPostsByUserId = async (userId: string) => {
   });
 };
 
+export const deletePost = async (id: string, userId: string) => {
+  const exists = await prisma.postSeen.findFirst({
+    where: { postId: id, userId },
+  });
+
+  if (exists) {
+    await prisma.postSeen.delete({
+      where: { postId_userId: { postId: id, userId } },
+    });
+  }
+  await prisma.blogPost.delete({
+    where: { id },
+  });
+
+  redirect("/dashboard");
+};
+
 export const isPostSeen = async (postId: string, userId: string) =>
   await prisma.postSeen.findUnique({
     where: {
