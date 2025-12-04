@@ -7,6 +7,12 @@ import {
   LogoutLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { usePathname } from "next/navigation";
+
+const navItems = [
+  { name: "Home", href: "/" },
+  { name: "Dashboard", href: "/dashboard" },
+];
 
 const Navbar = () => {
   const { getUser, isLoading } = useKindeBrowserClient();
@@ -18,10 +24,10 @@ const Navbar = () => {
         <div className="flex items-center gap-6">
           <Link href="/">
             <h1 className="text-3xl text-amber-50">
-              Blog<span className="text-blue-500">Place</span>
+              Blog<span className="text-amber-700 font-bold">Place</span>
             </h1>
           </Link>
-          <div className="hidden sm:flex gap-6">
+          <div className="hidden sm:flex gap-6 items-center">
             <MenuBar />
           </div>
         </div>
@@ -47,7 +53,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="flex sm:hidden gap-6">
+      <div className="flex sm:hidden gap-6 items-center">
         <MenuBar />
       </div>
     </nav>
@@ -57,20 +63,25 @@ const Navbar = () => {
 export default Navbar;
 
 const MenuBar = () => {
+  const pathname = usePathname();
   return (
     <>
-      <Link
-        href="/"
-        className="text-sm lg:text-[18px] font-medium hover:text-blue-500 transition-colors"
-      >
-        Home
-      </Link>
-      <Link
-        href="/dashboard"
-        className="text-sm lg:text-[18px] font-medium hover:text-blue-500 transition-colors"
-      >
-        Dashboard
-      </Link>
+      {navItems.map((item) => {
+        const isActive = pathname === item.href;
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`text-sm lg:text-[18px] font-medium hover:text-blue-50 transition-colors ${
+              isActive
+                ? "text-blue-50 bg-amber-700 border-amber-50 border rounded-sm p-2"
+                : "text-black"
+            }`}
+          >
+            {item.name}
+          </Link>
+        );
+      })}
     </>
   );
 };
