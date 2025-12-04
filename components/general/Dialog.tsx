@@ -36,7 +36,6 @@ export function CustomDialog({ title, description, onConfirm }: Props) {
           className="cursor-pointer text-red-600 hover:opacity-80"
         />
       </DialogTrigger>
-
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

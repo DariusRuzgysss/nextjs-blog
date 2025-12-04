@@ -6,7 +6,7 @@ import { notFound, redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BlogFormData } from "@/components/rhf/BlogForm";
 
-export const getBlogPosts = async () => {
+export const getBlogPosts = async (query?: string) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
   return await prisma.blogPost.findMany({
@@ -16,6 +16,14 @@ export const getBlogPosts = async () => {
     orderBy: {
       createdAt: "desc",
     },
+    where: query
+      ? {
+          OR: [
+            { title: { contains: query, mode: "insensitive" } },
+            { content: { contains: query, mode: "insensitive" } },
+          ],
+        }
+      : undefined,
   });
 };
 

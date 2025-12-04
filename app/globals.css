@@ -119,4 +119,12 @@
   body {
     @apply bg-background text-foreground;
   }
+  html {
+    min-height: 100vh;
+  }
+  html body[data-scroll-locked]:not([data-scroll-no-lock]) {
+  min-width: 100%;
+  margin-right: 0 !important;
+  overflow: inherit !important;
+}
 }

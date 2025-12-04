@@ -12,13 +12,13 @@ const Dashboard = async () => {
 
   return (
     <div className="px-2 lg:px-0">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between">
         <h2 className="text-xl font-medium">Your Blog Articles</h2>
         <Link className={buttonVariants()} href="/dashboard/create">
           Create Post
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
         {posts.map((post) => (
           <BlogPostCard key={post.id} post={post} />
         ))}

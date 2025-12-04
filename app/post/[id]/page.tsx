@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { requireUser } from "@/lib/auth";
 import { Params } from "@/app/types";
 import { CustomDialog } from "@/components/general/Dialog";
+import { Icon } from "@iconify/react";
 
 const PostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
@@ -14,7 +15,7 @@ const PostRoute = async ({ params }: { params: Params }) => {
   const isEditable = post.authorId === user.id;
 
   return (
-    <div className="max-w-3xl mx-auto px-2 lg:px-0">
+    <div className="max-w-3xl mx-auto p-4 lg:px-0">
       <Link className={buttonVariants({ variant: "outline" })} href="/">
         Back to posts
       </Link>
@@ -27,7 +28,11 @@ const PostRoute = async ({ params }: { params: Params }) => {
                 className={buttonVariants({ variant: "secondary" })}
                 href={`/post/${id}/edit`}
               >
-                Edit
+                <Icon
+                  icon="ic:baseline-mode-edit"
+                  fontSize={24}
+                  className="cursor-pointer hover:opacity-80"
+                />
               </Link>
               <CustomDialog
                 title={`Are you sure want to delete "${post.title}" ?`}
