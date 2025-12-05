@@ -26,15 +26,19 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
         className="block w-full h-full"
       >
         <div className="relative h-80 w-full overflow-hidden">
-          <Image
-            src={post.imageUrl}
-            alt="blog post"
-            loading="eager"
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover hover:scale-105 duration-300"
-            priority
-          />
+          {post.imageUrl ? (
+            <Image
+              src={post.imageUrl}
+              alt="blog post"
+              loading="eager"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover hover:scale-105 duration-300"
+              priority
+            />
+          ) : (
+            <p>No Image</p>
+          )}
         </div>
         <div className="p-4">
           <h3 className="mb-2 text-xl font-bold text-gray-900">{post.title}</h3>

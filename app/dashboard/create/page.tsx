@@ -9,7 +9,7 @@ import {
 
 const CreateBlogPostRoute = () => {
   return (
-    <div>
+    <div className="px-2 lg:px-0">
       <Card className="lg:max-w-lg max-w-full mx-auto">
         <CardHeader>
           <CardTitle>Create Post</CardTitle>

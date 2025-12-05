@@ -10,7 +10,7 @@ import { BlogPost } from "@/app/types";
 export const blogSchema = z.object({
   title: z.string().min(1, "Title is required"),
   content: z.string().min(1, "Content is required"),
-  imageUrl: z.url().min(1, "Url is required"),
+  imageUrl: z.string(),
 });
 
 export type BlogFormData = z.infer<typeof blogSchema>;
