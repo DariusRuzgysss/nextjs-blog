@@ -5,26 +5,43 @@ import { prisma } from "@/prisma/seed";
 import { notFound, redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BlogFormData } from "@/components/rhf/BlogForm";
+import { FilterTypes } from "./types";
 
-export const getBlogPosts = async (query?: string) => {
+export const getBlogPosts = async ({
+  sortBy,
+  page,
+  pageSize,
+  searchQuery,
+}: FilterTypes) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  return await prisma.blogPost.findMany({
-    include: {
-      postSeens: user ? { where: { userId: user.id } } : false,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    where: query
-      ? {
-          OR: [
-            { title: { contains: query, mode: "insensitive" } },
-            { content: { contains: query, mode: "insensitive" } },
-          ],
-        }
-      : undefined,
-  });
+
+  const [items, itemsCount] = await Promise.all([
+    prisma.blogPost.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+      include: {
+        postSeens: user ? { where: { userId: user.id } } : false,
+      },
+      orderBy: {
+        createdAt: sortBy,
+      },
+      where: searchQuery
+        ? {
+            OR: [
+              { title: { contains: searchQuery, mode: "insensitive" } },
+              { content: { contains: searchQuery, mode: "insensitive" } },
+            ],
+          }
+        : undefined,
+    }),
+    prisma.blogPost.count(),
+  ]);
+
+  return {
+    items,
+    totalPages: Math.ceil(itemsCount / pageSize),
+  };
 };
 
 export const getBlogPostById = async (id: string) => {

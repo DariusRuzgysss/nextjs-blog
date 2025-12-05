@@ -27,6 +27,7 @@ const SearchInput = ({ label, placeholder, debounce = 1000 }: Props) => {
       replace(`${pathname}?${params.toString()}`);
     }, debounce);
   };
+
   return (
     <>
       {label && <Label>{label}</Label>}
