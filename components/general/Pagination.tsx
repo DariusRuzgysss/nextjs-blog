@@ -3,7 +3,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../ui/button";
 import { Icon } from "@iconify/react";
 
-const PaginationComponent = ({ totalPages }: { totalPages: number }) => {
+type Props = {
+  totalPages: number;
+};
+
+const PaginationComponent = ({ totalPages }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
