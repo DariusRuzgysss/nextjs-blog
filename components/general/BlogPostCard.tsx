@@ -5,9 +5,12 @@ import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { markPostAsSeen } from "@/app/actions";
 import { useCallback } from "react";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
-  const isNew = post.postSeens && !post.postSeens.length;
+  const { user } = useKindeBrowserClient();
+  const isNew =
+    post.postSeens && !post.postSeens.length && post.authorId !== user?.id;
 
   const handleClick = useCallback(() => {
     markPostAsSeen(post.id);

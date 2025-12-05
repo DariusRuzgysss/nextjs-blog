@@ -14,13 +14,14 @@ export default async function Home(props: {
     query?: string;
     sort?: "desc" | "asc";
     page?: string;
+    limit?: number;
   }>;
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
   const sortBy = searchParams?.sort || "desc";
   const page = Number(searchParams?.page) || 1;
-  const pageSize = 5;
+  const pageSize = Number(searchParams?.limit) || 5;
 
   return (
     <div className="px-2 lg:px-0">
