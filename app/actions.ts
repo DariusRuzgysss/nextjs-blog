@@ -96,17 +96,18 @@ export const getBlogPostsByUserId = async (userId: string) => {
 };
 
 export const deletePost = async (id: string, userId: string) => {
-  const exists = await prisma.postSeen.findFirst({
+  const seenPost = await prisma.postSeen.findFirst({
     where: { postId: id, userId },
   });
 
-  if (exists) {
+  if (seenPost) {
     await prisma.postSeen.delete({
-      where: { postId_userId: { postId: id, userId } },
+      where: { id: seenPost.id },
     });
   }
+
   await prisma.blogPost.delete({
-    where: { id },
+    where: { id, authorId: userId },
   });
 
   redirect("/dashboard");

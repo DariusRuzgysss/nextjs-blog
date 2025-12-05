@@ -72,12 +72,11 @@ const PostRoute = async ({ params }: { params: Params }) => {
       </div>
       <div className="relative h-80 w-full overflow-hidden rounded-lg">
         <Image
-          src={post.imageUrl}
+          src={post.imageUrl || "/images/no image.jpg"}
           alt="blog post"
           loading="eager"
-          sizes="48"
           fill
-          className="object-cover"
+          className="object-contain"
           priority
         />
       </div>

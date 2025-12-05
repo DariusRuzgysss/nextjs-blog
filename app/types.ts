@@ -22,7 +22,7 @@ export type BlogPost = {
   title: string;
   content: string;
   id: string;
-  imageUrl: string;
+  imageUrl?: string;
   authorId: string;
   postSeens?: Array<PostSeen>;
   authorName: string;
