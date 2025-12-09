@@ -1,22 +1,17 @@
 import BlogPostCard from "@/components/general/BlogPostCard";
 import { Suspense } from "react";
-import { getBlogPosts } from "./actions";
+
 import SearchInput from "@/components/general/SearchInput";
 import SortSelect from "@/components/general/SortSelect";
-import { FilterTypes } from "./types";
+import { UrlParams } from "./types";
 import LoadingDashboard from "./dashboard/loading";
 import PaginationComponent from "@/components/general/Pagination";
+import { getPosts } from "./features/post/actions";
+import { FilterTypes } from "./features/post/types";
 
 export const revalidate = 60;
 
-export default async function Home(props: {
-  searchParams?: Promise<{
-    query?: string;
-    sort?: "desc" | "asc";
-    page?: string;
-    limit?: number;
-  }>;
-}) {
+export default async function Home(props: { searchParams?: UrlParams }) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || "";
   const sortBy = searchParams?.sort || "desc";
@@ -45,7 +40,7 @@ export default async function Home(props: {
 }
 
 const BlogPosts = async (filter: FilterTypes) => {
-  const { items, totalPages } = await getBlogPosts(filter);
+  const { items, totalPages } = await getPosts(filter);
 
   return (
     <Suspense fallback={<LoadingDashboard />}>

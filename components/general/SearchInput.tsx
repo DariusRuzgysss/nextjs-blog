@@ -10,7 +10,7 @@ type Props = {
   debounce?: number;
 };
 
-const SearchInput = ({ label, placeholder, debounce = 400 }: Props) => {
+const SearchInput = ({ label, placeholder, debounce = 600 }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -20,6 +20,7 @@ const SearchInput = ({ label, placeholder, debounce = 400 }: Props) => {
     const value = e.target.value;
     setTimeout(() => {
       if (value) {
+        params.set("page", "1");
         params.set("query", value);
       } else {
         params.delete("query");

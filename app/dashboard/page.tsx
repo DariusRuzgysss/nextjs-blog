@@ -1,14 +1,14 @@
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { getBlogPostsByUserId } from "../actions";
 import { requireUser } from "@/lib/auth";
 import BlogPostCard from "@/components/general/BlogPostCard";
+import { getPostsByUserId } from "../features/post/actions";
 
 export const revalidate = 60;
 
 const Dashboard = async () => {
   const user = await requireUser();
-  const posts = await getBlogPostsByUserId(user.id);
+  const posts = await getPostsByUserId(user.id);
 
   return (
     <div className="px-2 lg:px-0">

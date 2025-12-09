@@ -3,9 +3,9 @@ import { BlogPost } from "@/app/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { markPostAsSeen } from "@/app/actions";
 import { useCallback } from "react";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { markPostAsSeen } from "@/app/features/post/actions";
 
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
   const { user } = useKindeBrowserClient();
@@ -13,8 +13,11 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
     post.postSeens && !post.postSeens.length && post.authorId !== user?.id;
 
   const handleClick = useCallback(() => {
+    if (post.authorId === user?.id) {
+      return;
+    }
     markPostAsSeen(post.id);
-  }, [post.id]);
+  }, [post.id, post.authorId, user?.id]);
 
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition-all hover:shadow-2xl">

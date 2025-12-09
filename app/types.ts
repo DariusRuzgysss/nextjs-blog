@@ -11,12 +11,12 @@ export type FormFieldProps<TFormValues> = {
 
 export type Params = Promise<{ id: string }>;
 
-export type FilterTypes = {
-  searchQuery: string;
-  sortBy: "desc" | "asc";
-  page: number;
-  pageSize: number;
-};
+export type UrlParams = Promise<{
+  query?: string;
+  sort?: "desc" | "asc";
+  page?: string;
+  limit?: number;
+}>;
 
 export type BlogPost = {
   title: string;

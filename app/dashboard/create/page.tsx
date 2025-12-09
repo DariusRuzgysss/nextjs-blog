@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const CreateBlogPostRoute = () => {
+const createPostRoute = () => {
   return (
     <div className="px-2 lg:px-0">
       <Card className="lg:max-w-lg max-w-full mx-auto">
@@ -25,4 +25,4 @@ const CreateBlogPostRoute = () => {
   );
 };
 
-export default CreateBlogPostRoute;
+export default createPostRoute;

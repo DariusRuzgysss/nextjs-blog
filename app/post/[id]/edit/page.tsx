@@ -1,4 +1,4 @@
-import { getBlogPostById } from "@/app/actions";
+import { getPostById } from "@/app/features/post/actions";
 import { Params } from "@/app/types";
 import BlogForm from "@/components/rhf/BlogForm";
 import {
@@ -11,7 +11,7 @@ import {
 
 const EditBlogPostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
-  const post = await getBlogPostById(id);
+  const post = await getPostById(id);
   return (
     <div>
       <Card className="lg:max-w-lg max-w-full mx-auto">

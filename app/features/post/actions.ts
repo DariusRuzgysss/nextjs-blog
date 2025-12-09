@@ -5,9 +5,10 @@ import { prisma } from "@/prisma/seed";
 import { notFound, redirect } from "next/navigation";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BlogFormData } from "@/components/rhf/BlogForm";
+import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
 import { FilterTypes } from "./types";
 
-export const getBlogPosts = async ({
+export const getPosts = async ({
   sortBy,
   page,
   pageSize,
@@ -15,6 +16,15 @@ export const getBlogPosts = async ({
 }: FilterTypes) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+
+  const where: BlogPostWhereInput | undefined = searchQuery
+    ? {
+        OR: [
+          { title: { contains: searchQuery, mode: "insensitive" } },
+          { content: { contains: searchQuery, mode: "insensitive" } },
+        ],
+      }
+    : undefined;
 
   const [items, itemsCount] = await Promise.all([
     prisma.blogPost.findMany({
@@ -26,16 +36,11 @@ export const getBlogPosts = async ({
       orderBy: {
         createdAt: sortBy,
       },
-      where: searchQuery
-        ? {
-            OR: [
-              { title: { contains: searchQuery, mode: "insensitive" } },
-              { content: { contains: searchQuery, mode: "insensitive" } },
-            ],
-          }
-        : undefined,
+      where,
     }),
-    prisma.blogPost.count(),
+    prisma.blogPost.count({
+      where,
+    }),
   ]);
 
   return {
@@ -44,7 +49,7 @@ export const getBlogPosts = async ({
   };
 };
 
-export const getBlogPostById = async (id: string) => {
+export const getPostById = async (id: string) => {
   const data = await prisma.blogPost.findUnique({
     where: {
       id,
@@ -58,7 +63,7 @@ export const getBlogPostById = async (id: string) => {
   return data;
 };
 
-export const updateBlogPost = async (post: BlogFormData, id: string) => {
+export const updatePost = async (post: BlogFormData, id: string) => {
   await prisma.blogPost.update({
     where: {
       id,
@@ -68,7 +73,7 @@ export const updateBlogPost = async (post: BlogFormData, id: string) => {
   redirect(`/post/${id}`);
 };
 
-export const createBlogPost = async (data: BlogFormData) => {
+export const createPost = async (data: BlogFormData) => {
   const user = await requireUser();
   await prisma.blogPost.create({
     data: {
@@ -84,7 +89,7 @@ export const createBlogPost = async (data: BlogFormData) => {
   redirect("/dashboard");
 };
 
-export const getBlogPostsByUserId = async (userId: string) => {
+export const getPostsByUserId = async (userId: string) => {
   return await prisma.blogPost.findMany({
     where: {
       authorId: userId,
@@ -112,16 +117,6 @@ export const deletePost = async (id: string, userId: string) => {
 
   redirect("/dashboard");
 };
-
-export const isPostSeen = async (postId: string, userId: string) =>
-  await prisma.postSeen.findUnique({
-    where: {
-      postId_userId: {
-        postId,
-        userId,
-      },
-    },
-  });
 
 export const markPostAsSeen = async (postId: string) => {
   const user = await requireUser();

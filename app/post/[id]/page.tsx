@@ -1,4 +1,3 @@
-import { deletePost, getBlogPostById } from "@/app/actions";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,10 +6,11 @@ import { requireUser } from "@/lib/auth";
 import { Params } from "@/app/types";
 import { CustomDialog } from "@/components/general/Dialog";
 import { Icon } from "@iconify/react";
+import { deletePost, getPostById } from "@/app/features/post/actions";
 
 const PostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
-  const post = await getBlogPostById(id);
+  const post = await getPostById(id);
   const user = await requireUser();
   const isEditable = post.authorId === user.id;
 
