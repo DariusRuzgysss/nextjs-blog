@@ -1,5 +1,5 @@
-import { UploadApiErrorResponse, UploadApiResponse } from "cloudinary";
+import { UploadApiResponse } from "cloudinary";
 
 export type UploadResponse =
   | { success: true; result?: UploadApiResponse }
-  | { success: false; error: UploadApiErrorResponse };
+  | { success: false };

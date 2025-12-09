@@ -17,7 +17,6 @@ export const uploadImage = async (imageFile: File): Promise<UploadResponse> => {
     const encoding = "base64";
     const base64Data = Buffer.from(fileBuffer).toString("base64");
 
-    // this will be used to upload the file
     const fileUri = "data:" + mimeType + ";" + encoding + "," + base64Data;
 
     const result = await cloudinary.uploader.upload(fileUri, {
@@ -31,8 +30,7 @@ export const uploadImage = async (imageFile: File): Promise<UploadResponse> => {
 
     return { success: true, result };
   } catch (error) {
-    console.log(error);
-    return { success: false, error };
+    return { success: false };
   }
 };
 
