@@ -1,6 +1,7 @@
 import { getPostById } from "@/app/features/post/actions";
 import { Params } from "@/app/types";
 import BlogForm from "@/components/rhf/BlogForm";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -8,12 +9,19 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
+import Link from "next/link";
 
 const EditBlogPostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
   const post = await getPostById(id);
   return (
-    <div>
+    <div className="max-w-3xl mx-auto">
+      <Link
+        className={buttonVariants({ variant: "outline" })}
+        href={`/post/${post.id}`}
+      >
+        Back to post
+      </Link>
       <Card className="lg:max-w-lg max-w-full mx-auto">
         <CardHeader>
           <CardTitle>Edit Post</CardTitle>

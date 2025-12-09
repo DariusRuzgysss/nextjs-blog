@@ -99,9 +99,15 @@ const BlogForm = ({
         <div className="flex flex-col gap-2">
           <div className="flex flex-row  justify-between">
             <ImageField name="imageFile" label="Choose image" />
-            <Button type="button" onClick={clearImage}>
-              <Icon icon="mdi:trash" fontSize={24} />
-            </Button>
+            {imageUrl || imageFile ? (
+              <Button type="button" variant="outline" onClick={clearImage}>
+                <Icon
+                  icon="mdi:trash"
+                  fontSize={24}
+                  className="cursor-pointer text-red-600"
+                />
+              </Button>
+            ) : null}
           </div>
           {imageUrl && !imageFile && (
             <Image

@@ -10,14 +10,14 @@ interface Props {
 }
 
 export const ImageField = ({ name, label }: Props) => {
-  const { control, setValue, watch } = useFormContext();
+  const {
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext();
 
   const file = watch("imageFile");
-
-  const deleteImage = () => {
-    setValue("imageFile", undefined);
-    setValue("imageUrl", "");
-  };
 
   return (
     <Controller
@@ -46,6 +46,11 @@ export const ImageField = ({ name, label }: Props) => {
               height={200}
               className="object-contain"
             />
+          )}
+          {errors && errors[name] && (
+            <span className="text-red-700">
+              {errors[name]?.message as string}
+            </span>
           )}
         </div>
       )}
