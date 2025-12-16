@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import z from "zod";
 import { Button } from "../ui/button";
 import FormField from "./FormField";
@@ -42,8 +42,8 @@ const BlogForm = ({
   });
 
   const isSubmitting = methods.formState.isSubmitting;
-  const imageUrl = methods.watch("imageUrl");
-  const imageFile = methods.watch("imageFile");
+  const imageUrl = useWatch({ control: methods.control, name: "imageUrl" });
+  const imageFile = useWatch({ control: methods.control, name: "imageFile" });
 
   const onSubmit = async (data: BlogFormData) => {
     const dataCopy = { ...data };
