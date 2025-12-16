@@ -19,7 +19,7 @@ const PostRoute = async ({ params }: { params: Params }) => {
       <Link className={buttonVariants({ variant: "outline" })} href="/">
         Back to posts
       </Link>
-      <div className="my-8">
+      <div className="my-8 mt-3">
         <div className="flex flex-row justify-between">
           <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
           {isEditable && (
