@@ -1,6 +1,8 @@
+import { SortBy } from "@/app/types";
+
 export type FilterTypes = {
   searchQuery: string;
-  sortBy: "desc" | "asc";
+  sortBy: SortBy;
   page: number;
   pageSize: number;
 };

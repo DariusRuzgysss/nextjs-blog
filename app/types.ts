@@ -10,10 +10,11 @@ export type FormFieldProps<TFormValues> = {
 };
 
 export type Params = Promise<{ id: string }>;
+export type SortBy = "desc" | "asc" | "favorites";
 
 export type UrlParams = Promise<{
   query?: string;
-  sort?: "desc" | "asc";
+  sort?: SortBy;
   page?: string;
   limit?: number;
 }>;
@@ -25,6 +26,7 @@ export type BlogPost = {
   imageUrl?: string;
   authorId: string;
   postSeens?: Array<PostSeen>;
+  favoritePosts?: Array<FavoritePost>;
   authorName: string;
   authorImage: string;
   createdAt: Date;
@@ -36,4 +38,11 @@ type PostSeen = {
   userId: string;
   postId: string;
   seenAt: Date;
+};
+
+type FavoritePost = {
+  id: string;
+  userId: string;
+  postId: string;
+  favAt: Date;
 };

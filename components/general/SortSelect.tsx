@@ -40,6 +40,7 @@ const SortSelect = () => {
           <SelectLabel>Sort by</SelectLabel>
           <SelectItem value="desc">Newest first</SelectItem>
           <SelectItem value="asc">Oldest first</SelectItem>
+          <SelectItem value="favorites">Favorite</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

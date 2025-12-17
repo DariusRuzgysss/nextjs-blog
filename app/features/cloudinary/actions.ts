@@ -30,6 +30,7 @@ export const uploadImage = async (imageFile: File): Promise<UploadResponse> => {
 
     return { success: true, result };
   } catch (error) {
+    console.error("Image upload failed:", error);
     return { success: false };
   }
 };

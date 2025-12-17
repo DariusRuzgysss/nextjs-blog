@@ -14,16 +14,17 @@ datasource db {
 }
 
 model BlogPost {
-  id          String     @id @default(uuid())
-  title       String
-  content     String
-  imageUrl    String
-  authorId    String
-  authorName  String
-  authorImage String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  postSeens   PostSeen[]
+  id            String         @id @default(uuid())
+  title         String
+  content       String
+  imageUrl      String
+  authorId      String
+  authorName    String
+  authorImage   String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  postSeens     PostSeen[]
+  favoritePosts FavoritePost[]
 }
 
 model PostSeen {
@@ -31,6 +32,17 @@ model PostSeen {
   postId String
   userId String // string that identifies the viewer (email, auth ID, etc.)
   seenAt DateTime @default(now())
+
+  post BlogPost @relation(fields: [postId], references: [id])
+
+  @@unique([postId, userId]) // prevent duplicates
+}
+
+model FavoritePost {
+  id     String   @id @default(uuid())
+  postId String
+  userId String // string that identifies the user (email, auth ID, etc.)
+  favAt  DateTime @default(now())
 
   post BlogPost @relation(fields: [postId], references: [id])
 

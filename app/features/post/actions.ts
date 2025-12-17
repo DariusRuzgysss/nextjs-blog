@@ -2,7 +2,7 @@
 
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/prisma/seed";
-import { notFound, redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BlogFormData } from "@/components/rhf/BlogForm";
 import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
@@ -16,25 +16,34 @@ export const getPosts = async ({
 }: FilterTypes) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-
-  const where: BlogPostWhereInput | undefined = searchQuery
-    ? {
+  const isAuthor = user ? { where: { userId: user.id } } : false;
+  const where: BlogPostWhereInput | undefined = (() => {
+    if (searchQuery) {
+      return {
         OR: [
           { title: { contains: searchQuery, mode: "insensitive" } },
           { content: { contains: searchQuery, mode: "insensitive" } },
         ],
-      }
-    : undefined;
+      };
+    } else if (sortBy === "favorites") {
+      return {
+        favoritePosts: { some: user ? { userId: user.id } : undefined },
+      };
+    } else {
+      return undefined;
+    }
+  })();
 
   const [items, itemsCount] = await Promise.all([
     prisma.blogPost.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
       include: {
-        postSeens: user ? { where: { userId: user.id } } : false,
+        postSeens: isAuthor,
+        favoritePosts: isAuthor,
       },
       orderBy: {
-        createdAt: sortBy,
+        createdAt: sortBy === "favorites" ? "desc" : sortBy,
       },
       where,
     }),
@@ -105,9 +114,19 @@ export const deletePost = async (id: string, userId: string) => {
     where: { postId: id, userId },
   });
 
+  const favoritePost = await prisma.favoritePost.findFirst({
+    where: { postId: id, userId },
+  });
+
   if (seenPost) {
     await prisma.postSeen.delete({
       where: { id: seenPost.id },
+    });
+  }
+
+  if (favoritePost) {
+    await prisma.favoritePost.delete({
+      where: { id: favoritePost.id },
     });
   }
 
@@ -130,4 +149,27 @@ export const markPostAsSeen = async (postId: string) => {
       userId: user.id,
     },
   });
+};
+
+export const markPostAsFavorite = async (postId: string) => {
+  const user = await requireUser();
+  await prisma.favoritePost.upsert({
+    where: {
+      postId_userId: { postId, userId: user.id },
+    },
+    update: {}, // if exists, do nothing
+    create: {
+      postId,
+      userId: user.id,
+    },
+  });
+  revalidatePath("/");
+};
+
+export const unmarkPostAsFavorite = async (postId: string) => {
+  const user = await requireUser();
+  await prisma.favoritePost.deleteMany({
+    where: { postId, userId: user.id },
+  });
+  revalidatePath("/");
 };

@@ -8,6 +8,7 @@ import LoadingDashboard from "./dashboard/loading";
 import PaginationComponent from "@/components/general/Pagination";
 import { getPosts } from "./features/post/actions";
 import { FilterTypes } from "./features/post/types";
+import SortTitle from "@/components/general/SortTitle";
 
 export const revalidate = 60;
 
@@ -21,9 +22,7 @@ export default async function Home(props: { searchParams?: UrlParams }) {
   return (
     <div>
       <div className="grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr] items-center gap-4">
-        <h1 className="text-2xl lg:text-3xl font-bold tracking-tight">
-          {`${sortBy === "desc" ? "Newest" : "Oldest"} posts`}
-        </h1>
+        <SortTitle sortBy={sortBy} />
         <div className="grid grid-cols-[1fr_auto] gap-4">
           <SearchInput placeholder="Search" />
           <SortSelect />
