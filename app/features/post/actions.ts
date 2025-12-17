@@ -2,7 +2,7 @@
 
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/prisma/seed";
-import { revalidatePath } from "next/cache";
+
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BlogFormData } from "@/components/rhf/BlogForm";
 import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
@@ -100,9 +100,14 @@ export const createPost = async (data: BlogFormData) => {
 };
 
 export const getPostsByUserId = async (userId: string) => {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
   return await prisma.blogPost.findMany({
     where: {
       authorId: userId,
+    },
+    include: {
+      favoritePosts: user ? { where: { userId: user.id } } : false,
     },
     orderBy: {
       createdAt: "desc",
@@ -164,7 +169,6 @@ export const markPostAsFavorite = async (postId: string) => {
       userId: user.id,
     },
   });
-  revalidatePath("/");
 };
 
 export const unmarkPostAsFavorite = async (postId: string) => {
@@ -172,5 +176,4 @@ export const unmarkPostAsFavorite = async (postId: string) => {
   await prisma.favoritePost.deleteMany({
     where: { postId, userId: user.id },
   });
-  revalidatePath("/");
 };

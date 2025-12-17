@@ -1,14 +1,10 @@
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { requireUser } from "@/lib/auth";
-import BlogPostCard from "@/components/general/BlogPostCard";
-import { getPostsByUserId } from "../features/post/actions";
-
-export const revalidate = 60;
+import UserPostsClient from "@/components/general/UserPostsClient";
 
 const Dashboard = async () => {
   const user = await requireUser();
-  const posts = await getPostsByUserId(user.id);
 
   return (
     <div>
@@ -18,11 +14,7 @@ const Dashboard = async () => {
           Create Post
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
-        {posts.map((post) => (
-          <BlogPostCard key={post.id} post={post} />
-        ))}
-      </div>
+      <UserPostsClient userId={user.id} />
     </div>
   );
 };

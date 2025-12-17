@@ -3,7 +3,7 @@ import { BlogPost } from "@/app/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import {
   markPostAsFavorite,
@@ -11,9 +11,12 @@ import {
   unmarkPostAsFavorite,
 } from "@/app/features/post/actions";
 import { Icon } from "@iconify/react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
   const { user } = useKindeBrowserClient();
+  const queryClient = useQueryClient();
+  const [favoritingPostId, setFavoritingPostId] = useState<string | null>(null);
   const isAuthor = post.authorId === user?.id;
   const isLogged = !!user;
 
@@ -34,15 +37,22 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
   }, [post.id, post.authorId, user?.id]);
 
   const onClickFavorite = useCallback(async () => {
-    if (
-      post.favoritePosts?.length &&
-      post.favoritePosts.some((fav) => fav.postId === post.id)
-    ) {
-      unmarkPostAsFavorite(post.id);
-      return;
+    setFavoritingPostId(post.id);
+    try {
+      if (
+        post.favoritePosts?.length &&
+        post.favoritePosts.some((fav) => fav.postId === post.id)
+      ) {
+        await unmarkPostAsFavorite(post.id);
+      } else {
+        await markPostAsFavorite(post.id);
+      }
+      queryClient.invalidateQueries({ queryKey: ["userPosts"] });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    } finally {
+      setFavoritingPostId(null);
     }
-    markPostAsFavorite(post.id);
-  }, [post.id, post.favoritePosts]);
+  }, [post.id, post.favoritePosts, queryClient]);
 
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition-all hover:shadow-2xl">
@@ -59,7 +69,9 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
               : "material-symbols-light:favorite-outline-rounded"
           }`}
           fontSize={40}
-          className="absolute z-10 right-1 top-1 cursor-pointer text-red-600"
+          className={`absolute z-10 right-1 top-1 cursor-pointer text-red-600 ${
+            favoritingPostId === post.id ? "animate-spin transition-all" : ""
+          }`}
           onClick={onClickFavorite}
         />
       )}
