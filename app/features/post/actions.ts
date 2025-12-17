@@ -7,6 +7,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BlogFormData } from "@/components/rhf/BlogForm";
 import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
 import { FilterTypes } from "./types";
+import { notFound, redirect } from "next/navigation";
 
 export const getPosts = async ({
   sortBy,
