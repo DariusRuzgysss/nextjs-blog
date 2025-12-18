@@ -34,7 +34,7 @@ const BlogForm = ({
     defaultValues: {
       title: post?.title,
       content: post?.content,
-      imageUrl: post?.imageUrl,
+      imageUrl: post?.imageUrl || "",
       imageFile: undefined,
     },
     resolver: zodResolver(blogSchema),
@@ -96,7 +96,7 @@ const BlogForm = ({
             placeholder="Content"
           />
         </div>
-        <div className="flex flex-col gap-2 justify-center items-center">
+        <div className="flex flex-col gap-2 ">
           <div className="flex flex-row  justify-between">
             <ImageField name="imageFile" label="Choose image" />
             {imageUrl || imageFile ? (
@@ -109,6 +109,7 @@ const BlogForm = ({
               </Button>
             ) : null}
           </div>
+
           {imageUrl && !imageFile && (
             <Image
               src={imageUrl}
