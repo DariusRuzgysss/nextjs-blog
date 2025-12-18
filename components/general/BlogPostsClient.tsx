@@ -1,7 +1,5 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getPosts } from "@/app/features/post/actions";
 import { FilterTypes } from "@/app/features/post/types";
 import BlogPostCard from "@/components/general/BlogPostCard";
 import PaginationComponent from "@/components/general/Pagination";

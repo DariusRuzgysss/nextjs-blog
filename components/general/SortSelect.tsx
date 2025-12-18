@@ -1,5 +1,4 @@
 "use client";
-import { ChangeEvent } from "react";
 import {
   Select,
   SelectContent,
@@ -10,11 +9,13 @@ import {
   SelectValue,
 } from "../ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const SortSelect = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const { user } = useKindeBrowserClient();
 
   const handleSort = (value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -40,7 +41,7 @@ const SortSelect = () => {
           <SelectLabel>Sort by</SelectLabel>
           <SelectItem value="desc">Newest first</SelectItem>
           <SelectItem value="asc">Oldest first</SelectItem>
-          <SelectItem value="favorites">Favorite</SelectItem>
+          {user && <SelectItem value="favorites">Favorite</SelectItem>}
         </SelectGroup>
       </SelectContent>
     </Select>

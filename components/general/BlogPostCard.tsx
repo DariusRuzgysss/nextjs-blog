@@ -16,7 +16,7 @@ import { useQueryClient } from "@tanstack/react-query";
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
   const { user } = useKindeBrowserClient();
   const queryClient = useQueryClient();
-  const [favoritingPostId, setFavoritingPostId] = useState<string | null>(null);
+  const [favoringPostId, setFavoringPostId] = useState<string | null>(null);
   const isAuthor = post.authorId === user?.id;
   const isLogged = !!user;
 
@@ -37,7 +37,7 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
   }, [post.id, post.authorId, user?.id]);
 
   const onClickFavorite = useCallback(async () => {
-    setFavoritingPostId(post.id);
+    setFavoringPostId(post.id);
     try {
       if (
         post.favoritePosts?.length &&
@@ -50,7 +50,7 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
       queryClient.invalidateQueries({ queryKey: ["userPosts"] });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     } finally {
-      setFavoritingPostId(null);
+      setFavoringPostId(null);
     }
   }, [post.id, post.favoritePosts, queryClient]);
 
@@ -70,7 +70,7 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
           }`}
           fontSize={40}
           className={`absolute z-10 right-1 top-1 cursor-pointer text-red-600 ${
-            favoritingPostId === post.id ? "animate-spin transition-all" : ""
+            favoringPostId === post.id ? "animate-spin transition-all" : ""
           }`}
           onClick={onClickFavorite}
         />

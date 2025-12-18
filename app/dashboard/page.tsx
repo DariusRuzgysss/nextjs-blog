@@ -17,15 +17,13 @@ const Dashboard = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div>
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-medium">Your Blog Articles</h2>
-          <Link className={buttonVariants()} href="/dashboard/create">
-            Create Post
-          </Link>
-        </div>
-        <UserPostsClient userId={user.id} />
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-medium">Your Blog Articles</h2>
+        <Link className={buttonVariants()} href="/dashboard/create">
+          Create Post
+        </Link>
       </div>
+      <UserPostsClient userId={user.id} />
     </HydrationBoundary>
   );
 };
