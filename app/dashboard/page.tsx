@@ -3,8 +3,8 @@ import Link from "next/link";
 import { requireUser } from "@/lib/auth";
 import UserPostsClient from "@/components/general/UserPostsClient";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { getPostsByUserId } from "../features/post/actions";
-import { getQueryClient } from "../utils/getQueryClient";
+import { getPostsByUserId } from "../../features/post/actions";
+import { getQueryClient } from "../../utils/getQueryClient";
 
 const Dashboard = async () => {
   const user = await requireUser();

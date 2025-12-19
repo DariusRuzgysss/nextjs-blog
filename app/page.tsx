@@ -4,8 +4,8 @@ import { UrlParams } from "./types";
 import BlogPostsClient from "@/components/general/BlogPostsClient";
 import SortTitle from "@/components/general/SortTitle";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { getPosts } from "./features/post/actions";
-import { getQueryClient } from "./utils/getQueryClient";
+import { getPosts } from "../features/post/actions";
+import { getQueryClient } from "../utils/getQueryClient";
 
 export default async function Home(props: { searchParams?: UrlParams }) {
   const searchParams = await props.searchParams;

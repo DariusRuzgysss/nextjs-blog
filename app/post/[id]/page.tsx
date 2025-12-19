@@ -6,7 +6,7 @@ import { requireUser } from "@/lib/auth";
 import { Params } from "@/app/types";
 import { CustomDialog } from "@/components/general/Dialog";
 import { Icon } from "@iconify/react";
-import { deletePost, getPostById } from "@/app/features/post/actions";
+import { deletePost, getPostById } from "@/features/post/actions";
 
 const PostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;

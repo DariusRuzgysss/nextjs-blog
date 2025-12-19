@@ -1,5 +1,5 @@
-import { getPosts } from "@/app/features/post/actions";
-import { FilterTypes } from "@/app/features/post/types";
+import { getPosts } from "@/features/post/actions";
+import { FilterTypes } from "@/features/post/types";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export function usePosts(filter: FilterTypes) {

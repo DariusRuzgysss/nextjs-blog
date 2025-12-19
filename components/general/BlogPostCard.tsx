@@ -9,7 +9,7 @@ import {
   markPostAsFavorite,
   markPostAsSeen,
   unmarkPostAsFavorite,
-} from "@/app/features/post/actions";
+} from "@/features/post/actions";
 import { Icon } from "@iconify/react";
 import { useQueryClient } from "@tanstack/react-query";
 

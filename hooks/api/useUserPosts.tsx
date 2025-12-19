@@ -1,4 +1,4 @@
-import { getPostsByUserId } from "@/app/features/post/actions";
+import { getPostsByUserId } from "@/features/post/actions";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export function useUserPosts(userId: string) {

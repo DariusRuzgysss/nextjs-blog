@@ -1,4 +1,4 @@
-import { getPostById } from "@/app/features/post/actions";
+import { getPostById } from "@/features/post/actions";
 import { Params } from "@/app/types";
 import BlogForm from "@/components/rhf/BlogForm";
 import { buttonVariants } from "@/components/ui/button";

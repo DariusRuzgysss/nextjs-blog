@@ -7,8 +7,8 @@ import { Button } from "../ui/button";
 import FormField from "./FormField";
 import { BlogPost } from "@/app/types";
 import { ImageField } from "./ImageField";
-import { deleteImage, uploadImage } from "@/app/features/cloudinary/actions";
-import { updatePost, createPost } from "@/app/features/post/actions";
+import { deleteImage, uploadImage } from "@/features/cloudinary/actions";
+import { updatePost, createPost } from "@/features/post/actions";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 

@@ -1,4 +1,4 @@
-import { getQueryClient } from "@/app/utils/getQueryClient";
+import { getQueryClient } from "@/utils/getQueryClient";
 import { useMutation } from "@tanstack/react-query";
 
 export function useCreate<TData, TResponse>(
@@ -14,6 +14,6 @@ export function useCreate<TData, TResponse>(
     },
     onError: (error: Error) => {
       console.error("Error in mutation:", error);
-    }
+    },
   });
 }
