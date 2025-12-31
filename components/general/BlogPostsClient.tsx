@@ -4,12 +4,13 @@ import { FilterTypes } from "@/features/post/types";
 import BlogPostCard from "@/components/general/BlogPostCard";
 import PaginationComponent from "@/components/general/Pagination";
 import { Suspense } from "react";
-import { usePosts } from "@/hooks/api/usePosts";
+import { usePostsQueryOptions } from "@/hooks/api/usePosts";
 import SkeletonLoader from "./Skeleton";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 const BlogPosts = ({ filter }: { filter: FilterTypes }) => {
-  const { data } = usePosts(filter);
-  const { items, totalPages } = data || { items: [], totalPages: 0 };
+  const { data } = useSuspenseQuery(usePostsQueryOptions(filter));
+  const { items, totalPages } = data;
 
   return (
     <Suspense fallback={<SkeletonLoader />}>

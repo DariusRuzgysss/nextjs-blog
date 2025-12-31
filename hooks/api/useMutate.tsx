@@ -1,7 +1,7 @@
 import { getQueryClient } from "@/utils/getQueryClient";
 import { useMutation } from "@tanstack/react-query";
 
-export function useCreate<TData, TResponse>(
+export function useQueryMutate<TData, TResponse>(
   mutationFn: (data: TData) => Promise<TResponse>,
   queryKey: string[]
 ) {

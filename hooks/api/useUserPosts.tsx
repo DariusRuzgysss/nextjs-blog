@@ -1,9 +1,10 @@
 import { getPostsByUserId } from "@/features/post/actions";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/utils/constants";
+import { queryOptions } from "@tanstack/react-query";
 
-export function useUserPosts(userId: string) {
-  return useSuspenseQuery({
-    queryKey: ["userPosts", userId],
+export const useUserPostsQueryOptions = (userId: string) =>
+  queryOptions({
+    queryKey: [QUERY_KEYS.USER_POSTS, userId],
     queryFn: () => getPostsByUserId(userId),
+    staleTime: 1000 * 60 * 5,
   });
-}

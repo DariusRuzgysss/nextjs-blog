@@ -5,13 +5,14 @@ import UserPostsClient from "@/components/general/UserPostsClient";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getPostsByUserId } from "../../features/post/actions";
 import { getQueryClient } from "../../utils/getQueryClient";
+import { QUERY_KEYS } from "@/utils/constants";
 
 const Dashboard = async () => {
   const user = await requireUser();
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["userPosts", user.id],
+    queryKey: [QUERY_KEYS.USER_POSTS, user.id],
     queryFn: () => getPostsByUserId(user.id),
   });
 

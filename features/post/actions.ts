@@ -55,7 +55,7 @@ export const getPosts = async ({
 
     return {
       items,
-      totalPages: Math.ceil(itemsCount / pageSize),
+      totalPages: Math.ceil(itemsCount / pageSize) || 1,
     };
   } catch (error) {
     console.error("Error fetching posts:", error);
@@ -141,24 +141,28 @@ export const getPostsByUserId = async (userId: string) => {
 
 export const deletePost = async (id: string, userId: string) => {
   try {
-    const seenPost = await prisma.postSeen.findFirst({
-      where: { postId: id, userId },
+    const seenPosts = await prisma.postSeen.findMany({
+      where: { postId: id },
     });
 
-    const favoritePost = await prisma.favoritePost.findFirst({
-      where: { postId: id, userId },
+    const favoritePosts = await prisma.favoritePost.findMany({
+      where: { postId: id },
     });
 
-    if (seenPost) {
-      await prisma.postSeen.delete({
-        where: { id: seenPost.id },
-      });
+    if (seenPosts?.length) {
+      for (const post of seenPosts) {
+        await prisma.postSeen.delete({
+          where: { id: post.id },
+        });
+      }
     }
 
-    if (favoritePost) {
-      await prisma.favoritePost.delete({
-        where: { id: favoritePost.id },
-      });
+    if (favoritePosts?.length) {
+      for (const favoritePost of favoritePosts) {
+        await prisma.favoritePost.delete({
+          where: { id: favoritePost.id },
+        });
+      }
     }
 
     await prisma.blogPost.delete({

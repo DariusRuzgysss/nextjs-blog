@@ -12,6 +12,8 @@ import {
 } from "@/features/post/actions";
 import { Icon } from "@iconify/react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useQueryMutate } from "@/hooks/api/useMutate";
+import { QUERY_KEYS } from "@/utils/constants";
 
 const BlogPostCard = ({ post }: { post: BlogPost }) => {
   const { user } = useKindeBrowserClient();
@@ -19,6 +21,10 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
   const [favoringPostId, setFavoringPostId] = useState<string | null>(null);
   const isAuthor = post.authorId === user?.id;
   const isLogged = !!user;
+
+  const markPostAsSeenMutation = useQueryMutate<string, void>(markPostAsSeen, [
+    QUERY_KEYS.POSTS,
+  ]);
 
   const isNew = useMemo(
     () => post.postSeens && !post.postSeens.length && !isAuthor,
@@ -33,8 +39,8 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
     if (post.authorId === user?.id) {
       return;
     }
-    markPostAsSeen(post.id);
-  }, [post.id, post.authorId, user?.id]);
+    markPostAsSeenMutation.mutateAsync(post.id);
+  }, [post.authorId, post.id, user?.id, markPostAsSeenMutation]);
 
   const onClickFavorite = useCallback(async () => {
     setFavoringPostId(post.id);

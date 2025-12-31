@@ -12,6 +12,12 @@ export type FormFieldProps<TFormValues> = {
 export type Params = Promise<{ id: string }>;
 export type SortBy = "desc" | "asc" | "favorites";
 
+export enum SortOptions {
+  NEWEST_FIRST = "desc",
+  OLDEST_FIRST = "asc",
+  FAVORITE = "favorites",
+}
+
 export type UrlParams = Promise<{
   query?: string;
   sort?: SortBy;

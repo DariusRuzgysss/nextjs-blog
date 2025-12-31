@@ -1,12 +1,13 @@
 "use client";
-import { SortBy } from "@/app/types";
-import React, { useMemo } from "react";
+import { SortBy, SortOptions } from "@/app/types";
+
+import { useMemo } from "react";
 
 const SortTitle = ({ sortBy }: { sortBy: SortBy }) => {
   const nameBySort = useMemo(() => {
-    if (sortBy === "desc") return "Newest";
-    if (sortBy === "asc") return "Oldest";
-    if (sortBy === "favorites") return "Favorite";
+    if (sortBy === SortOptions.NEWEST_FIRST) return "Newest";
+    if (sortBy === SortOptions.OLDEST_FIRST) return "Oldest";
+    if (sortBy === SortOptions.FAVORITE) return "Favorite";
   }, [sortBy]);
 
   return (

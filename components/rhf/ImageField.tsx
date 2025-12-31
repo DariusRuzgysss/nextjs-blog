@@ -23,7 +23,7 @@ export const ImageField = ({ name, label }: Props) => {
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
+      render={() => (
         <div className="flex flex-col gap-2">
           {label && <label>{label}</label>}
           <Input

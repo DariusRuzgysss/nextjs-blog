@@ -15,6 +15,8 @@ type Props = {
   totalPages: number;
 };
 
+const pagesSizeOptions = [5, 10, 50, 100];
+
 const PaginationComponent = ({ totalPages }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -68,10 +70,11 @@ const PaginationComponent = ({ totalPages }: Props) => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value="5">5</SelectItem>
-            <SelectItem value="10">10</SelectItem>
-            <SelectItem value="50">50</SelectItem>
-            <SelectItem value="100">100</SelectItem>
+            {pagesSizeOptions.map((size) => (
+              <SelectItem key={size} value={size.toString()}>
+                {size}
+              </SelectItem>
+            ))}
           </SelectGroup>
         </SelectContent>
       </Select>

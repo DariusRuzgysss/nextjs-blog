@@ -10,7 +10,7 @@ type Props = {
   debounce?: number;
 };
 
-const SearchInput = ({ label, placeholder, debounce = 600 }: Props) => {
+const SearchInput = ({ label, placeholder, debounce = 400 }: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();

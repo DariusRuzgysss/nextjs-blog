@@ -1,12 +1,13 @@
 "use client";
 
 import BlogPostCard from "@/components/general/BlogPostCard";
-import { useUserPosts } from "@/hooks/api/useUserPosts";
+import { useUserPostsQueryOptions } from "@/hooks/api/useUserPosts";
 import { Suspense } from "react";
 import SkeletonLoader from "./Skeleton";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 const UserPostsClient = ({ userId }: { userId: string }) => {
-  const { data: posts } = useUserPosts(userId);
+  const { data: posts } = useSuspenseQuery(useUserPostsQueryOptions(userId));
 
   return (
     <Suspense fallback={<SkeletonLoader />}>
@@ -14,6 +15,9 @@ const UserPostsClient = ({ userId }: { userId: string }) => {
         {posts?.map((post) => (
           <BlogPostCard key={post.id} post={post} />
         ))}
+      </div>
+      <div className="flex items-center justify-center">
+        {posts.length === 0 && <p>There are no posts yet.</p>}
       </div>
     </Suspense>
   );

@@ -6,6 +6,7 @@ import SortTitle from "@/components/general/SortTitle";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getPosts } from "../features/post/actions";
 import { getQueryClient } from "../utils/getQueryClient";
+import { QUERY_KEYS } from "@/utils/constants";
 
 export default async function Home(props: { searchParams?: UrlParams }) {
   const searchParams = await props.searchParams;
@@ -18,7 +19,7 @@ export default async function Home(props: { searchParams?: UrlParams }) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["posts", filter],
+    queryKey: [QUERY_KEYS.POSTS, filter],
     queryFn: () => getPosts(filter),
   });
 
