@@ -1,12 +1,15 @@
 import { getQueryClient } from "@/utils/getQueryClient";
 import { useMutation } from "@tanstack/react-query";
+import { ExternalToast, toast } from "sonner";
 
 const queryClient = getQueryClient();
 
 export function useQueryMutate<TId, TData, TResponse>(
   createFn?: (data: TData) => Promise<TResponse>,
   updateFn?: (id: TId, data: TData) => Promise<TResponse>,
-  queryKey?: readonly string[]
+  queryKey?: readonly string[],
+  onSuccess?: () => void,
+  successMessage?: string
 ) {
   return useMutation<TResponse, Error, { id: TId; data: TData }>({
     mutationFn: (vars) => {
@@ -21,13 +24,16 @@ export function useQueryMutate<TId, TData, TResponse>(
       throw new Error("Invalid mutation variables");
     },
     onSuccess: () => {
-      if (!queryKey) return;
-      for (const key of queryKey) {
-        queryClient.invalidateQueries({ queryKey: [key] });
+      toast.success(successMessage);
+      if (queryKey?.length) {
+        for (const key of queryKey) {
+          queryClient.invalidateQueries({ queryKey: [key] });
+        }
       }
+      onSuccess?.();
     },
     onError: (error: Error) => {
-      console.error("Error in mutation:", error);
+      toast.error("Something wrong happened");
     },
   });
 }

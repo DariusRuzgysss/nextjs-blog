@@ -12,6 +12,7 @@ import { updatePost, createPost } from "@/features/post/actions";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useQueryMutate } from "@/hooks/api/useMutate";
+import { useRouter } from "next/navigation";
 
 const postSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -31,6 +32,8 @@ const PostForm = ({
 }: {
   post?: Pick<Post, "id" | "title" | "content" | "imageUrl">;
 }) => {
+  const router = useRouter();
+
   const methods = useForm<PostFormData>({
     defaultValues: {
       title: post?.title,
@@ -48,11 +51,18 @@ const PostForm = ({
 
   const updatePostMutation = useQueryMutate<string, PostFormData, void>(
     undefined,
-    updatePost
+    updatePost,
+    [],
+    () => router.push(`/post/${post?.id}`),
+    "Successfully updated"
   );
 
   const createPostMutation = useQueryMutate<null, PostFormData, void>(
-    createPost
+    createPost,
+    undefined,
+    [],
+    () => router.push("/dashboard"),
+    "Successfully created"
   );
 
   const onSubmit = async (data: PostFormData) => {

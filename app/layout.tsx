@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/general/Navbar";
 import { AuthProvider } from "@/providers/AuthProvider";
 import QueryProvider from "@/providers/QueryProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
           <QueryProvider>
             <Navbar />
             <div className="px-2 lg:px-0">{children}</div>
+            <Toaster />
           </QueryProvider>
         </body>
       </html>

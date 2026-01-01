@@ -96,8 +96,6 @@ export const updatePost = async (
   } catch (error) {
     console.error("Error updating post:", error);
     throw error;
-  } finally {
-    redirect(`/post/${id}`);
   }
 };
 
@@ -117,8 +115,6 @@ export const createPost = async (data: PostFormData): Promise<void> => {
   } catch (error) {
     console.error("Error creating post:", error);
     throw error;
-  } finally {
-    redirect("/dashboard");
   }
 };
 
