@@ -1,5 +1,5 @@
 "use client";
-import { BlogPost } from "@/app/types";
+import { Post } from "@/app/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
@@ -11,20 +11,32 @@ import {
   unmarkPostAsFavorite,
 } from "@/features/post/actions";
 import { Icon } from "@iconify/react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { QUERY_KEYS } from "@/utils/constants";
 
-const BlogPostCard = ({ post }: { post: BlogPost }) => {
+const PostCard = ({ post }: { post: Post }) => {
   const { user } = useKindeBrowserClient();
-  const queryClient = useQueryClient();
   const [favoringPostId, setFavoringPostId] = useState<string | null>(null);
   const isAuthor = post.authorId === user?.id;
   const isLogged = !!user;
 
-  const markPostAsSeenMutation = useQueryMutate<string, void>(markPostAsSeen, [
-    QUERY_KEYS.POSTS,
-  ]);
+  const markPostAsSeenMutation = useQueryMutate<string, null, void>(
+    undefined,
+    markPostAsSeen,
+    [QUERY_KEYS.POSTS]
+  );
+
+  const unmarkPostAsFavoriteMutation = useQueryMutate<string, null, void>(
+    undefined,
+    unmarkPostAsFavorite,
+    [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS]
+  );
+
+  const markPostAsFavoriteMutation = useQueryMutate<string, null, void>(
+    undefined,
+    markPostAsFavorite,
+    [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS]
+  );
 
   const isNew = useMemo(
     () => post.postSeens && !post.postSeens.length && !isAuthor,
@@ -39,26 +51,29 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
     if (post.authorId === user?.id) {
       return;
     }
-    markPostAsSeenMutation.mutateAsync(post.id);
+    markPostAsSeenMutation.mutateAsync({ id: post.id, data: null });
   }, [post.authorId, post.id, user?.id, markPostAsSeenMutation]);
 
   const onClickFavorite = useCallback(async () => {
     setFavoringPostId(post.id);
-    try {
-      if (
-        post.favoritePosts?.length &&
-        post.favoritePosts.some((fav) => fav.postId === post.id)
-      ) {
-        await unmarkPostAsFavorite(post.id);
-      } else {
-        await markPostAsFavorite(post.id);
-      }
-      queryClient.invalidateQueries({ queryKey: ["userPosts"] });
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    } finally {
-      setFavoringPostId(null);
+    if (
+      post.favoritePosts?.length &&
+      post.favoritePosts.some((fav) => fav.postId === post.id)
+    ) {
+      await unmarkPostAsFavoriteMutation.mutateAsync({
+        id: post.id,
+        data: null,
+      });
+    } else {
+      await markPostAsFavoriteMutation.mutateAsync({ id: post.id, data: null });
     }
-  }, [post.id, post.favoritePosts, queryClient]);
+    setFavoringPostId(null);
+  }, [
+    post.id,
+    post.favoritePosts,
+    unmarkPostAsFavoriteMutation,
+    markPostAsFavoriteMutation,
+  ]);
 
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition-all hover:shadow-2xl">
@@ -89,7 +104,7 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
         <div className="relative h-80 w-full overflow-hidden">
           <Image
             src={post.imageUrl || "/images/no image.jpg"}
-            alt="blog post"
+            alt="post"
             loading="eager"
             fill
             className="object-cover hover:scale-105 duration-300"
@@ -132,4 +147,4 @@ const BlogPostCard = ({ post }: { post: BlogPost }) => {
   );
 };
 
-export default BlogPostCard;
+export default PostCard;

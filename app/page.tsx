@@ -1,7 +1,7 @@
 import SearchInput from "@/components/general/SearchInput";
 import SortSelect from "@/components/general/SortSelect";
 import { UrlParams } from "./types";
-import BlogPostsClient from "@/components/general/BlogPostsClient";
+import PostsClientClient from "@/components/general/PostsClient";
 import SortTitle from "@/components/general/SortTitle";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getPosts } from "../features/post/actions";
@@ -32,7 +32,7 @@ export default async function Home(props: { searchParams?: UrlParams }) {
           <SortSelect />
         </div>
       </div>
-      <BlogPostsClient filter={filter} />
+      <PostsClientClient filter={filter} />
     </HydrationBoundary>
   );
 }

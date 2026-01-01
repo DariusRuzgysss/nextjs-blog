@@ -54,7 +54,7 @@ const PostRoute = async ({ params }: { params: Params }) => {
                   alt={post.authorName}
                   fill
                   loading="eager"
-                  sizes="48"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover"
                 />
               )}
@@ -73,11 +73,12 @@ const PostRoute = async ({ params }: { params: Params }) => {
       <div className="relative h-80 w-full overflow-hidden rounded-lg">
         <Image
           src={post.imageUrl || "/images/no image.jpg"}
-          alt="blog post"
+          alt="post"
           loading="eager"
           fill
           className="object-contain"
           priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       <Card>

@@ -5,14 +5,15 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import z from "zod";
 import { Button } from "../ui/button";
 import FormField from "./FormField";
-import { BlogPost } from "@/app/types";
+import { Post } from "@/app/types";
 import { ImageField } from "./ImageField";
 import { deleteImage, uploadImage } from "@/features/cloudinary/actions";
 import { updatePost, createPost } from "@/features/post/actions";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
+import { useQueryMutate } from "@/hooks/api/useMutate";
 
-export const blogSchema = z.object({
+const postSchema = z.object({
   title: z.string().min(1, "Title is required"),
   content: z.string().min(1, "Content is required"),
   imageUrl: z.string(),
@@ -23,21 +24,21 @@ export const blogSchema = z.object({
     .optional(),
 });
 
-export type BlogFormData = z.infer<typeof blogSchema>;
+export type PostFormData = z.infer<typeof postSchema>;
 
-const BlogForm = ({
+const PostForm = ({
   post,
 }: {
-  post?: Pick<BlogPost, "id" | "title" | "content" | "imageUrl">;
+  post?: Pick<Post, "id" | "title" | "content" | "imageUrl">;
 }) => {
-  const methods = useForm<BlogFormData>({
+  const methods = useForm<PostFormData>({
     defaultValues: {
       title: post?.title,
       content: post?.content,
       imageUrl: post?.imageUrl || "",
       imageFile: undefined,
     },
-    resolver: zodResolver(blogSchema),
+    resolver: zodResolver(postSchema),
     mode: "onChange",
   });
 
@@ -45,7 +46,16 @@ const BlogForm = ({
   const imageUrl = useWatch({ control: methods.control, name: "imageUrl" });
   const imageFile = useWatch({ control: methods.control, name: "imageFile" });
 
-  const onSubmit = async (data: BlogFormData) => {
+  const updatePostMutation = useQueryMutate<string, PostFormData, void>(
+    undefined,
+    updatePost
+  );
+
+  const createPostMutation = useQueryMutate<null, PostFormData, void>(
+    createPost
+  );
+
+  const onSubmit = async (data: PostFormData) => {
     const dataCopy = { ...data };
     if (dataCopy.imageUrl && dataCopy.imageFile) {
       await deleteImage(dataCopy.imageUrl);
@@ -61,9 +71,9 @@ const BlogForm = ({
       delete dataCopy.imageFile;
     }
     if (post) {
-      await updatePost(dataCopy, post.id);
+      updatePostMutation.mutateAsync({ id: post.id, data: dataCopy });
     } else {
-      await createPost(dataCopy);
+      createPostMutation.mutateAsync({ id: null, data: dataCopy });
     }
   };
 
@@ -130,4 +140,4 @@ const BlogForm = ({
   );
 };
 
-export default BlogForm;
+export default PostForm;

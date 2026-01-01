@@ -3,7 +3,7 @@
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/prisma/seed";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { BlogFormData } from "@/components/rhf/BlogForm";
+import { PostFormData } from "@/components/rhf/PostForm";
 import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
 import { FilterTypes } from "./types";
 import { notFound, redirect } from "next/navigation";
@@ -82,7 +82,10 @@ export const getPostById = async (id: string) => {
   }
 };
 
-export const updatePost = async (post: BlogFormData, id: string) => {
+export const updatePost = async (
+  id: string,
+  post: PostFormData
+): Promise<void> => {
   try {
     await prisma.blogPost.update({
       where: {
@@ -90,14 +93,15 @@ export const updatePost = async (post: BlogFormData, id: string) => {
       },
       data: { ...post, updatedAt: new Date() },
     });
-    redirect(`/post/${id}`);
   } catch (error) {
     console.error("Error updating post:", error);
     throw error;
+  } finally {
+    redirect(`/post/${id}`);
   }
 };
 
-export const createPost = async (data: BlogFormData) => {
+export const createPost = async (data: PostFormData): Promise<void> => {
   try {
     const user = await requireUser();
     await prisma.blogPost.create({
@@ -110,11 +114,11 @@ export const createPost = async (data: BlogFormData) => {
         authorImage: user?.picture ?? "",
       },
     });
-
-    redirect("/dashboard");
   } catch (error) {
     console.error("Error creating post:", error);
     throw error;
+  } finally {
+    redirect("/dashboard");
   }
 };
 
@@ -139,7 +143,7 @@ export const getPostsByUserId = async (userId: string) => {
   }
 };
 
-export const deletePost = async (id: string, userId: string) => {
+export const deletePost = async (id: string, userId: string): Promise<void> => {
   try {
     const seenPosts = await prisma.postSeen.findMany({
       where: { postId: id },
@@ -168,11 +172,11 @@ export const deletePost = async (id: string, userId: string) => {
     await prisma.blogPost.delete({
       where: { id, authorId: userId },
     });
-
-    redirect("/dashboard");
   } catch (error) {
     console.error("Error deleting post:", error);
     throw error;
+  } finally {
+    redirect("/dashboard");
   }
 };
 

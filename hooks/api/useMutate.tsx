@@ -1,16 +1,30 @@
 import { getQueryClient } from "@/utils/getQueryClient";
 import { useMutation } from "@tanstack/react-query";
 
-export function useQueryMutate<TData, TResponse>(
-  mutationFn: (data: TData) => Promise<TResponse>,
-  queryKey: string[]
-) {
-  const queryClient = getQueryClient();
+const queryClient = getQueryClient();
 
-  return useMutation<TResponse, Error, TData>({
-    mutationFn,
+export function useQueryMutate<TId, TData, TResponse>(
+  createFn?: (data: TData) => Promise<TResponse>,
+  updateFn?: (id: TId, data: TData) => Promise<TResponse>,
+  queryKey?: readonly string[]
+) {
+  return useMutation<TResponse, Error, { id: TId; data: TData }>({
+    mutationFn: (vars) => {
+      if (updateFn && "id" in vars) {
+        return updateFn(vars.id, vars.data);
+      }
+
+      if (createFn && "data" in vars) {
+        return createFn(vars.data);
+      }
+
+      throw new Error("Invalid mutation variables");
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
+      if (!queryKey) return;
+      for (const key of queryKey) {
+        queryClient.invalidateQueries({ queryKey: [key] });
+      }
     },
     onError: (error: Error) => {
       console.error("Error in mutation:", error);

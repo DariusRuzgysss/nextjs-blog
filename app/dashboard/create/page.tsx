@@ -1,4 +1,4 @@
-import BlogForm from "@/components/rhf/BlogForm";
+import PostForm from "@/components/rhf/PostForm";
 import {
   Card,
   CardContent,
@@ -18,7 +18,7 @@ const createPostRoute = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <BlogForm />
+          <PostForm />
         </CardContent>
       </Card>
     </div>

@@ -25,7 +25,7 @@ export type UrlParams = Promise<{
   limit?: number;
 }>;
 
-export type BlogPost = {
+export type Post = {
   title: string;
   content: string;
   id: string;

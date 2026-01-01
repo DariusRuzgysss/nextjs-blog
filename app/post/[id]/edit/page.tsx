@@ -1,6 +1,6 @@
 import { getPostById } from "@/features/post/actions";
 import { Params } from "@/app/types";
-import BlogForm from "@/components/rhf/BlogForm";
+import PostForm from "@/components/rhf/PostForm";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 
-const EditBlogPostRoute = async ({ params }: { params: Params }) => {
+const EditPostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
   const post = await getPostById(id);
   return (
@@ -28,11 +28,11 @@ const EditBlogPostRoute = async ({ params }: { params: Params }) => {
           <CardDescription>Fill with a new information</CardDescription>
         </CardHeader>
         <CardContent>
-          <BlogForm post={post} />
+          <PostForm post={post} />
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export default EditBlogPostRoute;
+export default EditPostRoute;
