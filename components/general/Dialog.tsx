@@ -15,7 +15,7 @@ import { useTransition } from "react";
 type Props = {
   title: string;
   description: string;
-  onConfirm: () => Promise<void>;
+  onConfirm: () => void;
 };
 
 export function CustomDialog({ title, description, onConfirm }: Props) {

@@ -100,21 +100,10 @@ const PostForm = ({
         className="flex flex-col gap-4"
       >
         <div className="flex flex-col gap-2">
-          <FormField
-            inputType="input"
-            type="text"
-            name="title"
-            label="Title"
-            placeholder="Title"
-          />
+          <FormField inputType="input" type="text" name="title" label="Title" />
         </div>
         <div className="flex flex-col gap-2">
-          <FormField
-            inputType="textarea"
-            name="content"
-            label="Content"
-            placeholder="Content"
-          />
+          <FormField inputType="textarea" name="content" label="Description" />
         </div>
         <div className="flex flex-col gap-2 ">
           <div className="flex flex-row  justify-between">

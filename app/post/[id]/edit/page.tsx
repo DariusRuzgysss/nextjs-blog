@@ -15,14 +15,14 @@ const EditPostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
   const post = await getPostById(id);
   return (
-    <div className="max-w-3xl mx-auto p-2v">
+    <div className="max-w-3xl mx-auto">
       <Link
         className={buttonVariants({ variant: "outline" })}
         href={`/post/${post.id}`}
       >
         Back to post
       </Link>
-      <Card className="lg:max-w-lg max-w-full mx-auto mt-3">
+      <Card className="mt-3">
         <CardHeader>
           <CardTitle>Edit Post</CardTitle>
           <CardDescription>Fill with a new information</CardDescription>

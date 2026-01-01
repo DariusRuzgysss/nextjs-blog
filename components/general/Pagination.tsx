@@ -41,7 +41,7 @@ const PaginationComponent = ({ totalPages }: Props) => {
         variant="outline"
         size="icon"
         disabled={currentPage <= 1}
-        className="cursor-pointer"
+        className="cursor-pointer active:border-amber-500"
         onClick={() => setUrlParams((currentPage - 1).toString(), "page")}
       >
         <Icon icon="material-symbols:chevron-left" fontSize={24} />
@@ -56,7 +56,7 @@ const PaginationComponent = ({ totalPages }: Props) => {
         size="icon"
         disabled={currentPage >= totalPages}
         onClick={() => setUrlParams((currentPage + 1).toString(), "page")}
-        className="cursor-pointer"
+        className="cursor-pointer active:border-amber-500"
       >
         <Icon icon="material-symbols:chevron-right" fontSize={24} />
       </Button>

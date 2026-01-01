@@ -29,13 +29,17 @@ const PostCard = ({ post }: { post: Post }) => {
   const unmarkPostAsFavoriteMutation = useQueryMutate<string, null, void>(
     undefined,
     unmarkPostAsFavorite,
-    [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS]
+    [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS],
+    undefined,
+    "Removed from favorites"
   );
 
   const markPostAsFavoriteMutation = useQueryMutate<string, null, void>(
     undefined,
     markPostAsFavorite,
-    [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS]
+    [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS],
+    undefined,
+    "Saved to your favorites"
   );
 
   const isNew = useMemo(

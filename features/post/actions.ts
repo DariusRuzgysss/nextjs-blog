@@ -6,7 +6,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PostFormData } from "@/components/rhf/PostForm";
 import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
 import { FilterTypes } from "./types";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 export const getPosts = async ({
   sortBy,
@@ -171,8 +171,6 @@ export const deletePost = async (id: string, userId: string): Promise<void> => {
   } catch (error) {
     console.error("Error deleting post:", error);
     throw error;
-  } finally {
-    redirect("/dashboard");
   }
 };
 

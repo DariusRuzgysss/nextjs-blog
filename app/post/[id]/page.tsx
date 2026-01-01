@@ -4,9 +4,9 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { requireUser } from "@/lib/auth";
 import { Params } from "@/app/types";
-import { CustomDialog } from "@/components/general/Dialog";
 import { Icon } from "@iconify/react";
-import { deletePost, getPostById } from "@/features/post/actions";
+import { getPostById } from "@/features/post/actions";
+import DeletePostClient from "@/components/general/DeletePostClient";
 
 const PostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
@@ -34,14 +34,7 @@ const PostRoute = async ({ params }: { params: Params }) => {
                   className="cursor-pointer hover:opacity-80"
                 />
               </Link>
-              <CustomDialog
-                title={`Are you sure want to delete "${post.title}" ?`}
-                description="Couldn't be recovered after deletion"
-                onConfirm={async () => {
-                  "use server";
-                  await deletePost(id, user.id);
-                }}
-              />
+              <DeletePostClient post={post} />
             </div>
           )}
         </div>
