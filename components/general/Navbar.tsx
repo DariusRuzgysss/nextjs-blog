@@ -9,6 +9,7 @@ import {
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import ProgressBar from "./ProgressBar";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -19,44 +20,49 @@ const Navbar = () => {
   const { user, isLoading } = useKindeBrowserClient();
 
   return (
-    <nav className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2 px-4 py-2 bg-amber-500 mb-4">
-      <div className="flex justify-between">
-        <div className="flex items-center gap-6">
-          <Link href="/">
-            <h1 className="text-3xl text-amber-50">
-              Blog<span className="text-amber-700 font-bold">Place</span>
-            </h1>
-          </Link>
-          <div className="hidden sm:flex gap-6 items-center">
-            <MenuBar />
+    <div className="mb-4">
+      <nav className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2 px-4 py-2 bg-amber-500">
+        <div className="flex justify-between">
+          <div className="flex items-center gap-6">
+            <Link href="/">
+              <h1 className="text-3xl text-amber-50">
+                Blog<span className="text-amber-700 font-bold">Place</span>
+              </h1>
+            </Link>
+            <div className="hidden sm:flex gap-6 items-center">
+              <MenuBar />
+            </div>
+          </div>
+          <div className="flex gap-4 items-center">
+            {user ? (
+              <>
+                <p>{user.given_name}</p>
+                <LogoutLink
+                  className={buttonVariants({ variant: "secondary" })}
+                >
+                  Logout
+                </LogoutLink>
+              </>
+            ) : isLoading ? null : (
+              <>
+                <LoginLink className={buttonVariants()}>Login</LoginLink>
+
+                <RegisterLink
+                  className={buttonVariants({ variant: "secondary" })}
+                >
+                  Sign up
+                </RegisterLink>
+              </>
+            )}
           </div>
         </div>
-        <div className="flex gap-4 items-center">
-          {user ? (
-            <>
-              <p>{user.given_name}</p>
-              <LogoutLink className={buttonVariants({ variant: "secondary" })}>
-                Logout
-              </LogoutLink>
-            </>
-          ) : isLoading ? null : (
-            <>
-              <LoginLink className={buttonVariants()}>Login</LoginLink>
 
-              <RegisterLink
-                className={buttonVariants({ variant: "secondary" })}
-              >
-                Sign up
-              </RegisterLink>
-            </>
-          )}
+        <div className="flex sm:hidden gap-6 items-center">
+          <MenuBar />
         </div>
-      </div>
-
-      <div className="flex sm:hidden gap-6 items-center">
-        <MenuBar />
-      </div>
-    </nav>
+      </nav>
+      <ProgressBar />
+    </div>
   );
 };
 

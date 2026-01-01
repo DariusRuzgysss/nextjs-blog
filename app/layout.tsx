@@ -5,6 +5,7 @@ import Navbar from "@/components/general/Navbar";
 import { AuthProvider } from "@/providers/AuthProvider";
 import QueryProvider from "@/providers/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { ProgressProvider } from "@/providers/ProgressProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,9 +35,11 @@ export default function RootLayout({
           max-w-7xl mx-auto `}
         >
           <QueryProvider>
-            <Navbar />
-            <div className="px-2 lg:px-0">{children}</div>
-            <Toaster />
+            <ProgressProvider>
+              <Navbar />
+              <div className="px-2 lg:px-0">{children}</div>
+              <Toaster />
+            </ProgressProvider>
           </QueryProvider>
         </body>
       </html>

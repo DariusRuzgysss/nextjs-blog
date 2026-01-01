@@ -10,9 +10,9 @@ import { ImageField } from "./ImageField";
 import { deleteImage, uploadImage } from "@/features/cloudinary/actions";
 import { updatePost, createPost } from "@/features/post/actions";
 import Image from "next/image";
-import { Icon } from "@iconify/react";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { useRouter } from "next/navigation";
+import { useProgress } from "@/providers/ProgressProvider";
 
 const postSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -33,6 +33,7 @@ const PostForm = ({
   post?: Pick<Post, "id" | "title" | "content" | "imageUrl">;
 }) => {
   const router = useRouter();
+  const progress = useProgress();
 
   const methods = useForm<PostFormData>({
     defaultValues: {
@@ -66,13 +67,16 @@ const PostForm = ({
   );
 
   const onSubmit = async (data: PostFormData) => {
+    progress.start();
     const dataCopy = { ...data };
     if (dataCopy.imageUrl && dataCopy.imageFile) {
       await deleteImage(dataCopy.imageUrl);
     }
+    progress.set(40);
     if (!dataCopy.imageUrl && !dataCopy.imageFile && post?.imageUrl) {
       await deleteImage(post.imageUrl);
     }
+    progress.set(60);
     if (dataCopy.imageFile) {
       const res = await uploadImage(dataCopy.imageFile);
       if (res.success && res.result?.secure_url) {
@@ -80,17 +84,13 @@ const PostForm = ({
       }
       delete dataCopy.imageFile;
     }
+    progress.set(80);
     if (post) {
-      updatePostMutation.mutateAsync({ id: post.id, data: dataCopy });
+      await updatePostMutation.mutateAsync({ id: post.id, data: dataCopy });
     } else {
-      createPostMutation.mutateAsync({ id: null, data: dataCopy });
+      await createPostMutation.mutateAsync({ id: null, data: dataCopy });
     }
-  };
-
-  const clearImage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    methods.setValue("imageFile", undefined);
-    methods.setValue("imageUrl", "");
+    progress.finish();
   };
 
   return (
@@ -105,26 +105,15 @@ const PostForm = ({
         <div className="flex flex-col gap-2">
           <FormField inputType="textarea" name="content" label="Description" />
         </div>
-        <div className="flex flex-col gap-2 ">
-          <div className="flex flex-row  justify-between">
-            <ImageField name="imageFile" label="Choose image" />
-            {imageUrl || imageFile ? (
-              <Button type="button" variant="outline" onClick={clearImage}>
-                <Icon
-                  icon="mdi:trash"
-                  fontSize={24}
-                  className="cursor-pointer text-red-600"
-                />
-              </Button>
-            ) : null}
-          </div>
+        <div className="flex flex-col gap-2 items-center">
+          <ImageField name="imageFile" label="Choose image" />
 
           {imageUrl && !imageFile && (
             <Image
               src={imageUrl}
               alt="Preview"
               width={450}
-              height={200}
+              height={300}
               className="object-contain"
             />
           )}
