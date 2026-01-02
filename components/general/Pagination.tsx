@@ -15,7 +15,7 @@ type Props = {
   totalPages: number;
 };
 
-const pagesSizeOptions = [5, 10, 50, 100];
+const pagesSizeOptions = [6, 12, 60, 120];
 
 const PaginationComponent = ({ totalPages }: Props) => {
   const router = useRouter();
@@ -63,7 +63,7 @@ const PaginationComponent = ({ totalPages }: Props) => {
 
       <Select
         onValueChange={(val) => setUrlParams(val, "limit", true)}
-        defaultValue="5"
+        defaultValue="6"
       >
         <SelectTrigger className="w-20  border-gray-400">
           <SelectValue placeholder="Posts per page" />

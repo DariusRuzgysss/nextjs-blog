@@ -55,8 +55,13 @@ const PostCard = ({ post }: { post: Post }) => {
     if (post.authorId === user?.id) {
       return;
     }
-    markPostAsSeenMutation.mutateAsync({ id: post.id, data: null });
-  }, [post.authorId, post.id, user?.id, markPostAsSeenMutation]);
+    if (
+      user?.id &&
+      !post.postSeens?.find((p) => p.postId === post.id && p.userId === user.id)
+    ) {
+      markPostAsSeenMutation.mutateAsync({ id: post.id, data: null });
+    }
+  }, [post.authorId, post.postSeens, post.id, user, markPostAsSeenMutation]);
 
   const onClickFavorite = useCallback(async () => {
     setFavoringPostId(post.id);

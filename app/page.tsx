@@ -13,7 +13,7 @@ export default async function Home(props: { searchParams?: UrlParams }) {
   const query = searchParams?.query || "";
   const sortBy = searchParams?.sort || "desc";
   const page = Number(searchParams?.page) || 1;
-  const pageSize = Number(searchParams?.limit) || 5;
+  const pageSize = Number(searchParams?.limit) || 6;
 
   const filter = { searchQuery: query, sortBy, page, pageSize };
   const queryClient = getQueryClient();

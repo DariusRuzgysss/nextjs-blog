@@ -37,7 +37,7 @@ export default function RootLayout({
           <QueryProvider>
             <ProgressProvider>
               <Navbar />
-              <div className="px-2 lg:px-0">{children}</div>
+              <div className="px-2">{children}</div>
               <Toaster />
             </ProgressProvider>
           </QueryProvider>

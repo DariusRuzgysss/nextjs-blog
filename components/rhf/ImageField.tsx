@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { Icon } from "@iconify/react";
 import { Button } from "../ui/button";
+import { resizeImageWithCanvas } from "@/utils/helper";
 
 interface Props {
   name: string;
@@ -22,6 +23,17 @@ export const ImageField = ({ name, label }: Props) => {
   const imageFile = watch("imageFile");
   const imageUrl = watch("imageUrl");
 
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      return;
+    }
+    const resizedFile = await resizeImageWithCanvas(file);
+    setValue("imageFile", resizedFile, {
+      shouldValidate: true,
+    });
+  };
+
   const clearImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setValue("imageFile", undefined);
@@ -36,17 +48,7 @@ export const ImageField = ({ name, label }: Props) => {
         <div className="w-full flex flex-col gap-2">
           {label && <label>{label}</label>}
           <div className="flex flex-row justify-between">
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                if (!f) {
-                  return;
-                }
-                setValue("imageFile", f, { shouldValidate: true });
-              }}
-            />
+            <Input type="file" accept="image/*" onChange={handleFileChange} />
             {imageUrl || imageFile ? (
               <Button type="button" variant="outline" onClick={clearImage}>
                 <Icon
