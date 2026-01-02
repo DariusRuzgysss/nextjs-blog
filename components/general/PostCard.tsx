@@ -85,7 +85,7 @@ const PostCard = ({ post }: { post: Post }) => {
   ]);
 
   return (
-    <div className="group relative overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition-all hover:shadow-2xl">
+    <div className="group relative overflow-hidden rounded-lg border border-(--dark)/16 bg-(--light) shadow-md transition-all hover:shadow-2xl">
       {isNew && (
         <Badge className="absolute z-10 left-1 top-1" variant="destructive">
           New
@@ -122,10 +122,18 @@ const PostCard = ({ post }: { post: Post }) => {
           />
         </div>
         <div className="p-4">
-          <h3 className="mb-2 text-xl font-bold text-gray-900">{post.title}</h3>
-          <p className="text-gray-600 mb-4 text-sm line-clamp-2 min-h-10">
+          <h3 className="mb-2 text-[24px] font-bold text-gray-900">
+            {post.title}
+          </h3>
+          <p className="text-(--dark) mb-4 text-[16px] font-light line-clamp-2 min-h-10">
             {post.content}
           </p>
+          <div className="flex items-center justify-between mb-2">
+            <p>reserved time</p>
+            <div className="rounded-3xl border border-(--dark) px-6 py-3 font-medium uppercase text-[14px] text-(--dark)">
+              View Recipe
+            </div>
+          </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="relative size-8 rounded-full overflow-hidden">

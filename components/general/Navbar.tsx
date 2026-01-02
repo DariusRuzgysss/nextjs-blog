@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import {
   RegisterLink,
@@ -7,58 +6,47 @@ import {
   LogoutLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
-import ProgressBar from "./ProgressBar";
 
-const navItems = [
-  { name: "Home", href: "/" },
-  { name: "Dashboard", href: "/dashboard" },
-];
+import ProgressBar from "./ProgressBar";
+import { Hamburger } from "./Hamburger";
+import Logo from "./Logo";
+import MenuBar from "./MenuBarClient";
 
 const Navbar = () => {
   const { user, isLoading } = useKindeBrowserClient();
 
   return (
     <div className="mb-4">
-      <nav className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2 px-4 py-2 bg-amber-500">
+      <nav className="border border-(--dark)/24 rounded-4xl px-4 lg:px-6 py-[18px]">
         <div className="flex justify-between">
-          <div className="flex items-center gap-6">
-            <Link href="/">
-              <h1 className="text-3xl text-amber-50">
-                Blog<span className="text-amber-700 font-bold">Place</span>
-              </h1>
-            </Link>
-            <div className="hidden sm:flex gap-6 items-center">
-              <MenuBar />
-            </div>
-          </div>
-          <div className="flex gap-4 items-center">
+          <Logo />
+          <MenuBar />
+          <div className="flex flex-row gap-4 items-center">
             {user ? (
               <>
                 <p>{user.given_name}</p>
-                <LogoutLink
-                  className={buttonVariants({ variant: "secondary" })}
-                >
+                <LogoutLink className={buttonVariants({ variant: "primary" })}>
                   Logout
                 </LogoutLink>
               </>
             ) : isLoading ? null : (
-              <>
-                <LoginLink className={buttonVariants()}>Login</LoginLink>
+              <div className="flex flex-row gap-4 items-center">
+                <LoginLink className={buttonVariants({ variant: "secondary" })}>
+                  Login
+                </LoginLink>
 
                 <RegisterLink
-                  className={buttonVariants({ variant: "secondary" })}
+                  className={buttonVariants({ variant: "primary" })}
                 >
                   Sign up
                 </RegisterLink>
-              </>
+              </div>
             )}
           </div>
-        </div>
 
-        <div className="flex sm:hidden gap-6 items-center">
-          <MenuBar />
+          <div className="flex lg:hidden">
+            <Hamburger />
+          </div>
         </div>
       </nav>
       <ProgressBar />
@@ -67,28 +55,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-const MenuBar = () => {
-  const pathname = usePathname();
-  return (
-    <>
-      {navItems.map((item) => {
-        const isActive = pathname === item.href;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={clsx(
-              "text-sm lg:text-[18px] font-medium transition-colors px-2 py-1 rounded-sm",
-              isActive
-                ? "text-blue-50 bg-amber-700 border border-amber-50"
-                : "text-black hover:text-blue-50"
-            )}
-          >
-            {item.name}
-          </Link>
-        );
-      })}
-    </>
-  );
-};

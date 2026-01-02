@@ -7,6 +7,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getPosts } from "../features/post/actions";
 import { getQueryClient } from "../utils/getQueryClient";
 import { QUERY_KEYS } from "@/utils/constants";
+import UnleashCulinary from "@/components/general/UnleashCulinary";
 
 export default async function Home(props: { searchParams?: UrlParams }) {
   const searchParams = await props.searchParams;
@@ -25,7 +26,8 @@ export default async function Home(props: { searchParams?: UrlParams }) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr] items-center gap-4">
+      <UnleashCulinary />
+      <div className="grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr] items-center gap-4 mt-4">
         <SortTitle sortBy={sortBy} />
         <div className="grid grid-cols-[1fr_auto] gap-4">
           <SearchInput placeholder="Search" />

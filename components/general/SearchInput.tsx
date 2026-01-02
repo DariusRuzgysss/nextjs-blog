@@ -8,9 +8,15 @@ type Props = {
   label?: string;
   placeholder?: string;
   debounce?: number;
+  className?: string;
 };
 
-const SearchInput = ({ label, placeholder, debounce = 400 }: Props) => {
+const SearchInput = ({
+  label,
+  placeholder,
+  className,
+  debounce = 400,
+}: Props) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -35,7 +41,7 @@ const SearchInput = ({ label, placeholder, debounce = 400 }: Props) => {
       <Input
         type="search"
         placeholder={placeholder}
-        className="border-gray-400"
+        className={`border-gray-400 ${className}`}
         onChange={handleSearch}
         defaultValue={searchParams.get("query")?.toString()}
       />
