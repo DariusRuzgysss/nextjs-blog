@@ -6,6 +6,8 @@ import { Input } from "../ui/input";
 import { Icon } from "@iconify/react";
 import { Button } from "../ui/button";
 import { resizeImageWithCanvas } from "@/utils/helper";
+import { Activity, useTransition } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 interface Props {
   name: string;
@@ -19,6 +21,7 @@ export const ImageField = ({ name, label }: Props) => {
     watch,
     formState: { errors },
   } = useFormContext();
+  const [isPending, startTransition] = useTransition();
 
   const imageFile = watch("imageFile");
   const imageUrl = watch("imageUrl");
@@ -28,9 +31,11 @@ export const ImageField = ({ name, label }: Props) => {
     if (!file) {
       return;
     }
-    const resizedFile = await resizeImageWithCanvas(file);
-    setValue("imageFile", resizedFile, {
-      shouldValidate: true,
+    startTransition(async () => {
+      const resizedFile = await resizeImageWithCanvas(file);
+      setValue("imageFile", resizedFile, {
+        shouldValidate: true,
+      });
     });
   };
 
@@ -60,8 +65,8 @@ export const ImageField = ({ name, label }: Props) => {
             ) : null}
           </div>
 
-          {imageFile && (
-            <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-center items-center">
+            {imageFile && (
               <Image
                 src={URL.createObjectURL(imageFile)}
                 alt="Preview"
@@ -69,8 +74,11 @@ export const ImageField = ({ name, label }: Props) => {
                 height={300}
                 className="object-contain"
               />
-            </div>
-          )}
+            )}
+            <Activity mode={isPending ? "visible" : "hidden"}>
+              <Spinner className="size-6" />
+            </Activity>
+          </div>
           {errors && errors[name] && (
             <span className="text-red-700">
               {errors[name]?.message as string}
