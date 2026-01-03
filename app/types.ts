@@ -18,11 +18,31 @@ export enum SortOptions {
   FAVORITE = "favorites",
 }
 
+export enum RecipeCategory {
+  Vegan = "VEGAN",
+  Breakfast = "BREAKFAST",
+  Lunch = "LUNCH",
+  Dinner = "DINNER",
+  Dessert = "DESSERT",
+  QuickBite = "QUICK_BITE",
+}
+
+export type CategoryFilter = RecipeCategory | "all";
+
+export type FilterTypes = {
+  searchQuery: string;
+  sortBy: SortBy;
+  page: number;
+  pageSize: number;
+  category: CategoryFilter;
+};
+
 export type UrlParams = Promise<{
   query?: string;
   sort?: SortBy;
   page?: string;
   limit?: number;
+  category?: CategoryFilter;
 }>;
 
 export type Post = {

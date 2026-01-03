@@ -17,12 +17,14 @@ import { navItems } from "@/utils/constants";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import {
+  LoginLink,
   LogoutLink,
+  RegisterLink,
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
 
 export function Hamburger() {
-  const { user } = useKindeBrowserClient();
+  const { user, isLoading } = useKindeBrowserClient();
   const pathname = usePathname();
   return (
     <Sheet>
@@ -32,18 +34,12 @@ export function Hamburger() {
         </Button>
       </SheetTrigger>
       <SheetContent className="bg-(--dark) [&>button]:hidden">
-        <SheetHeader>
+        <SheetHeader className="flex flex-row justify-between">
           <SheetTitle>
             <Logo titleColor="text-(--background)" />
           </SheetTitle>
-          <SheetClose>
-            <Button
-              variant="primary"
-              size="icon"
-              className="absolute right-4 top-4"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+          <SheetClose className="bg-(--primary-color-3) p-2 rounded-xl">
+            <X className="h-4 w-4" />
           </SheetClose>
         </SheetHeader>
         <div className="grid flex-1 auto-rows-min gap-8 px-4">
@@ -66,10 +62,24 @@ export function Hamburger() {
           })}
         </div>
         <SheetFooter>
-          <p className="text-background text-center">{user?.given_name}</p>
-          <LogoutLink className={buttonVariants({ variant: "primary" })}>
-            Logout
-          </LogoutLink>
+          {user ? (
+            <>
+              <p className="text-background text-center">{user.given_name}</p>
+              <LogoutLink className={buttonVariants({ variant: "primary" })}>
+                Logout
+              </LogoutLink>
+            </>
+          ) : isLoading ? null : (
+            <>
+              <LoginLink className={buttonVariants({ variant: "default" })}>
+                Login
+              </LoginLink>
+
+              <RegisterLink className={buttonVariants({ variant: "primary" })}>
+                Sign up
+              </RegisterLink>
+            </>
+          )}
         </SheetFooter>
       </SheetContent>
     </Sheet>

@@ -1,5 +1,6 @@
+import { FilterTypes } from "@/app/types";
 import { getPosts } from "@/features/post/actions";
-import { FilterTypes } from "@/features/post/types";
+
 import { QUERY_KEYS } from "@/utils/constants";
 import { queryOptions } from "@tanstack/react-query";
 

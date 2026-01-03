@@ -1,12 +1,12 @@
 "use client";
 
-import { FilterTypes } from "@/features/post/types";
 import PostCard from "@/components/general/PostCard";
 import PaginationComponent from "@/components/general/Pagination";
 import { Suspense } from "react";
 import { usePostsQueryOptions } from "@/hooks/api/usePosts";
 import SkeletonLoader from "./Skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { FilterTypes } from "@/app/types";
 
 const PostsClient = ({ filter }: { filter: FilterTypes }) => {
   const { data } = useSuspenseQuery(usePostsQueryOptions(filter));

@@ -5,14 +5,15 @@ import { prisma } from "@/prisma/seed";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PostFormData } from "@/components/rhf/PostForm";
 import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
-import { FilterTypes } from "./types";
 import { notFound } from "next/navigation";
+import { FilterTypes } from "@/app/types";
 
 export const getPosts = async ({
   sortBy,
   page,
   pageSize,
   searchQuery,
+  category,
 }: FilterTypes) => {
   try {
     const { getUser } = getKindeServerSession();
@@ -30,6 +31,7 @@ export const getPosts = async ({
         return {
           favoritePosts: { some: user ? { userId: user.id } : undefined },
         };
+      } else if (category !== "all") {
       } else {
         return undefined;
       }

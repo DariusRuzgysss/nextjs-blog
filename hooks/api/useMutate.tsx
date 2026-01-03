@@ -24,7 +24,7 @@ export function useQueryMutate<TId, TData, TResponse>(
       throw new Error("Invalid mutation variables");
     },
     onSuccess: () => {
-      toast.success(successMessage);
+      successMessage && toast.success(successMessage);
       if (queryKey?.length) {
         for (const key of queryKey) {
           queryClient.invalidateQueries({ queryKey: [key] });

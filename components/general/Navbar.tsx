@@ -21,7 +21,7 @@ const Navbar = () => {
         <div className="flex justify-between">
           <Logo />
           <MenuBar />
-          <div className="flex flex-row gap-4 items-center">
+          <div className="hidden lg:flex flex-row gap-4 items-center">
             {user ? (
               <>
                 <p>{user.given_name}</p>
