@@ -13,15 +13,6 @@ datasource db {
   provider = "postgresql"
 }
 
-enum RecipeCategory {
-  VEGAN
-  BREAKFAST
-  LUNCH
-  DINNER
-  DESSERT
-  QUICK_BITE
-}
-
 model BlogPost {
   id            String         @id @default(uuid())
   title         String
@@ -30,7 +21,8 @@ model BlogPost {
   authorId      String
   authorName    String
   authorImage   String
-  category      RecipeCategory
+  category      String
+  ingredients   String[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   postSeens     PostSeen[]

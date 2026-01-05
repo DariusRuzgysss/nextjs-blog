@@ -11,7 +11,7 @@ import { FilterTypes } from "@/app/types";
 const PostsClient = ({ filter }: { filter: FilterTypes }) => {
   const { data } = useSuspenseQuery(usePostsQueryOptions(filter));
   const { items, totalPages } = data;
-
+  console.log(items);
   return (
     <Suspense fallback={<SkeletonLoader />}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4">

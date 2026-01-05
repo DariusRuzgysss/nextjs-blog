@@ -18,10 +18,13 @@ const postSchema = z.object({
   title: z.string().min(1, "Title is required"),
   content: z.string().min(1, "Content is required"),
   imageUrl: z.string(),
+  category: z.string(),
+  ingredients: z
+    .array(z.string().min(1))
+    .min(1, "At least one ingredient is required"),
   imageFile: z
     .instanceof(File)
     .refine((f) => f.size > 0, "Image file is required")
-    .refine((f) => f.size <= 5_000_000, "Max file size is 5MB")
     .optional(),
 });
 
@@ -30,7 +33,10 @@ export type PostFormData = z.infer<typeof postSchema>;
 const PostForm = ({
   post,
 }: {
-  post?: Pick<Post, "id" | "title" | "content" | "imageUrl">;
+  post?: Pick<
+    Post,
+    "id" | "title" | "content" | "imageUrl" | "category" | "ingredients"
+  >;
 }) => {
   const router = useRouter();
   const progress = useProgress();
@@ -39,6 +45,8 @@ const PostForm = ({
     defaultValues: {
       title: post?.title,
       content: post?.content,
+      category: post?.category,
+      ingredients: post?.ingredients,
       imageUrl: post?.imageUrl || "",
       imageFile: undefined,
     },
@@ -100,10 +108,19 @@ const PostForm = ({
         className="flex flex-col gap-4"
       >
         <div className="flex flex-col gap-2">
-          <FormField inputType="input" type="text" name="title" label="Title" />
+          <FormField
+            inputType="input"
+            type="text"
+            name="title"
+            label="Recipe Title *"
+          />
         </div>
         <div className="flex flex-col gap-2">
-          <FormField inputType="textarea" name="content" label="Description" />
+          <FormField
+            inputType="textarea"
+            name="content"
+            label="Instructions *"
+          />
         </div>
         <div className="flex flex-col gap-2 items-center">
           <ImageField name="imageFile" label="Choose image" />

@@ -52,6 +52,7 @@ export type Post = {
   imageUrl?: string;
   authorId: string;
   category: string;
+  ingredients: string[];
   postSeens?: PostSeen[];
   favoritePosts?: FavoritePost[];
   comments?: Comment[];
