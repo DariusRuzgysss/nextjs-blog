@@ -51,7 +51,7 @@ export type Post = {
   id: string;
   imageUrl?: string;
   authorId: string;
-  category: RecipeCategory;
+  category: string;
   postSeens?: PostSeen[];
   favoritePosts?: FavoritePost[];
   comments?: Comment[];
@@ -81,7 +81,7 @@ type Comment = {
   postId: string;
   authorId: string;
   authorName: string;
-  authorImage: string;
+  authorImage: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
