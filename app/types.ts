@@ -52,9 +52,9 @@ export type Post = {
   imageUrl?: string;
   authorId: string;
   category: RecipeCategory;
-  postSeens?: Array<PostSeen>;
-  favoritePosts?: Array<FavoritePost>;
-  comments: Array<Comment>;
+  postSeens?: PostSeen[];
+  favoritePosts?: FavoritePost[];
+  comments?: Comment[];
   authorName: string;
   authorImage: string;
   createdAt: Date;

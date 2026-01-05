@@ -44,6 +44,7 @@ export const getPosts = async ({
         include: {
           postSeens: isAuthor,
           favoritePosts: isAuthor,
+          comments: true,
         },
         orderBy: {
           createdAt: sortBy === "favorites" ? "desc" : sortBy,

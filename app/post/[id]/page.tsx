@@ -34,7 +34,7 @@ const PostRoute = async ({ params }: { params: Params }) => {
                   className="cursor-pointer hover:opacity-80"
                 />
               </Link>
-              <DeletePostClient post={post} />
+              {/* <DeletePostClient post={post} /> */}
             </div>
           )}
         </div>
