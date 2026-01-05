@@ -112,6 +112,7 @@ export const createPost = async (data: PostFormData): Promise<void> => {
         authorId: user?.id,
         authorName: user?.given_name ?? "",
         authorImage: user?.picture ?? "",
+        category: "BREAKFAST",
       },
     });
   } catch (error) {

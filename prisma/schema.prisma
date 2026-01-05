@@ -13,6 +13,15 @@ datasource db {
   provider = "postgresql"
 }
 
+enum RecipeCategory {
+  VEGAN
+  BREAKFAST
+  LUNCH
+  DINNER
+  DESSERT
+  QUICK_BITE
+}
+
 model BlogPost {
   id            String         @id @default(uuid())
   title         String
@@ -21,10 +30,12 @@ model BlogPost {
   authorId      String
   authorName    String
   authorImage   String
+  category      RecipeCategory
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   postSeens     PostSeen[]
   favoritePosts FavoritePost[]
+  comments      Comment[]
 }
 
 model PostSeen {
@@ -47,4 +58,17 @@ model FavoritePost {
   post BlogPost @relation(fields: [postId], references: [id])
 
   @@unique([postId, userId]) // prevent duplicates
+}
+
+model Comment {
+  id          String   @id @default(uuid())
+  content     String
+  postId      String
+  authorId    String
+  authorName  String
+  authorImage String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

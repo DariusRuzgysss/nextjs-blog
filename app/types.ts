@@ -51,8 +51,10 @@ export type Post = {
   id: string;
   imageUrl?: string;
   authorId: string;
+  category: RecipeCategory;
   postSeens?: Array<PostSeen>;
   favoritePosts?: Array<FavoritePost>;
+  comments: Array<Comment>;
   authorName: string;
   authorImage: string;
   createdAt: Date;
@@ -71,4 +73,15 @@ type FavoritePost = {
   userId: string;
   postId: string;
   favAt: Date;
+};
+
+type Comment = {
+  id: string;
+  content: string;
+  postId: string;
+  authorId: string;
+  authorName: string;
+  authorImage: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
