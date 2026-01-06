@@ -110,10 +110,11 @@ export const createPost = async (data: PostFormData): Promise<void> => {
         title: data.title,
         content: data.content,
         imageUrl: data.imageUrl,
+        ingredients: data.ingredients,
         authorId: user?.id,
         authorName: user?.given_name ?? "",
         authorImage: user?.picture ?? "",
-        category: "BREAKFAST",
+        category: data.category,
       },
     });
   } catch (error) {

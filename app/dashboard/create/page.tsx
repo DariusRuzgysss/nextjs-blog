@@ -16,13 +16,13 @@ const createPostRoute = () => {
         className={buttonVariants({ variant: "outline" })}
         href={"/dashboard"}
       >
-        Back to dashboard
+        Back to my recipes
       </Link>
       <Card className="mt-3">
         <CardHeader>
-          <CardTitle>Create Post</CardTitle>
+          <CardTitle>Create Your Recipe</CardTitle>
           <CardDescription>
-            Create a new post to share with the world
+            Share your culinary masterpiece with the world
           </CardDescription>
         </CardHeader>
         <CardContent>

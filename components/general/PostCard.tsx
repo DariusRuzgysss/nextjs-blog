@@ -1,5 +1,5 @@
 "use client";
-import { Post } from "@/app/types";
+import { Post, RecipeCategory } from "@/app/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
@@ -91,6 +91,15 @@ const PostCard = ({ post }: { post: Post }) => {
           New
         </Badge>
       )}
+      {post.category === RecipeCategory.Vegan && (
+        <Image
+          alt="vegan"
+          src="/images/Vegan_tag.png"
+          width={60}
+          height={60}
+          className="absolute z-10 right-5 top-52"
+        />
+      )}
       {isLogged && (
         <Icon
           icon={`${
@@ -110,7 +119,7 @@ const PostCard = ({ post }: { post: Post }) => {
         onClick={handleClick}
         className="block w-full h-full"
       >
-        <div className="relative h-80 w-full overflow-hidden">
+        <div className="relative h-60 w-full overflow-hidden">
           <Image
             src={post.imageUrl || "/images/no image.jpg"}
             alt="post"
@@ -118,7 +127,7 @@ const PostCard = ({ post }: { post: Post }) => {
             fill
             className="object-cover hover:scale-105 duration-300"
             priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 80vw, (max-width: 1200px) 40vw, 23vw"
           />
         </div>
         <div className="p-4">

@@ -21,7 +21,7 @@ const Dashboard = async () => {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-medium">My Recipes</h2>
         <Link className={buttonVariants()} href="/dashboard/create">
-          Create Post
+          Create recipe
         </Link>
       </div>
       <UserPostsClient userId={user.id} />

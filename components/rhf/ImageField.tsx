@@ -1,13 +1,20 @@
 "use client";
 
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { Icon } from "@iconify/react";
 import { Button } from "../ui/button";
-import { resizeImageWithCanvas } from "@/utils/helper";
-import { Activity, useTransition } from "react";
+import { getErrorMessage, resizeImageWithCanvas } from "@/utils/helper";
+import { Activity, useRef, useTransition } from "react";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 
 interface Props {
   name: string;
@@ -23,8 +30,10 @@ export const ImageField = ({ name, label }: Props) => {
   } = useFormContext();
   const [isPending, startTransition] = useTransition();
 
-  const imageFile = watch("imageFile");
+  const imageFile = watch(name);
   const imageUrl = watch("imageUrl");
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -33,7 +42,7 @@ export const ImageField = ({ name, label }: Props) => {
     }
     startTransition(async () => {
       const resizedFile = await resizeImageWithCanvas(file);
-      setValue("imageFile", resizedFile, {
+      setValue(name, resizedFile, {
         shouldValidate: true,
       });
     });
@@ -41,29 +50,46 @@ export const ImageField = ({ name, label }: Props) => {
 
   const clearImage = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setValue("imageFile", undefined);
+    setValue(name, undefined, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
     setValue("imageUrl", "");
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
+  const errorMessage = getErrorMessage(errors, name);
+
   return (
-    <Controller
+    <FormField
       name={name}
       control={control}
       render={() => (
-        <div className="w-full flex flex-col gap-2">
-          {label && <label>{label}</label>}
-          <div className="flex flex-row justify-between">
-            <Input type="file" accept="image/*" onChange={handleFileChange} />
-            {imageUrl || imageFile ? (
-              <Button type="button" variant="outline" onClick={clearImage}>
-                <Icon
-                  icon="mdi:trash"
-                  fontSize={24}
-                  className="cursor-pointer text-red-600"
-                />
-              </Button>
-            ) : null}
-          </div>
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+          <FormControl className="flex flex-row justify-between">
+            <div>
+              <Input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+              {imageUrl || imageFile ? (
+                <Button type="button" variant="outline" onClick={clearImage}>
+                  <Icon
+                    icon="mdi:trash"
+                    fontSize={24}
+                    className="cursor-pointer text-red-600"
+                  />
+                </Button>
+              ) : null}
+            </div>
+          </FormControl>
 
           <div className="flex flex-col justify-center items-center">
             {imageFile && (
@@ -79,12 +105,8 @@ export const ImageField = ({ name, label }: Props) => {
               <Spinner className="size-6" />
             </Activity>
           </div>
-          {errors && errors[name] && (
-            <span className="text-red-700">
-              {errors[name]?.message as string}
-            </span>
-          )}
-        </div>
+          {errorMessage && <FormMessage>{errorMessage}</FormMessage>}
+        </FormItem>
       )}
     />
   );

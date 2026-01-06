@@ -1,3 +1,5 @@
+import { FieldErrors, FieldValues, FieldError, get } from "react-hook-form";
+
 export const resizeImageWithCanvas = (
   file: File,
   maxWidth = 1280,
@@ -52,4 +54,12 @@ export const resizeImageWithCanvas = (
     img.onerror = reject;
     reader.readAsDataURL(file);
   });
+};
+
+export const getErrorMessage = (
+  errors: FieldErrors<FieldValues>,
+  name: string
+): string | undefined => {
+  const error = get(errors, name) as FieldError | undefined;
+  return error?.message;
 };

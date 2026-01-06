@@ -1,20 +1,8 @@
 "use client";
-import { CategoryFilter, RecipeCategory } from "@/app/types";
+import { CategoryFilter } from "@/app/types";
+import { recipeCategoryOptions } from "@/utils/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-
-const recipeCategoryOptions: {
-  label: string;
-  value: CategoryFilter;
-}[] = [
-  { label: "All", value: "all" },
-  { label: "Vegan", value: RecipeCategory.Vegan },
-  { label: "Breakfast", value: RecipeCategory.Breakfast },
-  { label: "Lunch", value: RecipeCategory.Lunch },
-  { label: "Dinner", value: RecipeCategory.Dinner },
-  { label: "Dessert", value: RecipeCategory.Dessert },
-  { label: "Quick Bite", value: RecipeCategory.QuickBite },
-];
 
 const Categories = () => {
   const searchParams = useSearchParams();
