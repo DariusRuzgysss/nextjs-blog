@@ -1,19 +1,15 @@
 import { FormFieldProps } from "@/app/types";
 import { Input } from "../ui/input";
-import { FieldErrors, FieldValues, get, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { FieldError } from "react-hook-form";
+import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { getErrorMessage } from "@/utils/helper";
+import { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 
 interface UnifiedFieldProps<TFormValues> extends FormFieldProps<TFormValues> {
   inputType: "input" | "textarea";
+  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  textareaProps?: TextareaHTMLAttributes<HTMLTextAreaElement>;
 }
 
 const InputField = <TFormValues extends Record<string, string>>({
@@ -23,6 +19,8 @@ const InputField = <TFormValues extends Record<string, string>>({
   name,
   label,
   valueAsNumber,
+  inputProps,
+  textareaProps,
 }: UnifiedFieldProps<TFormValues>) => {
   const {
     register,
@@ -33,7 +31,7 @@ const InputField = <TFormValues extends Record<string, string>>({
   const errorMessage = getErrorMessage(errors, name);
 
   return (
-    <FormField
+    <Controller
       control={control}
       name={name}
       render={({ field }) => (
@@ -42,16 +40,18 @@ const InputField = <TFormValues extends Record<string, string>>({
           <FormControl>
             {inputType === "input" ? (
               <Input
+                {...field}
                 type={type}
                 placeholder={placeholder}
                 {...register(name, { valueAsNumber })}
-                {...field}
+                {...inputProps}
               />
             ) : (
               <Textarea
+                {...field}
                 placeholder={placeholder}
                 {...register(name, { valueAsNumber })}
-                {...field}
+                {...textareaProps}
               />
             )}
           </FormControl>

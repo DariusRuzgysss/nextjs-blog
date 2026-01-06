@@ -54,6 +54,7 @@ export type Post = {
   category: string;
   ingredients: string[];
   postSeens?: PostSeen[];
+  preparationTime: number;
   favoritePosts?: FavoritePost[];
   comments?: Comment[];
   authorName: string;

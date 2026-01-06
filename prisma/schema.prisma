@@ -14,20 +14,21 @@ datasource db {
 }
 
 model BlogPost {
-  id            String         @id @default(uuid())
-  title         String
-  content       String
-  imageUrl      String
-  authorId      String
-  authorName    String
-  authorImage   String
-  category      String
-  ingredients   String[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  postSeens     PostSeen[]
-  favoritePosts FavoritePost[]
-  comments      Comment[]
+  id              String         @id @default(uuid())
+  title           String
+  content         String
+  imageUrl        String
+  authorId        String
+  authorName      String
+  authorImage     String
+  category        String
+  ingredients     String[]
+  preparationTime Int            @default(0)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  postSeens       PostSeen[]
+  favoritePosts   FavoritePost[]
+  comments        Comment[]
 }
 
 model PostSeen {

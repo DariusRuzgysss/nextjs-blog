@@ -63,3 +63,7 @@ export const getErrorMessage = (
   const error = get(errors, name) as FieldError | undefined;
   return error?.message;
 };
+
+export const scrollInto = (id: string) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+};

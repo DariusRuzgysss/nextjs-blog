@@ -6,8 +6,6 @@ import {
   LogoutLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-
-import ProgressBar from "./ProgressBar";
 import { Hamburger } from "./Hamburger";
 import Logo from "./Logo";
 import MenuBar from "./MenuBarClient";
@@ -49,7 +47,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <ProgressBar />
     </div>
   );
 };

@@ -2,7 +2,6 @@
 
 import {
   FormControl,
-  FormField,
   FormItem,
   FormLabel,
   FormMessage,
@@ -15,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getErrorMessage } from "@/utils/helper";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 
 type Option = {
   label: string;
@@ -43,7 +42,7 @@ export function SelectField<T extends FieldValues>({
   } = useFormContext();
   const errorMessage = getErrorMessage(errors, name);
   return (
-    <FormField
+    <Controller
       control={control}
       name={name}
       render={({ field }) => (

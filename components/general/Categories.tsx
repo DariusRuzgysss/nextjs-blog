@@ -19,7 +19,6 @@ const Categories = () => {
       } else {
         params.set("category", val);
       }
-
       replace(`${pathname}?${params.toString()}`);
     },
     [pathname, replace, searchParams]

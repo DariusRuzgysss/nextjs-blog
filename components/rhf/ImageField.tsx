@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { Icon } from "@iconify/react";
@@ -8,13 +8,7 @@ import { Button } from "../ui/button";
 import { getErrorMessage, resizeImageWithCanvas } from "@/utils/helper";
 import { Activity, useRef, useTransition } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
+import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 
 interface Props {
   name: string;
@@ -65,7 +59,7 @@ export const ImageField = ({ name, label }: Props) => {
   const errorMessage = getErrorMessage(errors, name);
 
   return (
-    <FormField
+    <Controller
       name={name}
       control={control}
       render={() => (

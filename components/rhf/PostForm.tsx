@@ -17,11 +17,13 @@ import { SelectField } from "./SelectField";
 import { recipeCategoryOptions } from "@/utils/constants";
 import { Form } from "../ui/form";
 import IngredientsField from "./IngredientsField";
+import ProgressBar from "../general/ProgressBar";
 
 const postSchema = z.object({
   title: z.string().trim().min(1, "Title is required"),
   content: z.string().trim().min(1, "Instruction is required"),
   imageUrl: z.string(),
+  preparationTime: z.number().int(),
   category: z.string().min(1, "Category is required"),
   ingredients: z
     .array(z.string().trim().min(1, "Ingredient is required"))
@@ -39,7 +41,13 @@ const PostForm = ({
 }: {
   post?: Pick<
     Post,
-    "id" | "title" | "content" | "imageUrl" | "category" | "ingredients"
+    | "id"
+    | "title"
+    | "content"
+    | "imageUrl"
+    | "category"
+    | "ingredients"
+    | "preparationTime"
   >;
 }) => {
   const router = useRouter();
@@ -50,6 +58,7 @@ const PostForm = ({
       title: post?.title || "",
       content: post?.content || "",
       category: post?.category || "",
+      preparationTime: post?.preparationTime || 0,
       ingredients: post?.ingredients?.length ? post.ingredients : [" "],
       imageUrl: post?.imageUrl || "",
       imageFile: undefined,
@@ -61,9 +70,6 @@ const PostForm = ({
   const isSubmitting = methods.formState.isSubmitting;
   const imageUrl = useWatch({ control: methods.control, name: "imageUrl" });
   const imageFile = useWatch({ control: methods.control, name: "imageFile" });
-
-  // console.log("watch", methods.watch());
-  // console.log("err", methods.formState.errors);
 
   const updatePostMutation = useQueryMutate<string, PostFormData, void>(
     undefined,
@@ -107,7 +113,7 @@ const PostForm = ({
     }
     progress.finish();
   };
-
+  console.log(methods.watch());
   return (
     <FormProvider {...methods}>
       <Form {...methods}>
@@ -128,11 +134,24 @@ const PostForm = ({
           />
           <IngredientsField />
           <InputField
+            inputType="input"
+            type="range"
+            inputProps={{
+              min: 0,
+              max: 200,
+              step: 5,
+              disabled: isSubmitting,
+            }}
+            valueAsNumber={true}
+            name="preparationTime"
+            label="Preparation Time"
+          />
+          <InputField
             inputType="textarea"
             name="content"
             label="Instruction *"
           />
-          <div className="flex flex-col gap-2 items-center">
+          <div className="flex flex-col gap-2 ">
             <ImageField name="imageFile" label="Choose image" />
 
             {imageUrl && !imageFile && (
@@ -145,6 +164,7 @@ const PostForm = ({
               />
             )}
           </div>
+          <ProgressBar />
           <Button variant="primary" disabled={isSubmitting} type="submit">
             {isSubmitting
               ? `${post ? "Editing" : "Creating"}`

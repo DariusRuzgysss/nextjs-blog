@@ -13,7 +13,7 @@ export const getPosts = async ({
   page,
   pageSize,
   searchQuery,
-  category,
+  category: selectedCategory,
 }: FilterTypes) => {
   try {
     const { getUser } = getKindeServerSession();
@@ -31,7 +31,10 @@ export const getPosts = async ({
         return {
           favoritePosts: { some: user ? { userId: user.id } : undefined },
         };
-      } else if (category !== "all") {
+      } else if (selectedCategory !== "all") {
+        return {
+          category: selectedCategory,
+        };
       } else {
         return undefined;
       }
@@ -44,7 +47,9 @@ export const getPosts = async ({
         include: {
           postSeens: isAuthor,
           favoritePosts: isAuthor,
-          comments: true,
+          comments: {
+            orderBy: { createdAt: "desc" },
+          },
         },
         orderBy: {
           createdAt: sortBy === "favorites" ? "desc" : sortBy,
@@ -115,6 +120,7 @@ export const createPost = async (data: PostFormData): Promise<void> => {
         authorName: user?.given_name ?? "",
         authorImage: user?.picture ?? "",
         category: data.category,
+        preparationTime: data.preparationTime,
       },
     });
   } catch (error) {

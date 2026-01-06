@@ -2,19 +2,27 @@
 
 import PostCard from "@/components/general/PostCard";
 import PaginationComponent from "@/components/general/Pagination";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { usePostsQueryOptions } from "@/hooks/api/usePosts";
 import SkeletonLoader from "./Skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { FilterTypes } from "@/app/types";
+import { scrollInto } from "@/utils/helper";
 
 const PostsClient = ({ filter }: { filter: FilterTypes }) => {
   const { data } = useSuspenseQuery(usePostsQueryOptions(filter));
+
   const { items, totalPages } = data;
+  useEffect(() => {
+    scrollInto("list");
+  }, [items]);
   console.log(items);
   return (
     <Suspense fallback={<SkeletonLoader />}>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4">
+      <div
+        id="list"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4"
+      >
         {items.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
