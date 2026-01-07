@@ -15,9 +15,9 @@ const PostRoute = async ({ params }: { params: Params }) => {
   const isEditable = post.authorId === user.id;
 
   return (
-    <div className="max-w-3xl mx-auto p-2">
+    <div className="">
       <Link className={buttonVariants({ variant: "outline" })} href="/">
-        Back to posts
+        Back to recipes
       </Link>
       <div className="my-8 mt-3">
         <div className="flex flex-row justify-between">

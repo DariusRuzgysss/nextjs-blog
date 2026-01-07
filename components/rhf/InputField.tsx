@@ -19,6 +19,8 @@ const InputField = <TFormValues extends Record<string, string>>({
   name,
   label,
   valueAsNumber,
+  className,
+  fieldValue,
   inputProps,
   textareaProps,
 }: UnifiedFieldProps<TFormValues>) => {
@@ -36,10 +38,14 @@ const InputField = <TFormValues extends Record<string, string>>({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <div className="flex flex-row justify-between">
+            <FormLabel>{label}</FormLabel>
+            {fieldValue && <FormLabel>{fieldValue}</FormLabel>}
+          </div>
           <FormControl>
             {inputType === "input" ? (
               <Input
+                className={className}
                 {...field}
                 type={type}
                 placeholder={placeholder}
@@ -48,6 +54,7 @@ const InputField = <TFormValues extends Record<string, string>>({
               />
             ) : (
               <Textarea
+                className={className}
                 {...field}
                 placeholder={placeholder}
                 {...register(name, { valueAsNumber })}

@@ -14,7 +14,7 @@ const IngredientsField = () => {
   return (
     <div className="flex flex-col gap-2">
       {fields.map((field, index) => (
-        <div key={field.id} className="flex flex-row gap-2 items-center w-full">
+        <div key={field.id} className="flex flex-row gap-2">
           <div className="flex-1">
             <InputField
               inputType="input"

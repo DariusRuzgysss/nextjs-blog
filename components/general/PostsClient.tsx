@@ -2,21 +2,17 @@
 
 import PostCard from "@/components/general/PostCard";
 import PaginationComponent from "@/components/general/Pagination";
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { usePostsQueryOptions } from "@/hooks/api/usePosts";
 import SkeletonLoader from "./Skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { FilterTypes } from "@/app/types";
-import { scrollInto } from "@/utils/helper";
 
 const PostsClient = ({ filter }: { filter: FilterTypes }) => {
   const { data } = useSuspenseQuery(usePostsQueryOptions(filter));
 
   const { items, totalPages } = data;
-  useEffect(() => {
-    scrollInto("list");
-  }, [items]);
-  console.log(items);
+
   return (
     <Suspense fallback={<SkeletonLoader />}>
       <div

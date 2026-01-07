@@ -7,6 +7,8 @@ export type FormFieldProps<TFormValues> = {
   name: Path<TFormValues>;
   label?: string;
   valueAsNumber?: boolean;
+  className?: string;
+  fieldValue?: string;
 };
 
 export type Params = Promise<{ id: string }>;

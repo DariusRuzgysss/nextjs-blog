@@ -18,6 +18,7 @@ import { recipeCategoryOptions } from "@/utils/constants";
 import { Form } from "../ui/form";
 import IngredientsField from "./IngredientsField";
 import ProgressBar from "../general/ProgressBar";
+import { minutesToHours } from "@/utils/helper";
 
 const postSchema = z.object({
   title: z.string().trim().min(1, "Title is required"),
@@ -130,7 +131,10 @@ const PostForm = ({
           <SelectField
             name="category"
             label="Category *"
-            options={recipeCategoryOptions}
+            options={recipeCategoryOptions.slice(
+              1,
+              recipeCategoryOptions.length
+            )}
           />
           <IngredientsField />
           <InputField
@@ -138,13 +142,14 @@ const PostForm = ({
             type="range"
             inputProps={{
               min: 0,
-              max: 200,
+              max: 250,
               step: 5,
               disabled: isSubmitting,
             }}
             valueAsNumber={true}
             name="preparationTime"
             label="Preparation Time"
+            fieldValue={minutesToHours(methods.watch("preparationTime"))}
           />
           <InputField
             inputType="textarea"

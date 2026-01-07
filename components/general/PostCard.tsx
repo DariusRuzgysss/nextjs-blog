@@ -13,6 +13,8 @@ import {
 import { Icon } from "@iconify/react";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { QUERY_KEYS } from "@/utils/constants";
+import { Timer } from "lucide-react";
+import { minutesToHours } from "@/utils/helper";
 
 const PostCard = ({ post }: { post: Post }) => {
   const { user } = useKindeBrowserClient();
@@ -50,6 +52,10 @@ const PostCard = ({ post }: { post: Post }) => {
     () => post.favoritePosts && post.favoritePosts.length > 0,
     [post.favoritePosts]
   );
+
+  const preparationTime = useMemo(() => {
+    return minutesToHours(post.preparationTime);
+  }, [post.preparationTime]);
 
   const handleClick = useCallback(() => {
     if (post.authorId === user?.id) {
@@ -101,18 +107,19 @@ const PostCard = ({ post }: { post: Post }) => {
         />
       )}
       {isLogged && (
-        <Icon
-          icon={`${
-            isFavorite
-              ? "material-symbols-light:favorite-rounded"
-              : "material-symbols-light:favorite-outline-rounded"
-          }`}
-          fontSize={40}
-          className={`absolute z-10 right-1 top-1 cursor-pointer text-red-600 ${
-            favoringPostId === post.id ? "animate-spin transition-all" : ""
-          }`}
-          onClick={onClickFavorite}
-        />
+        <div className="absolute z-10 right-2 top-2 shadow-lg shadow-black/30 cursor-pointer rounded-full bg-background w-12 h-12 flex justify-center items-center">
+          <Icon
+            icon={`${
+              isFavorite
+                ? "material-symbols-light:favorite-rounded"
+                : "material-symbols-light:favorite-outline-rounded"
+            }`}
+            className={` text-(--primary-color-3) w-8 h-8  ${
+              favoringPostId === post.id ? "animate-spin transition-all" : ""
+            }`}
+            onClick={onClickFavorite}
+          />
+        </div>
       )}
       <Link
         href={`post/${post.id}`}
@@ -134,12 +141,17 @@ const PostCard = ({ post }: { post: Post }) => {
           <h3 className="mb-2 text-[24px] font-bold text-gray-900">
             {post.title}
           </h3>
-          <p className="text-(--dark) mb-4 text-[16px] font-light line-clamp-2 min-h-10">
+          <p className="text-(--dark) text-[16px] font-light line-clamp-2 min-h-10">
             {post.content}
           </p>
-          <div className="flex items-center justify-between mb-2">
-            <p>reserved time</p>
-            <div className="rounded-3xl border border-(--dark) px-6 py-3 font-medium uppercase text-[14px] text-(--dark)">
+          <div className="flex items-center justify-between mb-5 mt-5">
+            <div className="flex flex-row gap-4">
+              <Timer />
+              <div className="flex flex-row items-center gap-1">
+                {minutesToHours(post.preparationTime)}
+              </div>
+            </div>
+            <div className="rounded-3xl border border-(--dark) px-6 py-3 font-medium uppercase text-[14px] text-(--dark) hover:border-(--primary-color-3)">
               View Recipe
             </div>
           </div>

@@ -20,11 +20,11 @@ const EditPostRoute = async ({ params }: { params: Params }) => {
         className={buttonVariants({ variant: "outline" })}
         href={`/post/${post.id}`}
       >
-        Back to post
+        Back to recipe
       </Link>
       <Card className="mt-3">
         <CardHeader>
-          <CardTitle>Edit Post</CardTitle>
+          <CardTitle>Edit Recipe</CardTitle>
           <CardDescription>Fill with a new information</CardDescription>
         </CardHeader>
         <CardContent>
