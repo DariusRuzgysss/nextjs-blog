@@ -31,7 +31,7 @@ const SearchInput = ({
       } else {
         params.delete("query");
       }
-      replace(`${pathname}?${params.toString()}`);
+      replace(`${pathname}?${params.toString()}`, { scroll: false });
     }, debounce);
   };
 

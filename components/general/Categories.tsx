@@ -19,7 +19,7 @@ const Categories = () => {
       } else {
         params.set("category", val);
       }
-      replace(`${pathname}?${params.toString()}`);
+      replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
     [pathname, replace, searchParams]
   );

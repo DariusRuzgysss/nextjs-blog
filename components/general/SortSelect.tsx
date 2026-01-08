@@ -28,7 +28,7 @@ const SortSelect = () => {
     } else {
       params.delete("sort");
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (
