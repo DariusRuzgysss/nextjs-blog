@@ -43,10 +43,7 @@ export function CustomDialog({ title, description, onConfirm }: Props) {
         </DialogHeader>
 
         <form action={handleDelete} className="flex justify-end gap-3 mt-6">
-          <Button
-            className={buttonVariants({ variant: "secondary" })}
-            disabled={isPending}
-          >
+          <Button variant="primary" disabled={isPending}>
             {isPending ? "Processing..." : "Confirm"}
           </Button>
         </form>

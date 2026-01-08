@@ -17,7 +17,12 @@ export function PostMeta({
   showFullTime,
 }: PostMetaProps) {
   return (
-    <div className={cn("flex items-center gap-2 min-w-0", className)}>
+    <div
+      className={cn(
+        "flex items-center gap-2 min-w-0 flex-wrap shrink",
+        className
+      )}
+    >
       <div className="flex items-center space-x-2">
         <div className="relative size-8 rounded-full overflow-hidden">
           {authorImage && (

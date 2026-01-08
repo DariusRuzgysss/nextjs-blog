@@ -33,7 +33,6 @@ const PostRoute = async ({ params }: { params: Params }) => {
       <div className="rounded-4xl border-(--dark)/24 border lg:py-16 lg:px-10 py-10 px-4">
         <div className="flex flex-row justify-between items-start mb-10 gap-2">
           <PostMeta
-            className="flex-wrap shrink"
             authorImage={post.authorImage}
             createdAt={post.createdAt}
             authorName={post.authorName}

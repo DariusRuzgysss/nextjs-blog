@@ -6,12 +6,12 @@ import InputField from "./InputField";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { createComment } from "@/features/post/actions";
 
-type CommentFormValues = {
+type FormValues = {
   comment: string;
 };
 
 const CommentsField = ({ postId }: { postId: string }) => {
-  const methods = useForm<CommentFormValues>({
+  const methods = useForm<FormValues>({
     defaultValues: {
       comment: "",
     },
@@ -27,7 +27,7 @@ const CommentsField = ({ postId }: { postId: string }) => {
     "Successfully commented"
   );
 
-  const submitHandler: SubmitHandler<CommentFormValues> = async (data) => {
+  const submitHandler: SubmitHandler<FormValues> = async (data) => {
     await createCommentMutation.mutateAsync({ id: postId, data: data.comment });
     methods.reset();
   };

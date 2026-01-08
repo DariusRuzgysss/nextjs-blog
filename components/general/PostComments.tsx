@@ -13,7 +13,10 @@ const PostComments = ({ post, isEditable }: Props) => {
       {post.comments?.length ? (
         <div className="flex flex-col gap-6">
           {post.comments.map((comment) => (
-            <div key={comment.id} className="flex flex-row justify-between">
+            <div
+              key={comment.id}
+              className="flex flex-row justify-between rounded-4xl border-(--dark)/24 border lg:py-6 lg:px-4 py-3 px-4"
+            >
               <div className="flex flex-col gap-2">
                 <PostMeta
                   authorName={comment.authorName}
