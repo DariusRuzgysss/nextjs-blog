@@ -15,6 +15,7 @@ import { useQueryMutate } from "@/hooks/api/useMutate";
 import { QUERY_KEYS } from "@/utils/constants";
 import { Timer } from "lucide-react";
 import { minutesToHours } from "@/utils/helper";
+import { PostMeta } from "./PostMeta";
 
 const PostCard = ({ post }: { post: Post }) => {
   const { user } = useKindeBrowserClient();
@@ -145,40 +146,26 @@ const PostCard = ({ post }: { post: Post }) => {
             {post.content}
           </p>
           <div className="flex items-center justify-between mb-5 mt-5">
-            <div className="flex flex-row gap-4">
-              <Timer />
-              <div className="flex flex-row items-center gap-1">
-                {minutesToHours(post.preparationTime)}
+            {preparationTime ? (
+              <div className="flex flex-row gap-4">
+                <Timer />
+                <div className="flex flex-row items-center gap-1">
+                  {preparationTime}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div />
+            )}
             <div className="rounded-3xl border border-(--dark) px-6 py-3 font-medium uppercase text-[14px] text-(--dark) hover:border-(--primary-color-3)">
               View Recipe
             </div>
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="relative size-8 rounded-full overflow-hidden">
-                {post.authorImage && (
-                  <Image
-                    src={post.authorImage}
-                    alt={post.authorName}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    loading="eager"
-                    className="object-cover"
-                  />
-                )}
-              </div>
-              <p>{post.authorName}</p>
-            </div>
-            <time className="text-sm text-gray-500">
-              {new Intl.DateTimeFormat("lt", {
-                year: "numeric",
-                month: "short",
-                day: "numeric",
-              }).format(post.createdAt)}
-            </time>
-          </div>
+          <PostMeta
+            className="flex items-center justify-between"
+            authorImage={post.authorImage}
+            createdAt={post.createdAt}
+            authorName={post.authorName}
+          />
         </div>
       </Link>
     </div>

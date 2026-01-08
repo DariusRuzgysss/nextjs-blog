@@ -47,15 +47,17 @@ export function Hamburger() {
             const isActive = pathname === item.href;
             return (
               <div key={item.href}>
-                <Link
-                  href={item.href}
-                  className={clsx(
-                    "text-[18px] font-medium px-4",
-                    isActive ? "text-(--primary-color-3)" : "text-background"
-                  )}
-                >
-                  {item.name.toUpperCase()}
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    href={item.href}
+                    className={clsx(
+                      "text-[18px] font-medium px-4",
+                      isActive ? "text-(--primary-color-3)" : "text-background"
+                    )}
+                  >
+                    {item.name.toUpperCase()}
+                  </Link>
+                </SheetClose>
                 <div className="h-px bg-(--light)/16 mt-4" />
               </div>
             );

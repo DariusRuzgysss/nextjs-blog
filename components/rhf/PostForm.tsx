@@ -15,7 +15,6 @@ import { useRouter } from "next/navigation";
 import { useProgress } from "@/providers/ProgressProvider";
 import { SelectField } from "./SelectField";
 import { recipeCategoryOptions } from "@/utils/constants";
-import { Form } from "../ui/form";
 import IngredientsField from "./IngredientsField";
 import ProgressBar from "../general/ProgressBar";
 import { minutesToHours } from "@/utils/helper";
@@ -71,6 +70,10 @@ const PostForm = ({
   const isSubmitting = methods.formState.isSubmitting;
   const imageUrl = useWatch({ control: methods.control, name: "imageUrl" });
   const imageFile = useWatch({ control: methods.control, name: "imageFile" });
+  const preparationTime = useWatch({
+    control: methods.control,
+    name: "preparationTime",
+  });
 
   const updatePostMutation = useQueryMutate<string, PostFormData, void>(
     undefined,
@@ -114,69 +117,60 @@ const PostForm = ({
     }
     progress.finish();
   };
-  console.log(methods.watch());
+
   return (
     <FormProvider {...methods}>
-      <Form {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
-        >
-          <InputField
-            inputType="input"
-            type="text"
-            name="title"
-            label="Recipe Title *"
-          />
-          <SelectField
-            name="category"
-            label="Category *"
-            options={recipeCategoryOptions.slice(
-              1,
-              recipeCategoryOptions.length
-            )}
-          />
-          <IngredientsField />
-          <InputField
-            inputType="input"
-            type="range"
-            inputProps={{
-              min: 0,
-              max: 250,
-              step: 5,
-              disabled: isSubmitting,
-            }}
-            valueAsNumber={true}
-            name="preparationTime"
-            label="Preparation Time"
-            fieldValue={minutesToHours(methods.watch("preparationTime"))}
-          />
-          <InputField
-            inputType="textarea"
-            name="content"
-            label="Instruction *"
-          />
-          <div className="flex flex-col gap-2 ">
-            <ImageField name="imageFile" label="Choose image" />
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
+        <InputField
+          inputType="input"
+          type="text"
+          name="title"
+          label="Recipe Title *"
+        />
+        <SelectField
+          name="category"
+          label="Category *"
+          options={recipeCategoryOptions.slice(1, recipeCategoryOptions.length)}
+        />
+        <IngredientsField />
+        <InputField
+          inputType="input"
+          type="range"
+          inputProps={{
+            min: 0,
+            max: 250,
+            step: 5,
+            disabled: isSubmitting,
+          }}
+          valueAsNumber={true}
+          name="preparationTime"
+          label="Preparation Time"
+          fieldValue={minutesToHours(preparationTime)}
+        />
+        <InputField inputType="textarea" name="content" label="Instruction *" />
+        <div className="flex flex-col gap-2 ">
+          <ImageField name="imageFile" label="Choose image" />
 
-            {imageUrl && !imageFile && (
-              <Image
-                src={imageUrl}
-                alt="Preview"
-                width={450}
-                height={300}
-                className="object-contain"
-              />
-            )}
-          </div>
-          <ProgressBar />
-          <Button variant="primary" disabled={isSubmitting} type="submit">
-            {isSubmitting
-              ? `${post ? "Editing" : "Creating"}`
-              : `${post ? "Edit" : "Create"} `}
-          </Button>
-        </form>
-      </Form>
+          {imageUrl && !imageFile && (
+            <Image
+              src={imageUrl}
+              alt="Preview"
+              width={450}
+              height={300}
+              className="object-contain"
+            />
+          )}
+        </div>
+        <ProgressBar />
+        <Button variant="primary" disabled={isSubmitting} type="submit">
+          {isSubmitting
+            ? `${post ? "Updating" : "Saving"}`
+            : `${post ? "Update" : "Save"} `}
+        </Button>
+      </form>
     </FormProvider>
   );
 };

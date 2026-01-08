@@ -1,5 +1,5 @@
+import { AppBreadcrumb } from "@/components/general/AppBreadcrumb";
 import PostForm from "@/components/rhf/PostForm";
-import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,17 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Link from "next/link";
 
 const createPostRoute = () => {
   return (
     <div className="max-w-3xl mx-auto">
-      <Link
-        className={buttonVariants({ variant: "outline" })}
-        href={"/dashboard"}
-      >
-        Back to my recipes
-      </Link>
+      <AppBreadcrumb
+        items={[
+          { label: "Home", href: "/" },
+          { label: "My Recipes", href: `/dashboard` },
+          { label: "Create Recipe" },
+        ]}
+      />
       <Card className="mt-3">
         <CardHeader>
           <CardTitle>Create Your Recipe</CardTitle>

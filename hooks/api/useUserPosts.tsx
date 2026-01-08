@@ -6,5 +6,5 @@ export const useUserPostsQueryOptions = (userId: string) =>
   queryOptions({
     queryKey: [QUERY_KEYS.USER_POSTS, userId],
     queryFn: () => getPostsByUserId(userId),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60,
   });

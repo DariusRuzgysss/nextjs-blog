@@ -6,6 +6,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getPostsByUserId } from "../../features/post/actions";
 import { getQueryClient } from "../../utils/getQueryClient";
 import { QUERY_KEYS } from "@/utils/constants";
+import { Plus } from "lucide-react";
 
 const Dashboard = async () => {
   const user = await requireUser();
@@ -21,7 +22,8 @@ const Dashboard = async () => {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-medium">My Recipes</h2>
         <Link className={buttonVariants()} href="/dashboard/create">
-          Create recipe
+          <Plus />
+          New
         </Link>
       </div>
       <UserPostsClient userId={user.id} />

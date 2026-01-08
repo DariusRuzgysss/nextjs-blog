@@ -53,7 +53,7 @@ export function SelectField<T extends FieldValues>({
             onValueChange={field.onChange}
             disabled={disabled}
           >
-            <FormControl>
+            <FormControl className="border-(--dark)/20">
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>

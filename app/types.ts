@@ -58,7 +58,7 @@ export type Post = {
   postSeens?: PostSeen[];
   preparationTime: number;
   favoritePosts?: FavoritePost[];
-  comments?: Comment[];
+  comments?: PostComment[];
   authorName: string;
   authorImage: string;
   createdAt: Date;
@@ -79,7 +79,7 @@ type FavoritePost = {
   favAt: Date;
 };
 
-type Comment = {
+export type PostComment = {
   id: string;
   content: string;
   postId: string;

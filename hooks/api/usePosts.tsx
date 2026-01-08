@@ -8,5 +8,5 @@ export const usePostsQueryOptions = (filter: FilterTypes) =>
   queryOptions({
     queryKey: [QUERY_KEYS.POSTS, filter],
     queryFn: () => getPosts(filter),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60,
   });

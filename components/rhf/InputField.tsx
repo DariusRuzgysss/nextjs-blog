@@ -5,6 +5,7 @@ import { Textarea } from "../ui/textarea";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { getErrorMessage } from "@/utils/helper";
 import { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
 interface UnifiedFieldProps<TFormValues> extends FormFieldProps<TFormValues> {
   inputType: "input" | "textarea";
@@ -40,12 +41,14 @@ const InputField = <TFormValues extends Record<string, string>>({
         <FormItem>
           <div className="flex flex-row justify-between">
             <FormLabel>{label}</FormLabel>
-            {fieldValue && <FormLabel>{fieldValue}</FormLabel>}
+            {type === "range" && fieldValue && (
+              <FormLabel>{fieldValue}</FormLabel>
+            )}
           </div>
           <FormControl>
             {inputType === "input" ? (
               <Input
-                className={className}
+                className={cn("border-(--dark)/20", className)}
                 {...field}
                 type={type}
                 placeholder={placeholder}
@@ -54,7 +57,7 @@ const InputField = <TFormValues extends Record<string, string>>({
               />
             ) : (
               <Textarea
-                className={className}
+                className={cn("border-(--dark)/20", className)}
                 {...field}
                 placeholder={placeholder}
                 {...register(name, { valueAsNumber })}

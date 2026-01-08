@@ -69,7 +69,15 @@ export const scrollInto = (id: string) => {
 };
 
 export function minutesToHours(minutes: number) {
+  if (minutes <= 0) return "";
+
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  return `${hours}h ${mins}min`;
+
+  const parts: string[] = [];
+
+  if (hours) parts.push(`${hours}h`);
+  if (mins) parts.push(`${mins}min.`);
+
+  return parts.join(" ");
 }

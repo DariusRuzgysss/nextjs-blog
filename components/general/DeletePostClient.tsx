@@ -13,9 +13,9 @@ type Props = {
 const DeletePostClient = ({ post }: Props) => {
   const { user } = useKindeBrowserClient();
   const router = useRouter();
-  const deletePostMutation = useQueryMutate<string, string, void>(
-    undefined,
+  const deletePostMutation = useQueryMutate<null, Post, void>(
     deletePost,
+    undefined,
     [],
     () => router.push("/dashboard"),
     "Successfully deleted"
@@ -26,7 +26,7 @@ const DeletePostClient = ({ post }: Props) => {
       description="Couldn't be recovered after deletion"
       onConfirm={() => {
         if (user) {
-          deletePostMutation.mutateAsync({ id: post.id, data: user.id });
+          deletePostMutation.mutateAsync({ id: null, data: post });
         }
       }}
     />

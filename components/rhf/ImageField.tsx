@@ -71,6 +71,7 @@ export const ImageField = ({ name, label }: Props) => {
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
+                className="border-(--dark)/20"
                 onChange={handleFileChange}
               />
               {imageUrl || imageFile ? (

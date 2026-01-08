@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 import { useTransition } from "react";
 
@@ -43,12 +43,12 @@ export function CustomDialog({ title, description, onConfirm }: Props) {
         </DialogHeader>
 
         <form action={handleDelete} className="flex justify-end gap-3 mt-6">
-          <button
+          <Button
             className={buttonVariants({ variant: "secondary" })}
             disabled={isPending}
           >
             {isPending ? "Processing..." : "Confirm"}
-          </button>
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

@@ -6,7 +6,9 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PostFormData } from "@/components/rhf/PostForm";
 import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
 import { notFound } from "next/navigation";
-import { FilterTypes } from "@/app/types";
+import { FilterTypes, Post } from "@/app/types";
+import { deleteImage } from "../cloudinary/actions";
+import { revalidatePath } from "next/cache";
 
 export const getPosts = async ({
   sortBy,
@@ -47,9 +49,6 @@ export const getPosts = async ({
         include: {
           postSeens: isAuthor,
           favoritePosts: isAuthor,
-          comments: {
-            orderBy: { createdAt: "desc" },
-          },
         },
         orderBy: {
           createdAt: sortBy === "favorites" ? "desc" : sortBy,
@@ -74,6 +73,11 @@ export const getPosts = async ({
 export const getPostById = async (id: string) => {
   try {
     const data = await prisma.blogPost.findUnique({
+      include: {
+        comments: {
+          orderBy: { createdAt: "desc" },
+        },
+      },
       where: {
         id,
       },
@@ -150,14 +154,20 @@ export const getPostsByUserId = async (userId: string) => {
   }
 };
 
-export const deletePost = async (id: string, userId: string): Promise<void> => {
+export const deletePost = async (post: Post): Promise<void> => {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
   try {
     const seenPosts = await prisma.postSeen.findMany({
-      where: { postId: id },
+      where: { postId: post.id },
     });
 
     const favoritePosts = await prisma.favoritePost.findMany({
-      where: { postId: id },
+      where: { postId: post.id },
+    });
+
+    const commentPosts = await prisma.comment.findMany({
+      where: { postId: post.id },
     });
 
     if (seenPosts?.length) {
@@ -176,8 +186,19 @@ export const deletePost = async (id: string, userId: string): Promise<void> => {
       }
     }
 
+    if (commentPosts?.length) {
+      for (const commentPost of commentPosts) {
+        await prisma.comment.delete({
+          where: { id: commentPost.id },
+        });
+      }
+    }
+    if (post.imageUrl) {
+      await deleteImage(post.imageUrl);
+    }
+
     await prisma.blogPost.delete({
-      where: { id, authorId: userId },
+      where: { id: post.id, authorId: user?.id },
     });
   } catch (error) {
     console.error("Error deleting post:", error);
@@ -231,6 +252,38 @@ export const unmarkPostAsFavorite = async (postId: string) => {
     });
   } catch (error) {
     console.error("Error unmarking post as favorite:", error);
+    throw error;
+  }
+};
+
+export const createComment = async (postId: string, comment: string) => {
+  try {
+    const user = await requireUser();
+    await prisma.comment.create({
+      data: {
+        content: comment,
+        authorId: user?.id,
+        authorName: user?.given_name ?? "",
+        authorImage: user?.picture ?? "",
+        postId,
+      },
+    });
+    revalidatePath(`/post/${postId}`);
+  } catch (error) {
+    console.error("Error creating comment:", error);
+    throw error;
+  }
+};
+
+export const deleteComment = async (commentId: string, postId: string) => {
+  try {
+    const user = await requireUser();
+    await prisma.comment.delete({
+      where: { id: commentId, authorId: user?.id },
+    });
+    revalidatePath(`/post/${postId}`);
+  } catch (error) {
+    console.error("Error deleting comment:", error);
     throw error;
   }
 };
