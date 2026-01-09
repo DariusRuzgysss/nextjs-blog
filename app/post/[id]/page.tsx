@@ -17,7 +17,7 @@ const PostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;
   const post = await getPostById(id);
   const user = await requireUser();
-  const isEditable = post.authorId === user.id;
+  const isEditable = post.authorId === user?.id;
 
   const preparationTime = minutesToHours(post.preparationTime);
 
@@ -27,16 +27,27 @@ const PostRoute = async ({ params }: { params: Params }) => {
         items={[
           { label: "Home", href: "/" },
           { label: "My Recipes", href: "/dashboard" },
-          { label: "Edit Recipe" },
+          { label: "Recipe" },
         ]}
       />
       <div className="rounded-4xl border-(--dark)/24 border lg:py-16 lg:px-10 py-10 px-4">
         <div className="flex flex-row justify-between items-start mb-10 gap-2">
-          <PostMeta
-            authorImage={post.authorImage}
-            createdAt={post.createdAt}
-            authorName={post.authorName}
-          />
+          <div className="flex flex-col gap-3">
+            <PostMeta
+              authorImage={post.authorImage}
+              createdAt={post.createdAt}
+              authorName={post.authorName}
+            />
+            {post.comments.length && (
+              <div className="flex flex-row gap-3 text-(--dark)/70">
+                <Icon
+                  icon="material-symbols:mode-comment-outline"
+                  fontSize={24}
+                />
+                <p>{post.comments.length}</p>
+              </div>
+            )}
+          </div>
           {isEditable && (
             <div className="flex flex-row gap-3 items-center shrink-0">
               <Link
@@ -112,8 +123,8 @@ const PostRoute = async ({ params }: { params: Params }) => {
         </div>
         <div className="flex flex-col gap-6">
           <h1 className="uppercase text-[24px] font-semibold">Comments</h1>
-          {isEditable && <CommentsField postId={post.id} />}
-          <PostComments post={post} isEditable={isEditable} />
+          {user && <CommentsField postId={post.id} />}
+          <PostComments post={post} />
         </div>
       </div>
     </div>

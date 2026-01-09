@@ -23,10 +23,10 @@ const PostsClient = ({ filter }: { filter: FilterTypes }) => {
           <PostCard key={post.id} post={post} />
         ))}
       </div>
-      <PaginationComponent totalPages={totalPages} />
       <div className="flex items-center justify-center">
         {items.length === 0 && <p>No posts found.</p>}
       </div>
+      <PaginationComponent totalPages={totalPages} />
     </Suspense>
   );
 };

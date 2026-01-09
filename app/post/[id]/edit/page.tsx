@@ -18,6 +18,7 @@ const EditPostRoute = async ({ params }: { params: Params }) => {
       <AppBreadcrumb
         items={[
           { label: "Home", href: "/" },
+          { label: "My Recipes", href: "/dashboard" },
           { label: "Recipe", href: `/post/${post.id}` },
           { label: "Edit Recipe" },
         ]}

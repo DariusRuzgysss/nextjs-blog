@@ -5,9 +5,9 @@ export async function requireUser() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user) {
-    return redirect("/api/auth/register");
-  }
+  // if (!user) {
+  //   return redirect("/api/auth/register");
+  // }
 
   return user;
 }

@@ -120,7 +120,7 @@ export const createPost = async (data: PostFormData): Promise<void> => {
         content: data.content,
         imageUrl: data.imageUrl,
         ingredients: data.ingredients,
-        authorId: user?.id,
+        authorId: user?.id ?? "",
         authorName: user?.given_name ?? "",
         authorImage: user?.picture ?? "",
         category: data.category,
@@ -137,7 +137,8 @@ export const getPostsByUserId = async (userId: string) => {
   try {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
-    return await prisma.blogPost.findMany({
+
+    return prisma.blogPost.findMany({
       where: {
         authorId: userId,
       },
@@ -209,16 +210,18 @@ export const deletePost = async (post: Post): Promise<void> => {
 export const markPostAsSeen = async (postId: string) => {
   try {
     const user = await requireUser();
-    await prisma.postSeen.upsert({
-      where: {
-        postId_userId: { postId, userId: user.id },
-      },
-      update: {}, // if exists, do nothing
-      create: {
-        postId,
-        userId: user.id,
-      },
-    });
+    if (user) {
+      await prisma.postSeen.upsert({
+        where: {
+          postId_userId: { postId, userId: user.id },
+        },
+        update: {}, // if exists, do nothing
+        create: {
+          postId,
+          userId: user.id,
+        },
+      });
+    }
   } catch (error) {
     console.error("Error marking post as seen:", error);
     throw error;
@@ -228,16 +231,18 @@ export const markPostAsSeen = async (postId: string) => {
 export const markPostAsFavorite = async (postId: string) => {
   try {
     const user = await requireUser();
-    await prisma.favoritePost.upsert({
-      where: {
-        postId_userId: { postId, userId: user.id },
-      },
-      update: {}, // if exists, do nothing
-      create: {
-        postId,
-        userId: user.id,
-      },
-    });
+    if (user) {
+      await prisma.favoritePost.upsert({
+        where: {
+          postId_userId: { postId, userId: user.id },
+        },
+        update: {}, // if exists, do nothing
+        create: {
+          postId,
+          userId: user.id,
+        },
+      });
+    }
   } catch (error) {
     console.error("Error marking post as favorite:", error);
     throw error;
@@ -247,9 +252,11 @@ export const markPostAsFavorite = async (postId: string) => {
 export const unmarkPostAsFavorite = async (postId: string) => {
   try {
     const user = await requireUser();
-    await prisma.favoritePost.deleteMany({
-      where: { postId, userId: user.id },
-    });
+    if (user) {
+      await prisma.favoritePost.deleteMany({
+        where: { postId, userId: user.id },
+      });
+    }
   } catch (error) {
     console.error("Error unmarking post as favorite:", error);
     throw error;
@@ -262,7 +269,7 @@ export const createComment = async (postId: string, comment: string) => {
     await prisma.comment.create({
       data: {
         content: comment,
-        authorId: user?.id,
+        authorId: user?.id ?? "",
         authorName: user?.given_name ?? "",
         authorImage: user?.picture ?? "",
         postId,

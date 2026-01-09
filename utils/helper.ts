@@ -64,10 +64,6 @@ export const getErrorMessage = (
   return error?.message;
 };
 
-export const scrollInto = (id: string) => {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-};
-
 export function minutesToHours(minutes: number) {
   if (minutes <= 0) return "";
 

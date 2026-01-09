@@ -11,6 +11,9 @@ import { Plus } from "lucide-react";
 const Dashboard = async () => {
   const user = await requireUser();
   const queryClient = getQueryClient();
+  if (!user) {
+    return null;
+  }
 
   await queryClient.prefetchQuery({
     queryKey: [QUERY_KEYS.USER_POSTS, user.id],

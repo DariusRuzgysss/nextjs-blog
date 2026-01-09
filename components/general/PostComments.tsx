@@ -1,13 +1,14 @@
 import { Post } from "@/app/types";
 import { PostMeta } from "./PostMeta";
 import ManagePostComment from "./ManagePostComment";
+import { requireUser } from "@/lib/auth";
 
 type Props = {
   post: Post;
-  isEditable: boolean;
 };
 
-const PostComments = ({ post, isEditable }: Props) => {
+const PostComments = async ({ post }: Props) => {
+  const user = await requireUser();
   return (
     <div className="flex flex-col">
       {post.comments?.length ? (
@@ -26,7 +27,7 @@ const PostComments = ({ post, isEditable }: Props) => {
                 />
                 <p>{comment.content}</p>
               </div>
-              {isEditable && (
+              {comment.authorId === user?.id && (
                 <ManagePostComment post={post} commentId={comment.id} />
               )}
             </div>

@@ -23,7 +23,7 @@ const CommentsField = ({ postId }: { postId: string }) => {
     undefined,
     createComment,
     [],
-    () => {},
+    undefined,
     "Successfully commented"
   );
 
