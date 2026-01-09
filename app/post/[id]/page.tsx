@@ -66,7 +66,7 @@ const PostRoute = async ({ params }: { params: Params }) => {
         </div>
         <div className="flex flex-col items-center justify-center">
           <Button
-            className="uppercase text-[18px] active:border border-(--primary-color-2)"
+            className="uppercase text-[18px] active:border border-(--primaryColor2)"
             variant="primary"
           >
             Recipe

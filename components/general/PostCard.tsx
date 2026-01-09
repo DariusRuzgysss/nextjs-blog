@@ -125,7 +125,7 @@ const PostCard = ({ post }: { post: Post }) => {
       <Link
         href={`post/${post.id}`}
         onClick={handleClick}
-        className="block w-full h-full"
+        className="block w-full h-full active:bg-amber-200 lg:active:bg-transparent"
       >
         <div className="relative h-60 w-full overflow-hidden">
           <Image

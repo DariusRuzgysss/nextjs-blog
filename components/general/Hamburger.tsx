@@ -51,7 +51,7 @@ export function Hamburger() {
                   <Link
                     href={item.href}
                     className={clsx(
-                      "text-[18px] font-medium px-4",
+                      "text-[18px] font-medium px-4 active:text-amber-200 lg:active:text-transparent",
                       isActive ? "text-(--primary-color-3)" : "text-background"
                     )}
                   >
@@ -67,17 +67,32 @@ export function Hamburger() {
           {user ? (
             <>
               <p className="text-background text-center">{user.given_name}</p>
-              <LogoutLink className={buttonVariants({ variant: "primary" })}>
+              <LogoutLink
+                className={clsx(
+                  buttonVariants({ variant: "primary" }),
+                  "active:bg-amber-200 lg:active:bg-transparent"
+                )}
+              >
                 Logout
               </LogoutLink>
             </>
           ) : isLoading ? null : (
             <>
-              <LoginLink className={buttonVariants({ variant: "default" })}>
+              <LoginLink
+                className={clsx(
+                  buttonVariants({ variant: "default" }),
+                  "active:bg-amber-200 lg:active:bg-transparent"
+                )}
+              >
                 Login
               </LoginLink>
 
-              <RegisterLink className={buttonVariants({ variant: "primary" })}>
+              <RegisterLink
+                className={clsx(
+                  buttonVariants({ variant: "primary" }),
+                  "active:bg-amber-200 lg:active:bg-transparent"
+                )}
+              >
                 Sign up
               </RegisterLink>
             </>

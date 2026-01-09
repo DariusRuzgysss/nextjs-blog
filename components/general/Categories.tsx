@@ -32,7 +32,7 @@ const Categories = () => {
         <div
           key={recipe.value}
           onClick={() => onSelect(recipe.value)}
-          className={`uppercase cursor-pointer rounded-3xl border px-6 py-3 transition ${
+          className={`uppercase cursor-pointer rounded-3xl border px-6 py-3 transition active:bg-amber-200 lg:active:bg-transparent ${
             isActive
               ? "text-(--dark) bg-(--primaryColor1) border-(--dark)"
               : "border-(--dark)/40  text-(--dark)/40 hover:text-(--dark)"

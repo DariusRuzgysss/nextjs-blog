@@ -29,7 +29,12 @@ export function AppBreadcrumb({ items, separator = "/" }: AppBreadcrumbProps) {
             <BreadcrumbItem key={index}>
               {item.href && !isLast ? (
                 <BreadcrumbLink asChild>
-                  <Link href={item.href}>{item.label}</Link>
+                  <Link
+                    className="active:bg-amber-200 lg:active:bg-transparent"
+                    href={item.href}
+                  >
+                    {item.label}
+                  </Link>
                 </BreadcrumbLink>
               ) : (
                 <BreadcrumbPage>{item.label}</BreadcrumbPage>

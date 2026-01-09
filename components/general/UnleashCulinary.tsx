@@ -12,7 +12,7 @@ const UnleashCulinary = () => {
         aroma of our passion for cooking fill your kitchen
       </p>
       <Button
-        className="uppercase active:border border-(--primary-color-2)"
+        className="uppercase active:border border-(--primaryColor2)"
         variant="primary"
       >
         Explore recipes
