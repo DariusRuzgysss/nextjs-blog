@@ -45,7 +45,7 @@ const PostCard = ({ post }: { post: Post }) => {
     "Saved to your favorites"
   );
 
-  const isNew = user && !isAuthor && (post.postSeens?.length ?? 0) === 0;
+  const isNew = isLogged && !isAuthor && (post.postSeens?.length ?? 0) === 0;
   const isFavorite = Boolean(post.favoritePosts?.length);
 
   const preparationTime = useMemo(() => {
