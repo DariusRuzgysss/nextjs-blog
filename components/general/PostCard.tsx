@@ -3,7 +3,7 @@ import { Post, RecipeCategory } from "@/app/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import {
   markPostAsFavorite,
@@ -16,6 +16,7 @@ import { QUERY_KEYS } from "@/utils/constants";
 import { Timer } from "lucide-react";
 import { minutesToHours } from "@/utils/helper";
 import { PostMeta } from "./PostMeta";
+import { motion } from "framer-motion";
 
 const PostCard = ({ post }: { post: Post }) => {
   const { user } = useKindeBrowserClient();
@@ -48,9 +49,7 @@ const PostCard = ({ post }: { post: Post }) => {
   const isNew = isLogged && !isAuthor && (post.postSeens?.length ?? 0) === 0;
   const isFavorite = Boolean(post.favoritePosts?.length);
 
-  const preparationTime = useMemo(() => {
-    return minutesToHours(post.preparationTime);
-  }, [post.preparationTime]);
+  const preparationTime = minutesToHours(post.preparationTime);
 
   const handleClick = useCallback(() => {
     if (post.authorId === user?.id) {
@@ -85,7 +84,13 @@ const PostCard = ({ post }: { post: Post }) => {
   ]);
 
   return (
-    <div className="group relative overflow-hidden rounded-lg border border-(--dark)/16 bg-(--light) shadow-md transition-all hover:shadow-2xl">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.4 }}
+      className="group relative overflow-hidden rounded-lg border border-(--dark)/16 bg-(--light) shadow-md transition-all hover:shadow-2xl"
+    >
       {isNew && (
         <Badge className="absolute z-10 left-1 top-1" variant="destructive">
           New
@@ -161,7 +166,7 @@ const PostCard = ({ post }: { post: Post }) => {
           />
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 };
 

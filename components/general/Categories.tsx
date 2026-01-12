@@ -3,6 +3,7 @@ import { CategoryFilter } from "@/app/types";
 import { recipeCategoryOptions } from "@/utils/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+import AnimationWrapper from "./AnimationWrapper";
 
 const Categories = () => {
   const searchParams = useSearchParams();
@@ -45,18 +46,23 @@ const Categories = () => {
   }, [onSelect, category]);
 
   return (
-    <div className="flex flex-col items-center gap-10 mb-10">
-      <div className="flex flex-col items-center mt-20 max-w-[426px]">
-        <p className="font-bold text-[26px] lg:text-[40px] uppercase text-center">
-          Embark on a journey
-        </p>
-        <p className="font-light lg:text-[16px] text-[14px] text-center text-(--dark)/80">
-          With our diverse collection of recipes we have something to satisfy
-          every palate.
-        </p>
+    <AnimationWrapper
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: 1, x: 0 }}
+    >
+      <div className="flex flex-col items-center gap-10 mb-10">
+        <div className="flex flex-col items-center mt-20 max-w-[426px]">
+          <p className="font-bold text-[26px] lg:text-[40px] uppercase text-center">
+            Embark on a journey
+          </p>
+          <p className="font-light lg:text-[16px] text-[14px] text-center text-(--dark)/80">
+            With our diverse collection of recipes we have something to satisfy
+            every palate.
+          </p>
+        </div>
+        <div className="flex-wrap flex flex-row gap-4">{categoryList()}</div>
       </div>
-      <div className="flex-wrap flex flex-row gap-4">{categoryList()}</div>
-    </div>
+    </AnimationWrapper>
   );
 };
 

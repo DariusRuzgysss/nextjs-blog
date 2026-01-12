@@ -7,6 +7,7 @@ import { usePostsQueryOptions } from "@/hooks/api/usePosts";
 import SkeletonLoader from "./Skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { FilterTypes } from "@/app/types";
+import { AnimatePresence } from "framer-motion";
 
 const PostsClient = ({ filter }: { filter: FilterTypes }) => {
   const { data } = useSuspenseQuery(usePostsQueryOptions(filter));
@@ -19,9 +20,10 @@ const PostsClient = ({ filter }: { filter: FilterTypes }) => {
         id="list"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4"
       >
-        {items.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        <AnimatePresence mode="popLayout"></AnimatePresence>
+        {items.map((post) => {
+          return <PostCard key={post.id} post={post} />;
+        })}
       </div>
       <div className="flex items-center justify-center">
         {items.length === 0 && <p>No posts found.</p>}
