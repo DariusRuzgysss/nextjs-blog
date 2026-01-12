@@ -65,7 +65,7 @@ export const getErrorMessage = (
 };
 
 export function minutesToHours(minutes: number) {
-  if (minutes <= 0) return "";
+  if (minutes <= 0) return "0min.";
 
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;

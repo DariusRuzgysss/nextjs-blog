@@ -28,7 +28,7 @@ const Dashboard = async () => {
         <Link
           className={clsx(
             buttonVariants(),
-            "active:bg-amber-200 lg:active:bg-transparent"
+            "active:bg-active lg:active:bg-transparent"
           )}
           href="/dashboard/create"
         >

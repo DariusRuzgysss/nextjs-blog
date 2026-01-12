@@ -11,7 +11,6 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-
 import Logo from "./Logo";
 import { navItems } from "@/utils/constants";
 import clsx from "clsx";
@@ -70,7 +69,7 @@ export function Hamburger() {
               <LogoutLink
                 className={clsx(
                   buttonVariants({ variant: "primary" }),
-                  "active:bg-amber-200 lg:active:bg-transparent"
+                  "active:bg-active lg:active:bg-transparent"
                 )}
               >
                 Logout
@@ -81,7 +80,7 @@ export function Hamburger() {
               <LoginLink
                 className={clsx(
                   buttonVariants({ variant: "default" }),
-                  "active:bg-amber-200 lg:active:bg-transparent"
+                  "active:bg-active lg:active:bg-transparent"
                 )}
               >
                 Login
@@ -90,7 +89,7 @@ export function Hamburger() {
               <RegisterLink
                 className={clsx(
                   buttonVariants({ variant: "primary" }),
-                  "active:bg-amber-200 lg:active:bg-transparent"
+                  "active:bg-active lg:active:bg-transparent"
                 )}
               >
                 Sign up

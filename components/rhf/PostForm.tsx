@@ -5,7 +5,7 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import z from "zod";
 import { Button } from "../ui/button";
 import InputField from "./InputField";
-import { Post } from "@/app/types";
+import { Post, PostFormType } from "@/app/types";
 import { ImageField } from "./ImageField";
 import { deleteImage, uploadImage } from "@/features/cloudinary/actions";
 import { updatePost, createPost } from "@/features/post/actions";
@@ -36,20 +36,7 @@ const postSchema = z.object({
 
 export type PostFormData = z.infer<typeof postSchema>;
 
-const PostForm = ({
-  post,
-}: {
-  post?: Pick<
-    Post,
-    | "id"
-    | "title"
-    | "content"
-    | "imageUrl"
-    | "category"
-    | "ingredients"
-    | "preparationTime"
-  >;
-}) => {
+const PostForm = ({ post }: { post?: PostFormType }) => {
   const router = useRouter();
   const progress = useProgress();
 

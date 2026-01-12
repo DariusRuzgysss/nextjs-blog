@@ -18,7 +18,7 @@ const MenuBar = () => {
               "text-[18px] font-medium",
               isActive
                 ? "text-(--dark) border-b-4 border-(--primary-color-3)"
-                : "text-(--dark)/24"
+                : "text-(--dark)/24 hover:text-active"
             )}
           >
             {item.name}

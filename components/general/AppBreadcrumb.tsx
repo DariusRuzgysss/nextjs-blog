@@ -30,7 +30,7 @@ export function AppBreadcrumb({ items, separator = "/" }: AppBreadcrumbProps) {
               {item.href && !isLast ? (
                 <BreadcrumbLink asChild>
                   <Link
-                    className="active:bg-amber-200 lg:active:bg-transparent"
+                    className="active:bg-active lg:active:bg-transparent"
                     href={item.href}
                   >
                     {item.label}

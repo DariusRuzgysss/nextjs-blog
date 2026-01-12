@@ -45,14 +45,8 @@ const PostCard = ({ post }: { post: Post }) => {
     "Saved to your favorites"
   );
 
-  const isNew = useMemo(
-    () => post.postSeens && !post.postSeens.length && !isAuthor,
-    [post.postSeens, isAuthor]
-  );
-  const isFavorite = useMemo(
-    () => post.favoritePosts && post.favoritePosts.length > 0,
-    [post.favoritePosts]
-  );
+  const isNew = !isAuthor && (post.postSeens?.length ?? 0) === 0;
+  const isFavorite = Boolean(post.favoritePosts?.length);
 
   const preparationTime = useMemo(() => {
     return minutesToHours(post.preparationTime);
@@ -62,20 +56,19 @@ const PostCard = ({ post }: { post: Post }) => {
     if (post.authorId === user?.id) {
       return;
     }
-    if (
+    const hasSeen =
       user?.id &&
-      !post.postSeens?.find((p) => p.postId === post.id && p.userId === user.id)
-    ) {
+      !post.postSeens?.some(
+        (p) => p.postId === post.id && p.userId === user.id
+      );
+    if (hasSeen) {
       markPostAsSeenMutation.mutateAsync({ id: post.id, data: null });
     }
   }, [post.authorId, post.postSeens, post.id, user, markPostAsSeenMutation]);
 
   const onClickFavorite = useCallback(async () => {
     setFavoringPostId(post.id);
-    if (
-      post.favoritePosts?.length &&
-      post.favoritePosts.some((fav) => fav.postId === post.id)
-    ) {
+    if (post.favoritePosts?.some((fav) => fav.postId === post.id)) {
       await unmarkPostAsFavoriteMutation.mutateAsync({
         id: post.id,
         data: null,
@@ -125,9 +118,9 @@ const PostCard = ({ post }: { post: Post }) => {
       <Link
         href={`post/${post.id}`}
         onClick={handleClick}
-        className="block w-full h-full active:bg-amber-200 lg:active:bg-transparent"
+        className="block w-full h-full active:bg-active lg:active:bg-transparent"
       >
-        <div className="relative h-60 w-full overflow-hidden">
+        <div className="rounded-br-[40px] relative h-60 w-full overflow-hidden">
           <Image
             src={post.imageUrl || "/images/no image.jpg"}
             alt="post"

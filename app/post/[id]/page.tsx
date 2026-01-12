@@ -38,7 +38,7 @@ const PostRoute = async ({ params }: { params: Params }) => {
               createdAt={post.createdAt}
               authorName={post.authorName}
             />
-            {post.comments.length && (
+            {post.comments.length > 0 && (
               <div className="flex flex-row gap-3 text-(--dark)/70">
                 <Icon
                   icon="material-symbols:mode-comment-outline"
@@ -114,11 +114,11 @@ const PostRoute = async ({ params }: { params: Params }) => {
               ))}
             </ul>
           </div>
-          <div className="grid gap-4">
+          <div className="grid gap-4 self-start">
             <p className="uppercase text-[24px] font-semibold">Instructions</p>
-            <article className="lg:text-[18px] text-[16px] font-light text-(--dark)/90 tracking-wider">
+            <p className="lg:text-[18px] text-[16px] font-light text-(--dark)/90 tracking-wider">
               {post.content}
-            </article>
+            </p>
           </div>
         </div>
         <div className="flex flex-col gap-6">

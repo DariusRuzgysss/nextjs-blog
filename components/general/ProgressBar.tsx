@@ -9,10 +9,7 @@ const ProgressBar = () => {
 
   return (
     <Activity mode={showProgress ? "visible" : "hidden"}>
-      <Progress
-        value={value}
-        className="h-1 rounded-none [&>div]:bg-blue-900"
-      />
+      <Progress value={value} className="h-1 rounded-none [&>div]:bg-active" />
     </Activity>
   );
 };

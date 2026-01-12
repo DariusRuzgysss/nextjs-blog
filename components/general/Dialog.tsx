@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 import { useTransition } from "react";
 
@@ -33,7 +33,7 @@ export function CustomDialog({ title, description, onConfirm }: Props) {
         <Icon
           icon="mdi:trash"
           fontSize={24}
-          className="cursor-pointer text-red-600 hover:opacity-80"
+          className="cursor-pointer text-destructive hover:opacity-80"
         />
       </DialogTrigger>
       <DialogContent>
@@ -44,7 +44,7 @@ export function CustomDialog({ title, description, onConfirm }: Props) {
 
         <form action={handleDelete} className="flex justify-end gap-3 mt-6">
           <Button variant="primary" disabled={isPending}>
-            {isPending ? "Processing..." : "Confirm"}
+            {isPending ? "Confirming..." : "Confirm"}
           </Button>
         </form>
       </DialogContent>

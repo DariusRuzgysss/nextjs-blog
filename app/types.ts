@@ -65,6 +65,17 @@ export type Post = {
   updatedAt: Date;
 };
 
+export type PostFormType = Pick<
+  Post,
+  | "id"
+  | "title"
+  | "content"
+  | "imageUrl"
+  | "category"
+  | "ingredients"
+  | "preparationTime"
+>;
+
 type PostSeen = {
   id: string;
   userId: string;

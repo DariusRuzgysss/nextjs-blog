@@ -41,7 +41,7 @@ const PaginationComponent = ({ totalPages }: Props) => {
         variant="outline"
         size="icon"
         disabled={currentPage <= 1}
-        className="cursor-pointer"
+        className="cursor-pointer border-ring/20"
         onClick={() => setUrlParams((currentPage - 1).toString(), "page")}
       >
         <Icon icon="material-symbols:chevron-left" fontSize={24} />
@@ -56,7 +56,7 @@ const PaginationComponent = ({ totalPages }: Props) => {
         size="icon"
         disabled={currentPage >= totalPages}
         onClick={() => setUrlParams((currentPage + 1).toString(), "page")}
-        className="cursor-pointer active:border-amber-500"
+        className="cursor-pointer border-ring/20"
       >
         <Icon icon="material-symbols:chevron-right" fontSize={24} />
       </Button>
@@ -65,7 +65,7 @@ const PaginationComponent = ({ totalPages }: Props) => {
         onValueChange={(val) => setUrlParams(val, "limit", true)}
         defaultValue="6"
       >
-        <SelectTrigger className="w-20  border-gray-400">
+        <SelectTrigger className="w-20 border-ring/20">
           <SelectValue placeholder="Posts per page" />
         </SelectTrigger>
         <SelectContent>

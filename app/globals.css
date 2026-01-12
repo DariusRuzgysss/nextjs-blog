@@ -6,6 +6,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-active: var(--active);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -53,6 +54,7 @@
   --primaryColor2: #F29C33;
   --destructive: oklch(0.577 0.245 27.325);
   --light: #FFFBF2;
+  --active: oklch(0.769 0.188 70.08);
   --foreground: oklch(0.13 0.028 261.692);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.13 0.028 261.692);
