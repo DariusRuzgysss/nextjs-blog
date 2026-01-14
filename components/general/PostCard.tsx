@@ -147,7 +147,7 @@ const PostCard = ({ post }: { post: Post }) => {
           </p>
           <div className="flex items-center justify-between mb-5 mt-5">
             {preparationTime ? (
-              <div className="flex flex-row gap-4">
+              <div className="flex shrink-0 flex-row gap-4 mr-5 items-center">
                 <Timer />
                 <div className="flex flex-row items-center gap-1">
                   {preparationTime}
@@ -156,7 +156,7 @@ const PostCard = ({ post }: { post: Post }) => {
             ) : (
               <div />
             )}
-            <div className="rounded-3xl border border-(--dark) px-6 py-3 font-medium uppercase text-[14px] text-(--dark) hover:border-(--primary-color-3)">
+            <div className="rounded-3xl border border-(--dark) sm:px-3 px-6 py-3 font-medium uppercase text-center text-[14px] text-(--dark) hover:border-(--primary-color-3)">
               {t("viewRecipe")}
             </div>
           </div>

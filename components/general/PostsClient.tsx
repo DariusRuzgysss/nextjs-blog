@@ -13,7 +13,6 @@ import { useTranslations } from "next-intl";
 const PostsClient = ({ filter }: { filter: FilterTypes }) => {
   const t = useTranslations();
   const { data } = useSuspenseQuery(usePostsQueryOptions(filter));
-
   const { items, totalPages } = data;
 
   return (
