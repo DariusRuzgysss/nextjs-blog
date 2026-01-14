@@ -156,7 +156,7 @@ const PostCard = ({ post }: { post: Post }) => {
             ) : (
               <div />
             )}
-            <div className="rounded-3xl border border-(--dark) sm:px-3 px-6 py-3 font-medium uppercase text-center text-[14px] text-(--dark) hover:border-(--primary-color-3)">
+            <div className="rounded-3xl border border-(--dark) px-3 lg:px-6 py-3 font-medium uppercase text-center text-[12px] lg:text-[14px] text-(--dark) hover:border-(--primary-color-3)">
               {t("viewRecipe")}
             </div>
           </div>
