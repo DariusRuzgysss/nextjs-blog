@@ -88,7 +88,6 @@ export function getInitialLocale() {
 
   if (cookieLocale) return cookieLocale;
 
-  const browserLocale = navigator.language.slice(0, 2);
-  document.cookie = `LOCALE=${browserLocale}; `;
-  return browserLocale;
+  document.cookie = "LOCALE=en; ";
+  return "en";
 }
