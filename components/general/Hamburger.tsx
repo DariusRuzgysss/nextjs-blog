@@ -92,7 +92,7 @@ export function Hamburger() {
                   "active:bg-active lg:active:bg-transparent"
                 )}
               >
-                Login
+                {t("Actions.login")}
               </LoginLink>
 
               <RegisterLink
@@ -101,7 +101,7 @@ export function Hamburger() {
                   "active:bg-active lg:active:bg-transparent"
                 )}
               >
-                Sign up
+                {t("Actions.signUp")}
               </RegisterLink>
             </>
           )}
