@@ -17,8 +17,10 @@ import { Timer } from "lucide-react";
 import { minutesToHours } from "@/utils/helper";
 import { PostMeta } from "./PostMeta";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const PostCard = ({ post }: { post: Post }) => {
+  const t = useTranslations("PostCard");
   const { user } = useKindeBrowserClient();
   const [favoringPostId, setFavoringPostId] = useState<string | null>(null);
   const isAuthor = post.authorId === user?.id;
@@ -93,7 +95,7 @@ const PostCard = ({ post }: { post: Post }) => {
     >
       {isNew && (
         <Badge className="absolute z-10 left-1 top-1" variant="destructive">
-          New
+          {t("new")}
         </Badge>
       )}
       {post.category === RecipeCategory.Vegan && (
@@ -155,7 +157,7 @@ const PostCard = ({ post }: { post: Post }) => {
               <div />
             )}
             <div className="rounded-3xl border border-(--dark) px-6 py-3 font-medium uppercase text-[14px] text-(--dark) hover:border-(--primary-color-3)">
-              View Recipe
+              {t("viewRecipe")}
             </div>
           </div>
           <PostMeta

@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import InputField from "./InputField";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { createComment } from "@/features/post/actions";
+import { useTranslations } from "next-intl";
 
 type FormValues = {
   comment: string;
 };
 
 const CommentsField = ({ postId }: { postId: string }) => {
+  const t = useTranslations();
   const methods = useForm<FormValues>({
     defaultValues: {
       comment: "",
@@ -24,7 +26,7 @@ const CommentsField = ({ postId }: { postId: string }) => {
     createComment,
     [],
     undefined,
-    "Successfully commented"
+    t("Toasts.commentAdded")
   );
 
   const submitHandler: SubmitHandler<FormValues> = async (data) => {
@@ -41,12 +43,12 @@ const CommentsField = ({ postId }: { postId: string }) => {
         <InputField
           inputType="textarea"
           name="comment"
-          placeholder="Write your comment..."
-          label="Add a comment"
+          placeholder={t("PostPage.leaveComment")}
+          label={t("PostPage.addComment")}
         />
 
         <Button type="submit" disabled={isSubmitting} className="self-end">
-          {isSubmitting ? "Posting..." : "Post Comment"}
+          {isSubmitting ? t("PostPage.posting") : t("PostPage.postComment")}
         </Button>
       </form>
     </FormProvider>

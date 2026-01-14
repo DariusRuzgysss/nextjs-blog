@@ -8,6 +8,7 @@ import { getQueryClient } from "../../utils/getQueryClient";
 import { QUERY_KEYS } from "@/utils/constants";
 import { Plus } from "lucide-react";
 import clsx from "clsx";
+import TitleClient from "@/components/general/TitleClient";
 
 const Dashboard = async () => {
   const user = await requireUser();
@@ -24,7 +25,11 @@ const Dashboard = async () => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-medium">My Recipes</h2>
+        <TitleClient
+          tag="h2"
+          className="text-xl font-medium"
+          title="MyRecipesPage.myRecipes"
+        />
         <Link
           className={clsx(
             buttonVariants(),
@@ -33,7 +38,7 @@ const Dashboard = async () => {
           href="/dashboard/create"
         >
           <Plus />
-          New
+          <TitleClient title="Actions.new" />
         </Link>
       </div>
       <UserPostsClient userId={user.id} />

@@ -5,12 +5,14 @@ import { Post } from "@/app/types";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Props = {
   post: Post;
 };
 
 const DeletePostClient = ({ post }: Props) => {
+  const t = useTranslations();
   const { user } = useKindeBrowserClient();
   const router = useRouter();
   const deletePostMutation = useQueryMutate<null, Post, void>(
@@ -18,12 +20,12 @@ const DeletePostClient = ({ post }: Props) => {
     undefined,
     [],
     () => router.push("/dashboard"),
-    "Successfully deleted"
+    t("Toasts.recipeDeleted")
   );
   return (
     <CustomDialog
-      title={`Are you sure want to delete "${post.title}" ?`}
-      description="Couldn't be recovered after deletion"
+      title="General.confirmDelete"
+      description="General.couldNotBeRecovered"
       onConfirm={() => {
         if (user) {
           deletePostMutation.mutateAsync({ id: null, data: post });

@@ -77,3 +77,18 @@ export function minutesToHours(minutes: number) {
 
   return parts.join(" ");
 }
+
+export function getInitialLocale() {
+  if (typeof document === "undefined") return "en";
+
+  const cookieLocale = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("LOCALE="))
+    ?.split("=")[1];
+
+  if (cookieLocale) return cookieLocale;
+
+  const browserLocale = navigator.language.slice(0, 2);
+  document.cookie = `LOCALE=${browserLocale}; `;
+  return browserLocale;
+}

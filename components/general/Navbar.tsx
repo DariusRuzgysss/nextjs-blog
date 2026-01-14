@@ -9,8 +9,11 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { Hamburger } from "./Hamburger";
 import Logo from "./Logo";
 import MenuBar from "./MenuBarClient";
+import { LanguageSelect } from "./LanguageSelect";
+import { useTranslations } from "next-intl";
 
 const Navbar = () => {
+  const t = useTranslations();
   const { user, isLoading } = useKindeBrowserClient();
 
   return (
@@ -24,22 +27,23 @@ const Navbar = () => {
               <>
                 <p>{user.given_name}</p>
                 <LogoutLink className={buttonVariants({ variant: "primary" })}>
-                  Logout
+                  {t("Actions.logout")}
                 </LogoutLink>
               </>
             ) : isLoading ? null : (
               <div className="flex flex-row gap-4 items-center">
                 <LoginLink className={buttonVariants({ variant: "secondary" })}>
-                  Login
+                  {t("Actions.login")}
                 </LoginLink>
 
                 <RegisterLink
                   className={buttonVariants({ variant: "primary" })}
                 >
-                  Sign up
+                  {t("Actions.signUp")}
                 </RegisterLink>
               </div>
             )}
+            <LanguageSelect />
           </div>
 
           <div className="flex lg:hidden">

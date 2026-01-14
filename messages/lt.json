@@ -1,0 +1,108 @@
+{
+    "Navbar": {
+        "home": "Pagrindinis",
+        "myRecipes": "Mano receptai"
+    },
+    "Actions": {
+        "save": "Išsaugoti",
+        "saving": "Išsaugoma...",
+        "update": "Atnaujinti",
+        "updating": "Atnaujinama...",
+        "signUp": "Registruotis",
+        "confirm": "Patvirtinti",
+        "confirming": "Patvirtinama...",
+        "logout": "Atsijungti",
+        "login": "Prisijungti",
+        "new": "Naujas",
+        "addIngredient": "Pridėti ingredientą"
+    },
+    "General": {
+        "loading": "Kraunama...",
+        "noRecipesFound": "Receptų nerasta",
+        "confirmDelete": "Ar tikrai norite ištrinti šį receptą?",
+        "couldNotBeRecovered": "Po ištrynimo nebus galima atkurti",
+        "yes": "Taip",
+        "no": "Ne",
+        "pageNotFound": "Puslapis nerastas",
+        "page": "Puslapis",
+        "of": "iš",
+        "recipe": "Receptas",
+        "recipes": "Receptai",
+        "newest": "Naujausi",
+        "oldest": "Seniausi",
+        "favorite": "Mėgstami"
+    },
+    "Filters": {
+        "newest": "Naujausi pirmiausia",
+        "oldest": "Seniausi pirmiausia",
+        "favorite": "Mėgstami",
+        "searchPlaceholder": "Ieškoti receptų...",
+        "sortBy": "Rūšiuoti pagal"
+    },
+    "Toasts": {
+        "recipeAdded": "Sėkmingai pridėta!",
+        "recipeUpdated": "Sėkmingai atnaujinta!",
+        "recipeDeleted": "Sėkmingai ištrinta!",
+        "commentAdded": "Komentaras sėkmingai pridėtas!",
+        "errorOccurred": "Įvyko klaida. Bandykite dar kartą."
+    },
+    "HomePage": {
+        "unleashCulinary": "Atskleiskite kulinarinį",
+        "excellence": "meistriškumą",
+        "unleashCulinaryExcellenceDesc": "Atraskite skonių pasaulį, rankų darbo receptus ir leiskite mūsų aistrai gaminti užpildyti jūsų virtuvę aromatais",
+        "exploreRecipes": "Naršyti receptus",
+        "embarkOnJourney": "Leiskitės į kelionę",
+        "embarkOnJourneyDesc": "Mūsų įvairi receptų kolekcija patenkins kiekvieno skonį",
+        "categories": {
+            "breakfast": "Pusryčiai",
+            "lunch": "Pietūs",
+            "dinner": "Vakarienė",
+            "dessert": "Desertai",
+            "all": "Visi",
+            "quickBite": "Greitas užkandis",
+            "vegan": "Veganiški"
+        }
+    },
+    "MyRecipesPage": {
+        "myRecipes": "Mano receptai",
+        "noRecipesYet": "Dar nepridėjote jokių receptų.",
+        "startAdding": "Pradėkite pridėti savo mėgstamus receptus dabar!"
+    },
+    "PostPage": {
+        "description": "Sveiki atvykę į „Cooks Delight“, kur kulinarinės svajonės tampa realybe! Šiandien leidžiamės į skonių kelionę su patiekalu, kuris pakylės jūsų valgymo patirtį",
+        "recipe": "Receptas",
+        "comments": "Komentarai",
+        "addComment": "Pridėti komentarą",
+        "ingredients": "Ingredientai",
+        "instructions": "Instrukcijos",
+        "postComment": "Paskelbti komentarą",
+        "posting": "Skelbiama...",
+        "leaveComment": "Palikite komentarą...",
+        "noComments": "Komentarų dar nėra. Būkite pirmas!"
+    },
+    "PostCard": {
+        "viewRecipe": "Peržiūrėti receptą",
+        "new": "Naujas"
+    },
+    "ManageRecipePage": {
+        "createYourRecipe": "Sukurkite savo receptą",
+        "createYourRecipeDesc": "Pasidalinkite savo kulinariniais kūriniais su pasauliu.",
+        "editRecipe": "Redaguoti receptą",
+        "editRecipeDesc": "Užpildykite naują informaciją",
+        "recipeTitle": "Recepto pavadinimas",
+        "ingredient": "Ingredientas",
+        "instructions": "Instrukcijos",
+        "uploadImage": "Įkelti paveikslėlį",
+        "chooseImage": "Pasirinkti paveikslėlį",
+        "preparationTime": "Paruošimo laikas",
+        "category": "Kategorija",
+        "selectCategory": "Pasirinkite kategoriją",
+        "selectOption": "Pasirinkite parinktį",
+        "requiredFields": {
+            "title": "Pavadinimas yra privalomas",
+            "category": "Kategorija yra privaloma",
+            "ingredients": "Reikalingas bent vienas ingredientas",
+            "instructions": "Instrukcijos yra privalomos"
+        }
+    }
+}

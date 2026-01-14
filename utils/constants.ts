@@ -6,19 +6,24 @@ export const QUERY_KEYS = {
 };
 
 export const navItems = [
-  { name: "Home", href: "/" },
-  { name: "My Recipes", href: "/dashboard" },
+  { name: "home", href: "/" },
+  { name: "myRecipes", href: "/dashboard" },
+];
+
+export const languages = [
+  { code: "en", label: "En" },
+  { code: "lt", label: "Lt" },
 ];
 
 export const recipeCategoryOptions: {
   label: string;
   value: CategoryFilter;
 }[] = [
-  { label: "All", value: "all" },
-  { label: "Vegan", value: RecipeCategory.Vegan },
-  { label: "Breakfast", value: RecipeCategory.Breakfast },
-  { label: "Lunch", value: RecipeCategory.Lunch },
-  { label: "Dinner", value: RecipeCategory.Dinner },
-  { label: "Dessert", value: RecipeCategory.Dessert },
-  { label: "Quick Bite", value: RecipeCategory.QuickBite },
+  { label: "HomePage.categories.all", value: "all" },
+  { label: "HomePage.categories.vegan", value: RecipeCategory.Vegan },
+  { label: "HomePage.categories.breakfast", value: RecipeCategory.Breakfast },
+  { label: "HomePage.categories.lunch", value: RecipeCategory.Lunch },
+  { label: "HomePage.categories.dinner", value: RecipeCategory.Dinner },
+  { label: "HomePage.categories.dessert", value: RecipeCategory.Dessert },
+  { label: "HomePage.categories.quickBite", value: RecipeCategory.QuickBite },
 ];

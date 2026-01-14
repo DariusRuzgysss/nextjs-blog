@@ -11,8 +11,10 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { SortOptions } from "@/app/types";
+import { useTranslations } from "next-intl";
 
 const SortSelect = () => {
+  const t = useTranslations("Filters");
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -42,11 +44,17 @@ const SortSelect = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Sort by</SelectLabel>
-          <SelectItem value={SortOptions.NEWEST_FIRST}>Newest first</SelectItem>
-          <SelectItem value={SortOptions.OLDEST_FIRST}>Oldest first</SelectItem>
+          <SelectLabel>{t("sortBy")}</SelectLabel>
+          <SelectItem value={SortOptions.NEWEST_FIRST}>
+            {t("newest")}
+          </SelectItem>
+          <SelectItem value={SortOptions.OLDEST_FIRST}>
+            {t("oldest")}
+          </SelectItem>
           {user && (
-            <SelectItem value={SortOptions.FAVORITE}>Favorite</SelectItem>
+            <SelectItem value={SortOptions.FAVORITE}>
+              {t("favorite")}
+            </SelectItem>
           )}
         </SelectGroup>
       </SelectContent>

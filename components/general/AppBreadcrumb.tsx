@@ -7,6 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useTranslations } from "next-intl";
 
 export type BreadcrumbItemType = {
   label: string;
@@ -19,6 +20,7 @@ type AppBreadcrumbProps = {
 };
 
 export function AppBreadcrumb({ items, separator = "/" }: AppBreadcrumbProps) {
+  const t = useTranslations();
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -33,11 +35,11 @@ export function AppBreadcrumb({ items, separator = "/" }: AppBreadcrumbProps) {
                     className="active:bg-active lg:active:bg-transparent"
                     href={item.href}
                   >
-                    {item.label}
+                    {t(item.label)}
                   </Link>
                 </BreadcrumbLink>
               ) : (
-                <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                <BreadcrumbPage>{t(item.label)}</BreadcrumbPage>
               )}
 
               {!isLast && (

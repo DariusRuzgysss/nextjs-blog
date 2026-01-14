@@ -1,0 +1,108 @@
+{
+    "Navbar": {
+        "home": "Home",
+        "myRecipes": "My Recipes"
+    },
+    "Actions": {
+        "save": "Save",
+        "saving": "Saving...",
+        "update": "Update",
+        "updating": "Updating...",
+        "signUp": "Sign Up",
+        "confirm": "Confirm",
+        "confirming": "Confirming...",
+        "logout": "Logout",
+        "login": "Login",
+        "new": "New",
+        "addIngredient": "Add Ingredient"
+    },
+    "General": {
+        "loading": "Loading...",
+        "noRecipesFound": "No recipes found",
+        "confirmDelete": "Are you sure you want to delete this recipe?",
+        "couldNotBeRecovered": "Couldn't be recovered after deletion",
+        "yes": "Yes",
+        "no": "No",
+        "pageNotFound": "Page Not Found",
+        "page":"Page",
+        "of":"of",
+        "recipe":"Recipe",
+        "recipes":"Recipes",
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "favorite": "Favorite"
+    },
+    "Filters": {
+        "newest": "Newest first",
+        "oldest": "Oldest first",
+        "favorite": "Favorite",
+        "searchPlaceholder": "Search recipes...",
+        "sortBy":"Sort by"
+    },
+    "Toasts": {
+        "recipeAdded": "Successfully added!",
+        "recipeUpdated": "Successfully updated!",
+        "recipeDeleted": "Successfully deleted!",
+        "commentAdded": "Comment added successfully!",
+        "errorOccurred": "An error occurred. Please try again."
+    },
+    "HomePage": {
+        "unleashCulinary": "Unleash Culinary",
+        "excellence": "Excellence",
+        "unleashCulinaryExcellenceDesc": "Explore a world of flavors, discover handcrafted recipes, and let the aroma of our passion for cooking fill your kitchen",
+        "exploreRecipes": "Explore Recipes",
+        "embarkOnJourney": "Embark on a journey",
+        "embarkOnJourneyDesc": "With our diverse collection of recipes we have something to satisfy every palate",
+        "categories": {
+            "breakfast": "Breakfast",
+            "lunch": "Lunch",
+            "dinner": "Dinner",
+            "dessert": "Dessert",
+            "all": "All",
+            "quickBite": "Quick Bite",
+            "vegan": "Vegan"
+        }
+    },
+    "MyRecipesPage": {
+        "myRecipes": "My Recipes",
+        "noRecipesYet": "You haven't added any recipes yet.",
+        "startAdding": "Start adding your favorite recipes now!"
+    },
+    "PostPage": {
+        "description": "Welcome to Cooks Delight, where culinary dreams come alive! Today, we embark on a journey of flavors with a dish that promises to elevate your dining experience",
+        "recipe":"Recipe",
+        "comments":"Comments",
+        "addComment":"Add a Comment",
+        "ingredients":"Ingredients",
+        "instructions":"Instructions",
+        "postComment":"Post Comment",
+        "posting":"Posting...",
+        "leaveComment":"Leave a comment...",
+        "noComments":"No comments yet. Be the first to comment!"
+    },
+    "PostCard": {
+        "viewRecipe": "View Recipe",
+        "new": "New"
+    },
+    "ManageRecipePage": {
+        "createYourRecipe": "Create Your Recipe",
+        "createYourRecipeDesc": "Share your culinary creations with the world.",
+        "editRecipe": "Edit Recipe",
+        "editRecipeDesc": "Fill with a new information",
+        "recipeTitle": "Recipe Title",
+        "ingredient": "Ingredient",
+        "instructions": "Instructions",
+        "uploadImage": "Upload Image",
+        "chooseImage": "Choose Image",
+        "preparationTime": "Preparation Time",
+        "category": "Category",
+        "selectCategory": "Select Category",
+        "selectOption": "Select an option",
+        "requiredFields": {
+            "title": "Title is required",
+            "category": "Category is required",
+            "ingredients": "At least one ingredient is required",
+            "instructions": "Instructions are required"
+        }
+    }
+}

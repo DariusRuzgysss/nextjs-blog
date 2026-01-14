@@ -21,8 +21,10 @@ import {
   RegisterLink,
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
+import { useTranslations } from "next-intl";
 
 export function Hamburger() {
+  const t = useTranslations();
   const { user, isLoading } = useKindeBrowserClient();
   const pathname = usePathname();
   return (
@@ -54,7 +56,7 @@ export function Hamburger() {
                       isActive ? "text-(--primary-color-3)" : "text-background"
                     )}
                   >
-                    {item.name.toUpperCase()}
+                    {t(`Navbar.${item.name}`).toUpperCase()}
                   </Link>
                 </SheetClose>
                 <div className="h-px bg-(--light)/16 mt-4" />
@@ -72,7 +74,7 @@ export function Hamburger() {
                   "active:bg-active lg:active:bg-transparent"
                 )}
               >
-                Logout
+                {t("Actions.logout")}
               </LogoutLink>
             </>
           ) : isLoading ? null : (

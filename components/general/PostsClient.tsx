@@ -8,8 +8,10 @@ import SkeletonLoader from "./Skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { FilterTypes } from "@/app/types";
 import { AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const PostsClient = ({ filter }: { filter: FilterTypes }) => {
+  const t = useTranslations();
   const { data } = useSuspenseQuery(usePostsQueryOptions(filter));
 
   const { items, totalPages } = data;
@@ -25,8 +27,8 @@ const PostsClient = ({ filter }: { filter: FilterTypes }) => {
           return <PostCard key={post.id} post={post} />;
         })}
       </div>
-      <div className="flex items-center justify-center">
-        {items.length === 0 && <p>No posts found.</p>}
+      <div className="flex flex-1 items-center justify-center">
+        {items.length === 0 && <p>{t("General.noRecipesFound")}</p>}
       </div>
       <PaginationComponent totalPages={totalPages} />
     </Suspense>

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   FormControl,
   FormItem,
@@ -14,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { getErrorMessage } from "@/utils/helper";
+import { useTranslations } from "next-intl";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 
 type Option = {
@@ -32,7 +31,7 @@ type FormSelectProps<T extends FieldValues> = {
 export function SelectField<T extends FieldValues>({
   name,
   label,
-  placeholder = "Select an option",
+  placeholder = "ManageRecipePage.selectOption",
   options,
   disabled,
 }: FormSelectProps<T>) {
@@ -40,6 +39,7 @@ export function SelectField<T extends FieldValues>({
     control,
     formState: { errors },
   } = useFormContext();
+  const t = useTranslations();
   const errorMessage = getErrorMessage(errors, name);
   return (
     <Controller
@@ -55,13 +55,13 @@ export function SelectField<T extends FieldValues>({
           >
             <FormControl className="border-(--dark)/20">
               <SelectTrigger>
-                <SelectValue placeholder={placeholder} />
+                <SelectValue placeholder={t(placeholder)} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
               {options.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
-                  {option.label}
+                  {t(option.label)}
                 </SelectItem>
               ))}
             </SelectContent>

@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useTranslations } from "next-intl";
 
 type Props = {
   totalPages: number;
@@ -18,6 +19,7 @@ type Props = {
 const pagesSizeOptions = [6, 12, 60, 120];
 
 const PaginationComponent = ({ totalPages }: Props) => {
+  const t = useTranslations("General");
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -48,7 +50,7 @@ const PaginationComponent = ({ totalPages }: Props) => {
       </Button>
 
       <span className="px-4 text-sm">
-        Page {currentPage} of {totalPages}
+        {t("page")} {currentPage} {t("of")} {totalPages}
       </span>
 
       <Button

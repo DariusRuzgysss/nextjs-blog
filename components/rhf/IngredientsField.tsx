@@ -2,8 +2,10 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { Plus, X } from "lucide-react";
 import { Button } from "../ui/button";
 import InputField from "./InputField";
+import { useTranslations } from "next-intl";
 
 const IngredientsField = () => {
+  const t = useTranslations();
   const { control } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
@@ -20,7 +22,7 @@ const IngredientsField = () => {
               inputType="input"
               type="text"
               name={`ingredients.${index}`}
-              label={`Ingredient ${index + 1} *`}
+              label={`${t("ManageRecipePage.ingredient")} ${index + 1} *`}
             />
           </div>
 
@@ -45,7 +47,7 @@ const IngredientsField = () => {
         onClick={() => append(" ")}
       >
         <Plus className="text-[#EE6352]" />
-        <span>Add ingredient</span>
+        <span>{t("Actions.addIngredient")}</span>
       </Button>
     </div>
   );

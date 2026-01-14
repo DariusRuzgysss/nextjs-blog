@@ -1,35 +1,21 @@
 import { AppBreadcrumb } from "@/components/general/AppBreadcrumb";
-import PostForm from "@/components/rhf/PostForm";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import CardPostForm from "@/components/general/CardPostForm";
 
 const createPostRoute = () => {
   return (
-    <div className="max-w-3xl mx-auto">
+    <main className="max-w-3xl mx-auto">
       <AppBreadcrumb
         items={[
-          { label: "Home", href: "/" },
-          { label: "My Recipes", href: `/dashboard` },
-          { label: "Create Recipe" },
+          { label: "Navbar.home", href: "/" },
+          { label: "Navbar.myRecipes", href: `/dashboard` },
+          { label: "ManageRecipePage.createYourRecipe" },
         ]}
       />
-      <Card className="mt-3">
-        <CardHeader>
-          <CardTitle>Create Your Recipe</CardTitle>
-          <CardDescription>
-            Share your culinary masterpiece with the world
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <PostForm />
-        </CardContent>
-      </Card>
-    </div>
+      <CardPostForm
+        title="ManageRecipePage.createYourRecipe"
+        description="ManageRecipePage.createYourRecipeDesc"
+      />
+    </main>
   );
 };
 

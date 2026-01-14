@@ -1,7 +1,7 @@
 import SearchInput from "@/components/general/SearchInput";
 import SortSelect from "@/components/general/SortSelect";
 import { UrlParams } from "./types";
-import PostsClientClient from "@/components/general/PostsClient";
+import PostsClient from "@/components/general/PostsClient";
 import SortTitle from "@/components/general/SortTitle";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getPosts } from "../features/post/actions";
@@ -33,11 +33,11 @@ export default async function Home(props: { searchParams?: UrlParams }) {
       <div className="grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr] items-center gap-4 mt-4">
         <SortTitle sortBy={sortBy} />
         <div className="grid grid-cols-[1fr_auto] gap-4">
-          <SearchInput placeholder="Search" />
+          <SearchInput />
           <SortSelect />
         </div>
       </div>
-      <PostsClientClient filter={filter} />
+      <PostsClient filter={filter} />
     </HydrationBoundary>
   );
 }

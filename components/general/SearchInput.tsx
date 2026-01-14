@@ -3,6 +3,7 @@ import { ChangeEvent } from "react";
 import { Input } from "../ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Label } from "../ui/label";
+import { useTranslations } from "next-intl";
 
 type Props = {
   label?: string;
@@ -13,10 +14,11 @@ type Props = {
 
 const SearchInput = ({
   label,
-  placeholder,
+  placeholder = "searchPlaceholder",
   className,
   debounce = 400,
 }: Props) => {
+  const t = useTranslations("Filters");
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -40,7 +42,7 @@ const SearchInput = ({
       {label && <Label>{label}</Label>}
       <Input
         type="search"
-        placeholder={placeholder}
+        placeholder={t(placeholder)}
         className={`border-gray-400 ${className}`}
         onChange={handleSearch}
         defaultValue={searchParams.get("query")?.toString()}

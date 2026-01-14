@@ -3,8 +3,10 @@ import { navItems } from "@/utils/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { useTranslations } from "next-intl";
 
 const MenuBar = () => {
+  const t = useTranslations("Navbar");
   const pathname = usePathname();
   return (
     <div className="hidden lg:flex flex-row gap-6">
@@ -21,7 +23,7 @@ const MenuBar = () => {
                 : "text-(--dark)/24 hover:text-active"
             )}
           >
-            {item.name}
+            {t(item.name)}
           </Link>
         );
       })}

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Dialog,
   DialogContent,
@@ -11,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
 import { useTransition } from "react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   title: string;
@@ -19,6 +18,7 @@ type Props = {
 };
 
 export function CustomDialog({ title, description, onConfirm }: Props) {
+  const t = useTranslations();
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
@@ -38,13 +38,13 @@ export function CustomDialog({ title, description, onConfirm }: Props) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          <DialogTitle>{t(title)}</DialogTitle>
+          <DialogDescription>{t(description)}</DialogDescription>
         </DialogHeader>
 
         <form action={handleDelete} className="flex justify-end gap-3 mt-6">
           <Button variant="primary" disabled={isPending}>
-            {isPending ? "Confirming..." : "Confirm"}
+            {isPending ? t("Actions.confirming") : t("Actions.confirm")}
           </Button>
         </form>
       </DialogContent>

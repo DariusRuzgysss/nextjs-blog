@@ -5,7 +5,7 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import z from "zod";
 import { Button } from "../ui/button";
 import InputField from "./InputField";
-import { Post, PostFormType } from "@/app/types";
+import { PostFormType } from "@/app/types";
 import { ImageField } from "./ImageField";
 import { deleteImage, uploadImage } from "@/features/cloudinary/actions";
 import { updatePost, createPost } from "@/features/post/actions";
@@ -18,25 +18,36 @@ import { recipeCategoryOptions } from "@/utils/constants";
 import IngredientsField from "./IngredientsField";
 import ProgressBar from "../general/ProgressBar";
 import { minutesToHours } from "@/utils/helper";
+import { useTranslations } from "next-intl";
 
-const postSchema = z.object({
-  title: z.string().trim().min(1, "Title is required"),
-  content: z.string().trim().min(1, "Instruction is required"),
-  imageUrl: z.string(),
-  preparationTime: z.number().int(),
-  category: z.string().min(1, "Category is required"),
-  ingredients: z
-    .array(z.string().trim().min(1, "Ingredient is required"))
-    .min(1, "At least one ingredient is required"),
-  imageFile: z
-    .instanceof(File)
-    .refine((f) => f.size > 0, "Image file is required")
-    .optional(),
-});
+const postSchema = (t: ReturnType<typeof useTranslations>) =>
+  z.object({
+    title: z.string().trim().min(1, t("ManageRecipePage.requiredFields.title")),
+    content: z
+      .string()
+      .trim()
+      .min(1, t("ManageRecipePage.requiredFields.instructions")),
+    imageUrl: z.string(),
+    preparationTime: z.number().int(),
+    category: z.string().min(1, t("ManageRecipePage.requiredFields.category")),
+    ingredients: z
+      .array(
+        z
+          .string()
+          .trim()
+          .min(1, t("ManageRecipePage.requiredFields.ingredients"))
+      )
+      .min(1, t("ManageRecipePage.requiredFields.ingredients")),
+    imageFile: z
+      .instanceof(File)
+      .refine((f) => f.size > 0, "Image file is required")
+      .optional(),
+  });
 
-export type PostFormData = z.infer<typeof postSchema>;
+export type PostFormData = z.infer<ReturnType<typeof postSchema>>;
 
 const PostForm = ({ post }: { post?: PostFormType }) => {
+  const t = useTranslations();
   const router = useRouter();
   const progress = useProgress();
 
@@ -50,7 +61,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
       imageUrl: post?.imageUrl || "",
       imageFile: undefined,
     },
-    resolver: zodResolver(postSchema),
+    resolver: zodResolver(postSchema(t)),
     mode: "onChange",
   });
 
@@ -67,7 +78,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
     updatePost,
     [],
     () => router.push(`/post/${post?.id}`),
-    "Successfully updated"
+    t("Toasts.recipeUpdated")
   );
 
   const createPostMutation = useQueryMutate<null, PostFormData, void>(
@@ -75,7 +86,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
     undefined,
     [],
     () => router.push("/dashboard"),
-    "Successfully created"
+    t("Toasts.recipeAdded")
   );
 
   const onSubmit = async (data: PostFormData) => {
@@ -115,11 +126,11 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
           inputType="input"
           type="text"
           name="title"
-          label="Recipe Title *"
+          label={t("ManageRecipePage.recipeTitle") + " *"}
         />
         <SelectField
           name="category"
-          label="Category *"
+          label={t("ManageRecipePage.category") + " *"}
           options={recipeCategoryOptions.slice(1, recipeCategoryOptions.length)}
         />
         <IngredientsField />
@@ -134,12 +145,19 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
           }}
           valueAsNumber={true}
           name="preparationTime"
-          label="Preparation Time"
+          label={t("ManageRecipePage.preparationTime")}
           fieldValue={minutesToHours(preparationTime)}
         />
-        <InputField inputType="textarea" name="content" label="Instruction *" />
+        <InputField
+          inputType="textarea"
+          name="content"
+          label={t("ManageRecipePage.instructions") + " *"}
+        />
         <div className="flex flex-col gap-2 ">
-          <ImageField name="imageFile" label="Choose image" />
+          <ImageField
+            name="imageFile"
+            label={t("ManageRecipePage.chooseImage")}
+          />
 
           {imageUrl && !imageFile && (
             <Image
@@ -154,8 +172,8 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
         <ProgressBar />
         <Button variant="primary" disabled={isSubmitting} type="submit">
           {isSubmitting
-            ? `${post ? "Updating" : "Saving"}`
-            : `${post ? "Update" : "Save"} `}
+            ? `${post ? t("Actions.updating") : t("Actions.saving")}`
+            : `${post ? t("Actions.update") : t("Actions.save")} `}
         </Button>
       </form>
     </FormProvider>

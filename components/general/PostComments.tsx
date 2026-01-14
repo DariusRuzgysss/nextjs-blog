@@ -2,6 +2,7 @@ import { Post } from "@/app/types";
 import { PostMeta } from "./PostMeta";
 import ManagePostComment from "./ManagePostComment";
 import { requireUser } from "@/lib/auth";
+import TitleClient from "./TitleClient";
 
 type Props = {
   post: Post;
@@ -34,7 +35,7 @@ const PostComments = async ({ post }: Props) => {
           ))}
         </div>
       ) : (
-        <p>No Comments</p>
+        <TitleClient title="PostPage.noComments" />
       )}
     </div>
   );

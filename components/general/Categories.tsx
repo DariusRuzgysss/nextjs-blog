@@ -4,8 +4,10 @@ import { recipeCategoryOptions } from "@/utils/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import AnimationWrapper from "./AnimationWrapper";
+import { useTranslations } from "next-intl";
 
 const Categories = () => {
+  const t = useTranslations();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -39,11 +41,11 @@ const Categories = () => {
               : "border-(--dark)/40  text-(--dark)/40 hover:text-(--dark)"
           } hover:border-(--dark)`}
         >
-          <p>{recipe.label}</p>
+          <p>{t(recipe.label).toUpperCase()}</p>
         </div>
       );
     });
-  }, [onSelect, category]);
+  }, [onSelect, category, t]);
 
   return (
     <AnimationWrapper
@@ -53,11 +55,10 @@ const Categories = () => {
       <div className="flex flex-col items-center gap-10 mb-10">
         <div className="flex flex-col items-center mt-20 max-w-[426px]">
           <p className="font-bold text-[26px] lg:text-[40px] uppercase text-center">
-            Embark on a journey
+            {t("HomePage.embarkOnJourney")}
           </p>
           <p className="font-light lg:text-[16px] text-[14px] text-center text-(--dark)/80">
-            With our diverse collection of recipes we have something to satisfy
-            every palate.
+            {t("HomePage.embarkOnJourneyDesc")}
           </p>
         </div>
         <div className="flex-wrap flex flex-row gap-4">{categoryList()}</div>
