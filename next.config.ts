@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         port: "",
       },
       {
+        hostname: "gravatar.com",
+        protocol: "https",
+        port: "",
+      },
+      {
         hostname: "/",
         protocol: "https",
         port: "",

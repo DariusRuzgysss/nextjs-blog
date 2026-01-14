@@ -37,10 +37,11 @@ export default function ProfileDropdown() {
           <Activity mode={isPending ? "visible" : "hidden"}>
             <Spinner className="size-6" />
           </Activity>
-          {!isPending && <strong>{user?.given_name?.charAt(0)}</strong>}
-          <AvatarFallback className="bg-active">
+          {!isPending && user ? (
+            <strong>{user?.given_name?.charAt(0)}</strong>
+          ) : (
             <User />
-          </AvatarFallback>
+          )}
         </Avatar>
       </DropdownMenuTrigger>
 
