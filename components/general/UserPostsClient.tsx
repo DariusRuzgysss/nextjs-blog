@@ -6,8 +6,10 @@ import { Suspense } from "react";
 import SkeletonLoader from "./Skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const UserPostsClient = ({ userId }: { userId: string }) => {
+  const t = useTranslations();
   const { data: posts } = useSuspenseQuery(useUserPostsQueryOptions(userId));
 
   return (
@@ -20,7 +22,7 @@ const UserPostsClient = ({ userId }: { userId: string }) => {
         </div>
       </AnimatePresence>
       <div className="flex items-center justify-center">
-        {posts.length === 0 && <p>There are no posts yet.</p>}
+        {posts.length === 0 && <p>{t("General.noRecipesFound")}</p>}
       </div>
     </Suspense>
   );

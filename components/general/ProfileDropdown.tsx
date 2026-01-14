@@ -33,13 +33,11 @@ export default function ProfileDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="h-9 w-9 rounded-full cursor-pointer flex flex-row items-center justify-center">
+        <Avatar className="h-9 w-9 rounded-full bg-active/80 cursor-pointer flex flex-row items-center justify-center">
           <Activity mode={isPending ? "visible" : "hidden"}>
             <Spinner className="size-6" />
           </Activity>
-          {!isPending && (
-            <AvatarImage src={user?.picture ?? ""} alt="User avatar" />
-          )}
+          {!isPending && <strong>{user?.given_name?.charAt(0)}</strong>}
           <AvatarFallback className="bg-active">
             <User />
           </AvatarFallback>
