@@ -30,7 +30,8 @@
         "recipes": "Receptai",
         "newest": "Naujausi",
         "oldest": "Seniausi",
-        "favorite": "Mėgstami"
+        "favorite": "Mėgstami",
+        "language": "Kalba"
     },
     "Filters": {
         "newest": "Naujausi pirmiausia",

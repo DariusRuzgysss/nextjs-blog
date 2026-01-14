@@ -30,7 +30,8 @@
         "recipes":"Recipes",
         "newest": "Newest",
         "oldest": "Oldest",
-        "favorite": "Favorite"
+        "favorite": "Favorite",
+        "language": "Language"
     },
     "Filters": {
         "newest": "Newest first",

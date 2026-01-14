@@ -22,11 +22,17 @@ import {
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
 import { useTranslations } from "next-intl";
+import LanguageMenuMobile from "./LanguageMenuMobile";
 
 export function Hamburger() {
   const t = useTranslations();
   const { user, isLoading } = useKindeBrowserClient();
   const pathname = usePathname();
+
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -63,6 +69,7 @@ export function Hamburger() {
               </div>
             );
           })}
+          <LanguageMenuMobile />
         </div>
         <SheetFooter>
           {user ? (
@@ -77,7 +84,7 @@ export function Hamburger() {
                 {t("Actions.logout")}
               </LogoutLink>
             </>
-          ) : isLoading ? null : (
+          ) : (
             <>
               <LoginLink
                 className={clsx(

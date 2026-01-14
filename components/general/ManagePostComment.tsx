@@ -22,8 +22,8 @@ const ManagePostComment = ({ commentId, post }: Props) => {
   return (
     <div className="flex flex-row lg:gap-4 gap-3 items-start justify-center">
       <CustomDialog
-        title={"Are you sure want to delete ?"}
-        description="Couldn't be recovered after deletion"
+        title="General.confirmDelete"
+        description="General.couldNotBeRecovered"
         onConfirm={() => {
           if (user) {
             deleteCommentMutation.mutateAsync({ id: commentId, data: post.id });
