@@ -22,6 +22,7 @@ const Categories = () => {
       } else {
         params.set("category", val);
       }
+      params.set("page", "1");
       replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
     [pathname, replace, searchParams]

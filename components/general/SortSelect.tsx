@@ -19,28 +19,32 @@ const SortSelect = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const { user } = useKindeBrowserClient();
+  const sort = searchParams.get("sort") ?? SortOptions.NEWEST_FIRST;
 
   const handleSort = (value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if (value) {
-      params.set("sort", value);
-      if (value === SortOptions.FAVORITE) {
-        params.set("page", "1");
-      }
-    } else {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (value === SortOptions.NEWEST_FIRST) {
       params.delete("sort");
+    } else {
+      params.set("sort", value);
     }
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+    if (value === SortOptions.FAVORITE) {
+      params.set("page", "1");
+    }
+
+    replace(`${pathname}?${params}`, { scroll: false });
   };
 
   return (
     <Select
-      value={searchParams.get("sort")?.toString()}
+      value={sort}
       onValueChange={handleSort}
       defaultValue={SortOptions.NEWEST_FIRST}
     >
-      <SelectTrigger className="w-[130px] md:w-[180px] border-gray-400">
-        <SelectValue placeholder="Sort by" />
+      <SelectTrigger className="w-[130px] md:w-[180px] border-gray-400 truncate">
+        <SelectValue placeholder="Sort by" className="truncate" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

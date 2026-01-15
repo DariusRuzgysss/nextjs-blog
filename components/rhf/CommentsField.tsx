@@ -1,6 +1,11 @@
 "use client";
 
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import {
+  useForm,
+  SubmitHandler,
+  FormProvider,
+  useWatch,
+} from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import InputField from "./InputField";
 import { useQueryMutate } from "@/hooks/api/useMutate";
@@ -20,6 +25,10 @@ const CommentsField = ({ postId }: { postId: string }) => {
   });
 
   const isSubmitting = methods.formState.isSubmitting;
+  const commentField = useWatch({
+    control: methods.control,
+    name: "comment",
+  });
 
   const createCommentMutation = useQueryMutate<string, string, void>(
     undefined,
@@ -47,7 +56,11 @@ const CommentsField = ({ postId }: { postId: string }) => {
           label={t("PostPage.addComment")}
         />
 
-        <Button type="submit" disabled={isSubmitting} className="self-end">
+        <Button
+          type="submit"
+          disabled={isSubmitting || commentField.trim() === ""}
+          className="self-end"
+        >
           {isSubmitting ? t("PostPage.posting") : t("PostPage.postComment")}
         </Button>
       </form>

@@ -34,8 +34,8 @@
         "language": "Language"
     },
     "Filters": {
-        "newest": "Newest first",
-        "oldest": "Oldest first",
+        "newest": "Newest",
+        "oldest": "Oldest",
         "favorite": "Favorite",
         "searchPlaceholder": "Search recipes...",
         "sortBy":"Sort by"
@@ -44,6 +44,8 @@
         "recipeAdded": "Successfully added!",
         "recipeUpdated": "Successfully updated!",
         "recipeDeleted": "Successfully deleted!",
+        "recipeFavorited": "Recipe added to favorites!",
+        "recipeUnfavorited": "Recipe removed from favorites!",
         "commentAdded": "Comment added successfully!",
         "errorOccurred": "An error occurred. Please try again."
     },
@@ -70,7 +72,7 @@
         "startAdding": "Start adding your favorite recipes now!"
     },
     "PostPage": {
-        "description": "Welcome to Cooks Delight, where culinary dreams come alive! Today, we embark on a journey of flavors with a dish that promises to elevate your dining experience",
+        "description": "Welcome to „Skonių pasaulį“, where culinary dreams come alive! Today, we embark on a journey of flavors with a dish that promises to elevate your dining experience",
         "recipe":"Recipe",
         "comments":"Comments",
         "addComment":"Add a Comment",

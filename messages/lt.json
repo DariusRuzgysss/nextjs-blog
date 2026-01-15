@@ -34,8 +34,8 @@
         "language": "Kalba"
     },
     "Filters": {
-        "newest": "Naujausi pirmiausia",
-        "oldest": "Seniausi pirmiausia",
+        "newest": "Naujausi",
+        "oldest": "Seniausi",
         "favorite": "Mėgstami",
         "searchPlaceholder": "Ieškoti receptų...",
         "sortBy": "Rūšiuoti pagal"
@@ -44,7 +44,10 @@
         "recipeAdded": "Sėkmingai pridėta!",
         "recipeUpdated": "Sėkmingai atnaujinta!",
         "recipeDeleted": "Sėkmingai ištrinta!",
+        "recipeFavorited": "Receptas pridėtas prie mėgstamų!",
+        "recipeUnfavorited": "Receptas pašalintas iš mėgstamų!",
         "commentAdded": "Komentaras sėkmingai pridėtas!",
+        "commentDeleted": "Komentaras sėkmingai ištrintas!",
         "errorOccurred": "Įvyko klaida. Bandykite dar kartą."
     },
     "HomePage": {
@@ -70,7 +73,7 @@
         "startAdding": "Pradėkite pridėti savo mėgstamus receptus dabar!"
     },
     "PostPage": {
-        "description": "Sveiki atvykę į „Cooks Delight“, kur kulinarinės svajonės tampa realybe! Šiandien leidžiamės į skonių kelionę su patiekalu, kuris pakylės jūsų valgymo patirtį",
+        "description": "Sveiki atvykę į „Skonių pasaulį“, kur kulinarinės svajonės tampa realybe! Šiandien leidžiamės į skonių kelionę su patiekalu, kuris pakylės jūsų valgymo patirtį",
         "recipe": "Receptas",
         "comments": "Komentarai",
         "addComment": "Pridėti komentarą",

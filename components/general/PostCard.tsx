@@ -20,7 +20,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 const PostCard = ({ post }: { post: Post }) => {
-  const t = useTranslations("PostCard");
+  const t = useTranslations();
   const { user } = useKindeBrowserClient();
   const [favoringPostId, setFavoringPostId] = useState<string | null>(null);
   const isAuthor = post.authorId === user?.id;
@@ -37,7 +37,7 @@ const PostCard = ({ post }: { post: Post }) => {
     unmarkPostAsFavorite,
     [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS],
     undefined,
-    "Removed from favorites"
+    t("Toasts.recipeUnfavorited")
   );
 
   const markPostAsFavoriteMutation = useQueryMutate<string, null, void>(
@@ -45,7 +45,7 @@ const PostCard = ({ post }: { post: Post }) => {
     markPostAsFavorite,
     [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS],
     undefined,
-    "Saved to your favorites"
+    t("Toasts.recipeFavorited")
   );
 
   const isNew = isLogged && !isAuthor && (post.postSeens?.length ?? 0) === 0;
@@ -95,7 +95,7 @@ const PostCard = ({ post }: { post: Post }) => {
     >
       {isNew && (
         <Badge className="absolute z-10 left-1 top-1" variant="destructive">
-          {t("new")}
+          {t("PostCard.new")}
         </Badge>
       )}
       {post.category === RecipeCategory.Vegan && (
@@ -157,7 +157,7 @@ const PostCard = ({ post }: { post: Post }) => {
               <div />
             )}
             <div className="rounded-3xl border border-(--dark) px-3 lg:px-6 py-3 font-medium uppercase text-center text-[12px] lg:text-[14px] text-(--dark) hover:border-(--primary-color-3)">
-              {t("viewRecipe")}
+              {t("PostCard.viewRecipe")}
             </div>
           </div>
           <PostMeta
