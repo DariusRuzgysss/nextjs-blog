@@ -27,6 +27,7 @@ type Props = {
 const UserPostClient = ({ id }: Props) => {
   const t = useTranslations();
   const user = useKindeBrowserClient().getUser();
+  const isLoggedIn = !!user;
 
   const { data: post } = useQuery(useUserPostQueryOptions(id));
 
@@ -92,9 +93,10 @@ const UserPostClient = ({ id }: Props) => {
             </Button>
             <StarRating
               post={post}
-              onChange={(value) =>
-                ratePostMutation.mutate({ id: post.id, data: value })
-              }
+              {...(isLoggedIn && {
+                onChange: (value) =>
+                  ratePostMutation.mutate({ id: post.id, data: value }),
+              })}
             />
             <div className="max-w-[870px] flex  flex-col gap-3 text-center mt-5 mb-5">
               <p className="font-extrabold text-[38px] lg:text-[80px] leading-none">

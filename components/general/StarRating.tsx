@@ -37,9 +37,7 @@ export function StarRating({ post, onChange }: Props) {
                   star <= post.avgRating
                     ? "fill-active text-active"
                     : "text-muted-foreground",
-                  !onChange
-                    ? "hover:text-active"
-                    : "cursor-pointer hover:text-active"
+                  onChange && "cursor-pointer hover:text-active"
                 )}
               />
             </motion.button>
