@@ -1,11 +1,11 @@
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
-import AnimationWrapper from "./AnimationWrapper";
+import AnimationWrapperClient from "./AnimationWrapperClient";
 
 const UnleashCulinary = () => {
   const t = useTranslations();
   return (
-    <AnimationWrapper
+    <AnimationWrapperClient
       initial={{ opacity: 0, x: -100 }}
       animate={{ opacity: 1, x: 0 }}
     >
@@ -24,7 +24,7 @@ const UnleashCulinary = () => {
           {t("HomePage.exploreRecipes")}
         </Button>
       </div>
-    </AnimationWrapper>
+    </AnimationWrapperClient>
   );
 };
 

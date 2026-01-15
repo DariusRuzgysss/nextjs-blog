@@ -14,7 +14,8 @@
         "logout": "Logout",
         "login": "Login",
         "new": "New",
-        "addIngredient": "Add Ingredient"
+        "addIngredient": "Add Ingredient",
+        "tryAgain": "Try Again"
     },
     "General": {
         "loading": "Loading...",
@@ -47,7 +48,11 @@
         "recipeFavorited": "Recipe added to favorites!",
         "recipeUnfavorited": "Recipe removed from favorites!",
         "commentAdded": "Comment added successfully!",
-        "errorOccurred": "An error occurred. Please try again."
+        "errorOccurred": "An error occurred. Please try again.",
+        "ratingSubmitted": "Rating submitted successfully!"
+    },
+    "ErrorsPage": {
+        "somethingWentWrong": "Something went wrong"
     },
     "HomePage": {
         "unleashCulinary": "Unleash Culinary",

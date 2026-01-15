@@ -29,6 +29,7 @@ model BlogPost {
   postSeens       PostSeen[]
   favoritePosts   FavoritePost[]
   comments        Comment[]
+  ratings         Rating[]
 }
 
 model PostSeen {
@@ -64,4 +65,16 @@ model Comment {
   updatedAt   DateTime @updatedAt
 
   post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  value     Int // 1–5
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+
+  post BlogPost @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId]) // one rating per user per post
 }

@@ -14,7 +14,8 @@
         "logout": "Atsijungti",
         "login": "Prisijungti",
         "new": "Naujas",
-        "addIngredient": "Pridėti ingredientą"
+        "addIngredient": "Pridėti ingredientą",
+        "tryAgain": "Bandykite dar kartą"
     },
     "General": {
         "loading": "Kraunama...",
@@ -48,7 +49,11 @@
         "recipeUnfavorited": "Receptas pašalintas iš mėgstamų!",
         "commentAdded": "Komentaras sėkmingai pridėtas!",
         "commentDeleted": "Komentaras sėkmingai ištrintas!",
-        "errorOccurred": "Įvyko klaida. Bandykite dar kartą."
+        "errorOccurred": "Įvyko klaida. Bandykite dar kartą.",
+        "ratingSubmitted": "Įvertinimas sėkmingai pateiktas!"
+    },
+    "ErrorsPage": {
+        "somethingWentWrong": "Kažkas nepavyko"
     },
     "HomePage": {
         "unleashCulinary": "Atskleiskite kulinarinį",

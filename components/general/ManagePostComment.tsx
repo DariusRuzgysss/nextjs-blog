@@ -14,6 +14,7 @@ type Props = {
 const ManagePostComment = ({ commentId, post }: Props) => {
   const t = useTranslations();
   const { user } = useKindeBrowserClient();
+
   const deleteCommentMutation = useQueryMutate<string, string, void>(
     undefined,
     deleteComment,
@@ -21,6 +22,7 @@ const ManagePostComment = ({ commentId, post }: Props) => {
     undefined,
     t("Toasts.commentDeleted")
   );
+
   return (
     <div className="flex flex-row lg:gap-4 gap-3 items-start justify-center">
       <CustomDialog

@@ -49,6 +49,7 @@ export const getPosts = async ({
         include: {
           postSeens: isAuthor,
           favoritePosts: isAuthor,
+          ratings: true,
         },
         orderBy: {
           createdAt: sortBy === "favorites" ? "desc" : sortBy,
@@ -60,8 +61,18 @@ export const getPosts = async ({
       }),
     ]);
 
+    const itemsWithRating = items.map((post) => {
+      const total = post.ratings.reduce((sum, r) => sum + r.value, 0);
+      const avg = post.ratings.length ? total / post.ratings.length : 0;
+
+      return {
+        ...post,
+        avgRating: avg,
+      };
+    });
+
     return {
-      items,
+      items: itemsWithRating,
       totalPages: Math.ceil(itemsCount / pageSize) || 1,
     };
   } catch (error) {
@@ -77,6 +88,7 @@ export const getPostById = async (id: string) => {
         comments: {
           orderBy: { createdAt: "desc" },
         },
+        ratings: true,
       },
       where: {
         id,
@@ -87,7 +99,13 @@ export const getPostById = async (id: string) => {
       return notFound();
     }
 
-    return data;
+    const total = data.ratings.reduce((sum, r) => sum + r.value, 0);
+    const avg = data.ratings.length ? total / data.ratings.length : 0;
+
+    return {
+      ...data,
+      avgRating: avg,
+    };
   } catch (error) {
     console.error("Error fetching post by ID:", error);
     throw error;
@@ -138,17 +156,30 @@ export const getPostsByUserId = async (userId: string) => {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    return prisma.blogPost.findMany({
+    const data = await prisma.blogPost.findMany({
       where: {
         authorId: userId,
       },
       include: {
         favoritePosts: user ? { where: { userId: user.id } } : false,
+        ratings: true,
       },
       orderBy: {
         createdAt: "desc",
       },
     });
+    // rating average
+    const dataWithRating = data.map((post) => {
+      const total = post.ratings?.reduce((sum, r) => sum + r.value, 0) || 0;
+      const avg =
+        post.ratings && post.ratings.length ? total / post.ratings.length : 0;
+      return {
+        ...post,
+        avgRating: avg,
+      };
+    });
+
+    return dataWithRating;
   } catch (error) {
     console.error("Error fetching posts by user ID:", error);
     throw error;
@@ -294,3 +325,29 @@ export const deleteComment = async (commentId: string, postId: string) => {
     throw error;
   }
 };
+
+export async function ratePost(postId: string, value: number) {
+  if (value < 1 || value > 5) {
+    throw new Error("Invalid rating");
+  }
+
+  const user = await requireUser();
+  if (!user?.id) {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.rating.upsert({
+    where: {
+      userId_postId: {
+        userId: user.id,
+        postId,
+      },
+    },
+    update: { value },
+    create: {
+      value,
+      userId: user.id,
+      postId,
+    },
+  });
+}

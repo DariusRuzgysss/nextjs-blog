@@ -3,6 +3,7 @@ import { CategoryFilter, RecipeCategory } from "@/app/types";
 export const QUERY_KEYS = {
   POSTS: "posts",
   USER_POSTS: "userPosts",
+  USER_POST: "userPost",
 };
 
 export const navItems = [

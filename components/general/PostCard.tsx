@@ -16,8 +16,9 @@ import { QUERY_KEYS } from "@/utils/constants";
 import { Timer } from "lucide-react";
 import { minutesToHours } from "@/utils/helper";
 import { PostMeta } from "./PostMeta";
-import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { StarRating } from "./StarRating";
+import AnimationWrapperClient from "./AnimationWrapperClient";
 
 const PostCard = ({ post }: { post: Post }) => {
   const t = useTranslations();
@@ -86,11 +87,9 @@ const PostCard = ({ post }: { post: Post }) => {
   ]);
 
   return (
-    <motion.div
+    <AnimationWrapperClient
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.4 }}
       className="group relative overflow-hidden rounded-lg border border-(--dark)/16 bg-(--light) shadow-md transition-all hover:shadow-2xl"
     >
       {isNew && (
@@ -139,9 +138,12 @@ const PostCard = ({ post }: { post: Post }) => {
           />
         </div>
         <div className="p-4">
-          <h3 className="mb-2 text-[24px] font-bold text-gray-900">
-            {post.title}
-          </h3>
+          <div className="flex flex-row justify-between items-start">
+            <h3 className="mb-2 mr-4 text-[24px] font-bold text-gray-900">
+              {post.title}
+            </h3>
+            <StarRating post={post} />
+          </div>
           <p className="text-(--dark) text-[16px] font-light line-clamp-2 min-h-10">
             {post.content}
           </p>
@@ -168,7 +170,7 @@ const PostCard = ({ post }: { post: Post }) => {
           />
         </div>
       </Link>
-    </motion.div>
+    </AnimationWrapperClient>
   );
 };
 

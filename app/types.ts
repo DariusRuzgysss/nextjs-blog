@@ -61,6 +61,7 @@ export type Post = {
   comments?: PostComment[];
   authorName: string;
   authorImage: string;
+  avgRating: number;
   createdAt: Date;
   updatedAt: Date;
 };

@@ -1,15 +1,18 @@
+"use client";
 import { Post } from "@/app/types";
 import { PostMeta } from "./PostMeta";
 import ManagePostComment from "./ManagePostComment";
-import { requireUser } from "@/lib/auth";
-import TitleClient from "./TitleClient";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { useTranslations } from "next-intl";
 
 type Props = {
   post: Post;
 };
 
-const PostComments = async ({ post }: Props) => {
-  const user = await requireUser();
+const PostComments = ({ post }: Props) => {
+  const t = useTranslations();
+  const user = useKindeBrowserClient().getUser();
+
   return (
     <div className="flex flex-col">
       {post.comments?.length ? (
@@ -35,7 +38,7 @@ const PostComments = async ({ post }: Props) => {
           ))}
         </div>
       ) : (
-        <TitleClient title="PostPage.noComments" />
+        <p>{t("PostPage.noComments")}</p>
       )}
     </div>
   );

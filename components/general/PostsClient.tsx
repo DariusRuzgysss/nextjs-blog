@@ -17,14 +17,12 @@ const PostsClient = ({ filter }: { filter: FilterTypes }) => {
 
   return (
     <Suspense fallback={<SkeletonLoader />}>
-      <div
-        id="list"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4"
-      >
-        <AnimatePresence mode="popLayout"></AnimatePresence>
-        {items.map((post) => {
-          return <PostCard key={post.id} post={post} />;
-        })}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-4">
+        <AnimatePresence mode="popLayout">
+          {items.map((post) => {
+            return <PostCard key={post.id} post={post} />;
+          })}
+        </AnimatePresence>
       </div>
       <div className="flex flex-1 items-center justify-center">
         {items.length === 0 && <p>{t("General.noRecipesFound")}</p>}

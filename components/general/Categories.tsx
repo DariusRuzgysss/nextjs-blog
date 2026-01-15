@@ -3,7 +3,7 @@ import { CategoryFilter } from "@/app/types";
 import { recipeCategoryOptions } from "@/utils/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-import AnimationWrapper from "./AnimationWrapper";
+import AnimationWrapperClient from "./AnimationWrapperClient";
 import { useTranslations } from "next-intl";
 
 const Categories = () => {
@@ -49,7 +49,7 @@ const Categories = () => {
   }, [onSelect, category, t]);
 
   return (
-    <AnimationWrapper
+    <AnimationWrapperClient
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
     >
@@ -64,7 +64,7 @@ const Categories = () => {
         </div>
         <div className="flex-wrap flex flex-row gap-4">{categoryList()}</div>
       </div>
-    </AnimationWrapper>
+    </AnimationWrapperClient>
   );
 };
 

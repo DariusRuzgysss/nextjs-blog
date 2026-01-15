@@ -1,4 +1,3 @@
-"use client";
 import { PostFormType } from "@/app/types";
 import PostForm from "../rhf/PostForm";
 import {
