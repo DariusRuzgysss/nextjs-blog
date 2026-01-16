@@ -101,7 +101,7 @@ const PostCard = ({ post }: { post: Post }) => {
       {post.calories > 0 && (
         <Calories
           calories={post.calories}
-          className="absolute z-10 left-2 top-2"
+          className="absolute z-10 left-2 top-50"
         />
       )}
 

@@ -17,7 +17,7 @@ import { SelectField } from "./SelectField";
 import { recipeCategoryOptions } from "@/utils/constants";
 import IngredientsField from "./IngredientsField";
 import ProgressBar from "../general/ProgressBar";
-import { minutesToHours } from "@/utils/helper";
+import { minutesToHours, stringArrayChangedNormalized } from "@/utils/helper";
 import { useTranslations } from "next-intl";
 import useAiClient from "@/hooks/useAiClient";
 import LoaderDots from "../general/LoaderDots";
@@ -38,7 +38,7 @@ const postSchema = (t: ReturnType<typeof useTranslations>) =>
         z
           .string()
           .trim()
-          .min(1, t("ManageRecipePage.requiredFields.ingredients"))
+          .nonempty(t("ManageRecipePage.requiredFields.emptyIngredient"))
       )
       .min(1, t("ManageRecipePage.requiredFields.ingredients")),
     imageFile: z
@@ -113,26 +113,35 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
       delete dataCopy.imageFile;
     }
     progress.set(60);
-    const aiMessage = `You are a nutrition calculator.
-
-      I will provide a list of ingredients with their weights in grams.
-      Each ingredient name is in Lithuanian.
-      Use standard average nutritional values.
-
-      Steps:
-      1. Calculate total calories of all ingredients.
-      2. Calculate total weight of the dish in grams.
-      3. Calculate calories per 100 grams using this formula:
-        (total calories / total weight) * 100
-
-      Return ONLY a single numeric value (integer), with no text, no units, no explanation.
-
-      Ingredients:
-      ${dataCopy.ingredients.join("\n")}`;
-    const aiCalories = await ask(aiMessage);
-    const kcalPer100g = Math.round(
-      parseFloat(aiCalories.trim().replace(/[^\d.]/g, "")) || 0
-    );
+    let kcalPer100g = dataCopy.calories;
+    if (
+      stringArrayChangedNormalized(
+        post?.ingredients || [],
+        dataCopy.ingredients
+      )
+    ) {
+      progress.set(70);
+      const aiMessage = `You are a nutrition calculator.
+  
+        I will provide a list of ingredients with their weights in grams.
+        Each ingredient name is in Lithuanian.
+        Use standard average nutritional values.
+  
+        Steps:
+        1. Calculate total calories of all ingredients.
+        2. Calculate total weight of the dish in grams.
+        3. Calculate calories per 100 grams using this formula:
+          (total calories / total weight) * 100
+  
+        Return ONLY a single numeric value (integer), with no text, no units, no explanation.
+  
+        Ingredients:
+        ${dataCopy.ingredients.join("\n")}`;
+      const aiCalories = await ask(aiMessage);
+      kcalPer100g = Math.round(
+        parseFloat(aiCalories.trim().replace(/[^\d.]/g, "")) || 0
+      );
+    }
     progress.set(80);
     if (post) {
       await updatePostMutation.mutateAsync({
@@ -185,7 +194,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
           name="content"
           label={t("ManageRecipePage.instructions") + " *"}
         />
-        <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-2">
           <ImageField
             name="imageFile"
             label={t("ManageRecipePage.chooseImage")}
@@ -202,7 +211,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
           )}
         </div>
         <ProgressBar />
-        {progress.value === 60 && (
+        {progress.value === 70 && (
           <div className="flex flex-row gap-4">
             <p className="font-medium">
               {t("ManageRecipePage.aiCalculatingCalories")}

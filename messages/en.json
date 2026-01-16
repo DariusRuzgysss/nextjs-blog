@@ -112,6 +112,7 @@
             "title": "Title is required",
             "category": "Category is required",
             "ingredients": "At least one ingredient is required",
+            "emptyIngredient": "Ingredient cannot be empty",
             "instructions": "Instructions are required"
         }
     }

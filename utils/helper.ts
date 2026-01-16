@@ -91,3 +91,21 @@ export function getInitialLocale() {
   document.cookie = "LOCALE=en; ";
   return "en";
 }
+function stringArrayChanged(prev: string[], next: string[]): boolean {
+  if (prev.length !== next.length) return true;
+
+  for (let i = 0; i < prev.length; i++) {
+    if (prev[i] !== next[i]) return true;
+  }
+
+  return false;
+}
+
+export function stringArrayChangedNormalized(
+  prev: string[],
+  next: string[]
+): boolean {
+  const normalize = (arr: string[]) => arr.map((s) => s.trim().toLowerCase());
+
+  return stringArrayChanged(normalize(prev), normalize(next));
+}
