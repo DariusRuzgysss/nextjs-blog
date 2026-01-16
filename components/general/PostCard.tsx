@@ -19,6 +19,7 @@ import { PostMeta } from "./PostMeta";
 import { useTranslations } from "next-intl";
 import { StarRating } from "./StarRating";
 import AnimationWrapperClient from "./AnimationWrapperClient";
+import Calories from "./Calories";
 
 const PostCard = ({ post }: { post: Post }) => {
   const t = useTranslations();
@@ -97,6 +98,13 @@ const PostCard = ({ post }: { post: Post }) => {
           {t("PostCard.new")}
         </Badge>
       )}
+      {post.calories > 0 && (
+        <Calories
+          calories={post.calories}
+          className="absolute z-10 left-2 top-2"
+        />
+      )}
+
       {post.category === RecipeCategory.Vegan && (
         <Image
           alt="vegan"

@@ -19,6 +19,8 @@ import IngredientsField from "./IngredientsField";
 import ProgressBar from "../general/ProgressBar";
 import { minutesToHours } from "@/utils/helper";
 import { useTranslations } from "next-intl";
+import useAiClient from "@/hooks/useAiClient";
+import LoaderDots from "../general/LoaderDots";
 
 const postSchema = (t: ReturnType<typeof useTranslations>) =>
   z.object({
@@ -29,6 +31,7 @@ const postSchema = (t: ReturnType<typeof useTranslations>) =>
       .min(1, t("ManageRecipePage.requiredFields.instructions")),
     imageUrl: z.string(),
     preparationTime: z.number().int(),
+    calories: z.number().int(),
     category: z.string().min(1, t("ManageRecipePage.requiredFields.category")),
     ingredients: z
       .array(
@@ -50,6 +53,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
   const t = useTranslations();
   const router = useRouter();
   const progress = useProgress();
+  const { ask } = useAiClient();
 
   const methods = useForm<PostFormData>({
     defaultValues: {
@@ -60,6 +64,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
       ingredients: post?.ingredients?.length ? post.ingredients : [" "],
       imageUrl: post?.imageUrl || "",
       imageFile: undefined,
+      calories: post?.calories || 0,
     },
     resolver: zodResolver(postSchema(t)),
     mode: "onChange",
@@ -95,11 +100,11 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
     if (dataCopy.imageUrl && dataCopy.imageFile) {
       await deleteImage(dataCopy.imageUrl);
     }
-    progress.set(40);
+    progress.set(20);
     if (!dataCopy.imageUrl && !dataCopy.imageFile && post?.imageUrl) {
       await deleteImage(post.imageUrl);
     }
-    progress.set(60);
+    progress.set(40);
     if (dataCopy.imageFile) {
       const res = await uploadImage(dataCopy.imageFile);
       if (res.success && res.result?.secure_url) {
@@ -107,11 +112,38 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
       }
       delete dataCopy.imageFile;
     }
+    progress.set(60);
+    const aiMessage = `You are a nutrition calculator.
+
+      I will provide a list of ingredients with their weights in grams.
+      Each ingredient name is in Lithuanian.
+      Use standard average nutritional values.
+
+      Steps:
+      1. Calculate total calories of all ingredients.
+      2. Calculate total weight of the dish in grams.
+      3. Calculate calories per 100 grams using this formula:
+        (total calories / total weight) * 100
+
+      Return ONLY a single numeric value (integer), with no text, no units, no explanation.
+
+      Ingredients:
+      ${dataCopy.ingredients.join("\n")}`;
+    const aiCalories = await ask(aiMessage);
+    const kcalPer100g = Math.round(
+      parseFloat(aiCalories.trim().replace(/[^\d.]/g, "")) || 0
+    );
     progress.set(80);
     if (post) {
-      await updatePostMutation.mutateAsync({ id: post.id, data: dataCopy });
+      await updatePostMutation.mutateAsync({
+        id: post.id,
+        data: { ...dataCopy, calories: kcalPer100g },
+      });
     } else {
-      await createPostMutation.mutateAsync({ id: null, data: dataCopy });
+      await createPostMutation.mutateAsync({
+        id: null,
+        data: { ...dataCopy, calories: kcalPer100g },
+      });
     }
     progress.finish();
   };
@@ -170,6 +202,14 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
           )}
         </div>
         <ProgressBar />
+        {progress.value === 60 && (
+          <div className="flex flex-row gap-4">
+            <p className="font-medium">
+              {t("ManageRecipePage.aiCalculatingCalories")}
+            </p>
+            <LoaderDots dotCount={3} dotSize={10} />
+          </div>
+        )}
         <Button variant="primary" disabled={isSubmitting} type="submit">
           {isSubmitting
             ? `${post ? t("Actions.updating") : t("Actions.saving")}`
@@ -179,5 +219,4 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
     </FormProvider>
   );
 };
-
 export default PostForm;

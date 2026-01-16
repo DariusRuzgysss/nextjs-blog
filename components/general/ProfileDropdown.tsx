@@ -19,7 +19,7 @@ import { buttonVariants } from "../ui/button";
 import { Activity } from "react";
 import { Spinner } from "../ui/spinner";
 import LanguageMenuDesktop from "./LanguageMenuDesktop";
-import { useLocaleSwitcher } from "@/hooks/api/useLocaleSwitcher";
+import { useLocaleSwitcher } from "@/hooks/useLocaleSwitcher";
 
 export default function ProfileDropdown() {
   const t = useTranslations();

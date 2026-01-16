@@ -143,6 +143,7 @@ export const createPost = async (data: PostFormData): Promise<void> => {
         authorImage: user?.picture ?? "",
         category: data.category,
         preparationTime: data.preparationTime,
+        calories: data.calories,
       },
     });
   } catch (error) {

@@ -3,10 +3,9 @@
 import { languages } from "@/utils/constants";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
-import { useLocaleSwitcher } from "@/hooks/api/useLocaleSwitcher";
+import { useLocaleSwitcher } from "@/hooks/useLocaleSwitcher";
 import { Activity } from "react";
 import { Spinner } from "../ui/spinner";
-import { cn } from "@/lib/utils";
 
 export default function LanguageMenuMobile() {
   const t = useTranslations();

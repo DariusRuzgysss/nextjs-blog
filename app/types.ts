@@ -60,6 +60,7 @@ export type Post = {
   favoritePosts?: FavoritePost[];
   comments?: PostComment[];
   authorName: string;
+  calories: number;
   authorImage: string;
   avgRating: number;
   createdAt: Date;
@@ -75,6 +76,7 @@ export type PostFormType = Pick<
   | "category"
   | "ingredients"
   | "preparationTime"
+  | "calories"
 >;
 
 type PostSeen = {

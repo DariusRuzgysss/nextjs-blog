@@ -108,6 +108,7 @@
         "category": "Kategorija",
         "selectCategory": "Pasirinkite kategoriją",
         "selectOption": "Pasirinkite parinktį",
+        "aiCalculatingCalories": "AI skaičiuoja kalorijas",
         "requiredFields": {
             "title": "Pavadinimas yra privalomas",
             "category": "Kategorija yra privaloma",

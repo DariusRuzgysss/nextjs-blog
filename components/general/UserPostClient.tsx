@@ -19,6 +19,7 @@ import { useQueryMutate } from "@/hooks/api/useMutate";
 import { QUERY_KEYS } from "@/utils/constants";
 import Link from "next/link";
 import AnimationWrapperClient from "./AnimationWrapperClient";
+import Calories from "./Calories";
 
 type Props = {
   id: string;
@@ -107,15 +108,19 @@ const UserPostClient = ({ id }: Props) => {
               </p>
             </div>
           </div>
-
-          {preparationTime && (
-            <div className="flex flex-row gap-2">
-              <Timer />
-              <p className="font-semibold text-[18px]">
-                {preparationTime.toUpperCase()}
-              </p>
-            </div>
-          )}
+          <div className="flex flex-col items-center justify-center gap-4">
+            {preparationTime && (
+              <div className="flex flex-row gap-2">
+                <Timer />
+                <p className="font-semibold text-[18px]">
+                  {preparationTime.toUpperCase()}
+                </p>
+              </div>
+            )}
+            {post.calories > 0 && (
+              <Calories calories={post.calories} className="bg-active/90" />
+            )}
+          </div>
           <AnimationWrapperClient
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -137,6 +142,7 @@ const UserPostClient = ({ id }: Props) => {
             <p className="uppercase text-[24px] font-semibold text-(--primary-color-3)">
               {t("PostPage.ingredients")}
             </p>
+
             <ul className="list-disc list-inside grid gap-1">
               {post.ingredients.map((ingredient, index) => (
                 <li className="lg:text-[18px] text-[16px]" key={index}>

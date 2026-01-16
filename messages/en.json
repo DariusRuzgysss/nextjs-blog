@@ -107,6 +107,7 @@
         "category": "Category",
         "selectCategory": "Select Category",
         "selectOption": "Select an option",
+        "aiCalculatingCalories": "AI is calculating calories",
         "requiredFields": {
             "title": "Title is required",
             "category": "Category is required",

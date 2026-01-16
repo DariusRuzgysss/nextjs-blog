@@ -41,7 +41,7 @@ const IngredientsField = () => {
       ))}
       <Button
         type="button"
-        variant="ghost"
+        variant="link"
         size="icon"
         className="flex items-center gap-2 w-full"
         onClick={() => append(" ")}
