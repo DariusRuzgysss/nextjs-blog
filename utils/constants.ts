@@ -1,4 +1,4 @@
-import { CategoryFilter, RecipeCategory } from "@/app/types";
+import { CategoryFilter, RecipeCategory, SortOptions } from "@/app/types";
 
 export const QUERY_KEYS = {
   POSTS: "posts",
@@ -27,4 +27,10 @@ export const recipeCategoryOptions: {
   { label: "HomePage.categories.dinner", value: RecipeCategory.Dinner },
   { label: "HomePage.categories.dessert", value: RecipeCategory.Dessert },
   { label: "HomePage.categories.quickBite", value: RecipeCategory.QuickBite },
+];
+
+export const SortFilter = [
+  { title: "newest", value: SortOptions.NEWEST_FIRST, onlyLogged: false },
+  { title: "oldest", value: SortOptions.OLDEST_FIRST, onlyLogged: false },
+  { title: "favorite", value: SortOptions.FAVORITE, onlyLogged: true },
 ];

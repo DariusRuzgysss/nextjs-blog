@@ -1,17 +1,10 @@
 "use client";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { SortOptions } from "@/app/types";
 import { useTranslations } from "next-intl";
+import { SortFilter } from "@/utils/constants";
+import { Button } from "../ui/button";
 
 const SortSelect = () => {
   const t = useTranslations("Filters");
@@ -20,6 +13,7 @@ const SortSelect = () => {
   const { replace } = useRouter();
   const { user } = useKindeBrowserClient();
   const sort = searchParams.get("sort") ?? SortOptions.NEWEST_FIRST;
+  const isLogged = !!user;
 
   const handleSort = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -38,31 +32,22 @@ const SortSelect = () => {
   };
 
   return (
-    <Select
-      value={sort}
-      onValueChange={handleSort}
-      defaultValue={SortOptions.NEWEST_FIRST}
-    >
-      <SelectTrigger className="w-[130px] md:w-[180px] border-gray-400 truncate">
-        <SelectValue placeholder="Sort by" className="truncate" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>{t("sortBy")}</SelectLabel>
-          <SelectItem value={SortOptions.NEWEST_FIRST}>
-            {t("newest")}
-          </SelectItem>
-          <SelectItem value={SortOptions.OLDEST_FIRST}>
-            {t("oldest")}
-          </SelectItem>
-          {user && (
-            <SelectItem value={SortOptions.FAVORITE}>
-              {t("favorite")}
-            </SelectItem>
-          )}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <div className="flex flex-col gap-3">
+      <h3 className="text-[16px] font-semibold uppercase">{t("sortBy")}</h3>
+      <div className="grid grid-cols-3 gap-2">
+        {SortFilter.filter((item) => isLogged || !item.onlyLogged).map(
+          (sortItem) => (
+            <Button
+              variant={sort === sortItem.value ? "ghost" : "secondary"}
+              key={sortItem.title}
+              onClick={() => handleSort(sortItem.value)}
+            >
+              {t(sortItem.title)}
+            </Button>
+          )
+        )}
+      </div>
+    </div>
   );
 };
 

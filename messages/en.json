@@ -36,6 +36,8 @@
         "language": "Language"
     },
     "Filters": {
+        "filter": "Filter",
+        "filterDesc": "Find your recipes by more details",
         "newest": "Newest",
         "oldest": "Oldest",
         "favorite": "Favorite",

@@ -36,6 +36,8 @@
         "language": "Kalba"
     },
     "Filters": {
+        "filter": "Filtras",
+        "filterDesc": "Atraskite daugiau savo receptų",
         "newest": "Naujausi",
         "oldest": "Seniausi",
         "favorite": "Mėgstami",

@@ -18,7 +18,7 @@ export function StarRating({ value, onChange }: Props) {
 
   return (
     <AnimatePresence mode="popLayout">
-      <div className="flex gap-1">
+      <div className="flex gap-0.5">
         {[1, 2, 3, 4, 5].map((star) => (
           <AnimationWrapperClient key={star}>
             <motion.button

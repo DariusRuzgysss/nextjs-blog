@@ -1,5 +1,4 @@
 import SearchInput from "@/components/general/SearchInput";
-import SortSelect from "@/components/general/SortSelect";
 import { UrlParams } from "./types";
 import PostsClient from "@/components/general/PostsClient";
 import SortTitle from "@/components/general/SortTitle";
@@ -9,6 +8,7 @@ import { getQueryClient } from "../utils/getQueryClient";
 import { QUERY_KEYS } from "@/utils/constants";
 import UnleashCulinary from "@/components/general/UnleashCulinary";
 import Categories from "@/components/general/Categories";
+import { FilterDrawer } from "@/components/general/FilterDrawer";
 
 export default async function Home(props: { searchParams?: UrlParams }) {
   const searchParams = await props.searchParams;
@@ -30,13 +30,14 @@ export default async function Home(props: { searchParams?: UrlParams }) {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <UnleashCulinary />
       <Categories />
-      <div className="grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr] items-center gap-4 mt-4">
+      <div className="grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[auto_1fr] items-center w-full sm:max-w-[75%] mx-auto gap-4 mt-4">
         <SortTitle sortBy={sortBy} />
         <div className="grid grid-cols-[1fr_auto] gap-4">
           <SearchInput />
-          <SortSelect />
+          <FilterDrawer />
         </div>
       </div>
+
       <PostsClient filter={filter} />
     </HydrationBoundary>
   );
