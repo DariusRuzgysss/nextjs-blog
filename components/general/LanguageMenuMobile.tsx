@@ -27,12 +27,9 @@ export default function LanguageMenuMobile() {
         {languages.map((lang) => (
           <Button
             key={lang.code}
-            type="button"
+            variant={locale === lang.code ? "ghost" : "default"}
             onClick={() => changeLanguage(lang.code)}
-            className={cn(
-              "w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-background hover:bg-muted",
-              locale === lang.code && "border border-background"
-            )}
+            className={"w-full"}
           >
             {lang.label.toUpperCase()}
           </Button>
