@@ -16,7 +16,8 @@
         "edit": "Redaguoti",
         "new": "Naujas",
         "addIngredient": "Pridėti ingredientą",
-        "tryAgain": "Bandykite dar kartą"
+        "tryAgain": "Bandykite dar kartą",
+        "cancel": "Atmesti"
     },
     "General": {
         "loading": "Kraunama...",
@@ -37,7 +38,7 @@
     },
     "Filters": {
         "filter": "Filtras",
-        "filterDesc": "Atraskite daugiau savo receptų",
+        "filterDesc": "Atraskite receptus pagal save!",
         "newest": "Naujausi",
         "oldest": "Seniausi",
         "favorite": "Mėgstami",
@@ -61,7 +62,7 @@
     "HomePage": {
         "unleashCulinary": "Atskleiskite kulinarinį",
         "excellence": "meistriškumą",
-        "unleashCulinaryExcellenceDesc": "Atraskite skonių pasaulį, rankų darbo receptus ir leiskite mūsų aistrai gaminti užpildyti jūsų virtuvę aromatais",
+        "unleashCulinaryExcellenceDesc": "Atraskite skonių pasaulį, rankų darbo receptus ir leiskite mūsų aistrai gaminti, užpildyti jūsų virtuvę aromatais",
         "exploreRecipes": "Naršyti receptus",
         "embarkOnJourney": "Leiskitės į kelionę",
         "embarkOnJourneyDesc": "Mūsų įvairi receptų kolekcija patenkins kiekvieno skonį",
@@ -81,7 +82,7 @@
         "startAdding": "Pradėkite pridėti savo mėgstamus receptus dabar!"
     },
     "PostPage": {
-        "description": "Sveiki atvykę į „Skonių pasaulį“, kur kulinarinės svajonės tampa realybe! Šiandien leidžiamės į skonių kelionę su patiekalu, kuris pakylės jūsų valgymo patirtį",
+        "description": "Sveiki atvykę į „Skonių pasaulis“, kur kulinarinės svajonės tampa realybe! Šiandien leidžiamės į skonių kelionę su patiekalu, kuris pakylės jūsų valgymo patirtį",
         "recipe": "Receptas",
         "comments": "Komentarai",
         "addComment": "Pridėti komentarą",

@@ -5,6 +5,7 @@ import { SortOptions } from "@/app/types";
 import { useTranslations } from "next-intl";
 import { SortFilter } from "@/utils/constants";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 const SortSelect = () => {
   const t = useTranslations("Filters");
@@ -41,6 +42,9 @@ const SortSelect = () => {
               variant={sort === sortItem.value ? "ghost" : "secondary"}
               key={sortItem.title}
               onClick={() => handleSort(sortItem.value)}
+              className={cn(
+                `hover:${sort === sortItem.value && "bg-transparent"}`
+              )}
             >
               {t(sortItem.title)}
             </Button>

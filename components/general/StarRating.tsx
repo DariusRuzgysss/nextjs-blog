@@ -28,7 +28,7 @@ export function StarRating({ value, onChange }: Props) {
               transition={{ duration: 0.6, delay: star * 0.1 }}
               type="button"
               onClick={() => handleClick(star)}
-              className="focus:outline-none active:bg-active rounded-full p-1"
+              className="focus:outline-none rounded-full p-1"
             >
               <Star
                 className={cn(
@@ -36,7 +36,8 @@ export function StarRating({ value, onChange }: Props) {
                   star <= value
                     ? "fill-active text-active"
                     : "text-muted-foreground",
-                  onChange && "cursor-pointer hover:text-active"
+                  onChange &&
+                    "cursor-pointer hover:text-active active:bg-active lg:active:bg-transparent"
                 )}
               />
             </motion.button>

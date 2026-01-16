@@ -10,15 +10,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90 active:bg-active lg:active:bg-transparent",
+          "bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 active:bg-active lg:active:bg-transparent",
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 active:bg-active lg:active:bg-transparent",
+          "bg-destructive text-white  hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 active:bg-active lg:active:bg-transparent",
         outline:
           "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 active:bg-active lg:active:bg-transparent",
         secondary:
-          "bg-(--dark)/16 px-4 py-2 rounded-xl text-(--dark) text-[16px] active:bg-active lg:active:bg-transparent",
+          "bg-(--dark)/16 px-4 py-2 rounded-xl text-(--dark) text-[16px] active:bg-active hover:bg-active lg:active:bg-transparent",
         ghost:
-          "hover:bg-accent hover:text-accent-foreground text-[16px] bg-active rounded-xl",
+          "hover:bg-background hover:text-accent-foreground text-[16px] bg-active rounded-xl",
         link: "text-primary underline-offset-4 hover:underline",
         primary:
           "font-normal bg-(--primary-color-3) px-4 py-2 rounded-xl text-white text-[16px] active:bg-active lg:active:bg-transparent",

@@ -117,9 +117,7 @@ const UserPostClient = ({ id }: Props) => {
                 </p>
               </div>
             )}
-            {post.calories > 0 && (
-              <Calories calories={post.calories} className="bg-active/90" />
-            )}
+            {post.calories > 0 && <Calories calories={post.calories} />}
           </div>
           <AnimationWrapperClient
             initial={{ opacity: 0, scale: 0.8 }}
