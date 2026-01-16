@@ -8,8 +8,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Icon } from "@iconify/react";
-import { useTransition } from "react";
+import { Activity, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { Spinner } from "../ui/spinner";
 
 type Props = {
   title: string;
@@ -43,7 +44,14 @@ export function CustomDialog({ title, description, onConfirm }: Props) {
         </DialogHeader>
 
         <form action={handleDelete} className="flex justify-end gap-3 mt-6">
-          <Button variant="primary" disabled={isPending}>
+          <Button
+            variant="primary"
+            disabled={isPending}
+            className="flex flex-row gap-2"
+          >
+            <Activity mode={isPending ? "visible" : "hidden"}>
+              <Spinner className="size-6 text-background" />
+            </Activity>
             {isPending ? t("Actions.confirming") : t("Actions.confirm")}
           </Button>
         </form>

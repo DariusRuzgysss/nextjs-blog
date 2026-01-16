@@ -25,7 +25,7 @@ const LanguageMenuDesktop = ({ locale, onChange }: Props) => {
         <DropdownMenuItem
           key={lang.code}
           className={clsx(
-            "pl-6 py-1",
+            "pl-6 py-1 cursor-pointer",
             locale === lang.code && "bg-active font-semibold"
           )}
           onClick={() => onChange(lang.code)}

@@ -13,7 +13,7 @@ const EditPostRoute = async ({ params }: { params: Params }) => {
           { label: "Navbar.home", href: "/" },
           { label: "Navbar.myRecipes", href: "/dashboard" },
           { label: "General.recipe", href: `/post/${post.id}` },
-          { label: "ManageRecipePage.editRecipe" },
+          { label: "Actions.edit" },
         ]}
       />
       <CardPostForm

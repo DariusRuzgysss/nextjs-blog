@@ -2,16 +2,15 @@
 
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Post } from "@/app/types";
 import { AnimatePresence, motion } from "framer-motion";
 import AnimationWrapperClient from "./AnimationWrapperClient";
 
 type Props = {
-  post: Post;
+  value: number;
   onChange?: (rating: number) => void;
 };
 
-export function StarRating({ post, onChange }: Props) {
+export function StarRating({ value, onChange }: Props) {
   const handleClick = (star: number) => {
     if (!onChange) return;
     onChange(star);
@@ -29,12 +28,12 @@ export function StarRating({ post, onChange }: Props) {
               transition={{ duration: 0.6, delay: star * 0.1 }}
               type="button"
               onClick={() => handleClick(star)}
-              className="focus:outline-none"
+              className="focus:outline-none active:bg-active rounded-full p-1"
             >
               <Star
                 className={cn(
-                  "lg:h-6 lg:w-6 h-5 w-5 transition",
-                  star <= post.avgRating
+                  "lg:h-6 lg:w-6 h-5 w-5 transition-colors",
+                  star <= value
                     ? "fill-active text-active"
                     : "text-muted-foreground",
                   onChange && "cursor-pointer hover:text-active"

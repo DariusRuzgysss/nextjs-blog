@@ -15,6 +15,7 @@ const DeletePostClient = ({ post }: Props) => {
   const t = useTranslations();
   const { user } = useKindeBrowserClient();
   const router = useRouter();
+
   const deletePostMutation = useQueryMutate<null, Post, void>(
     deletePost,
     undefined,

@@ -8,7 +8,7 @@ const createPostRoute = () => {
         items={[
           { label: "Navbar.home", href: "/" },
           { label: "Navbar.myRecipes", href: `/dashboard` },
-          { label: "ManageRecipePage.createYourRecipe" },
+          { label: "Actions.new" },
         ]}
       />
       <CardPostForm

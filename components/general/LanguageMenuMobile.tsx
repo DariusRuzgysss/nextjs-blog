@@ -1,12 +1,12 @@
 "use client";
 
-import clsx from "clsx";
 import { languages } from "@/utils/constants";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 import { useLocaleSwitcher } from "@/hooks/api/useLocaleSwitcher";
 import { Activity } from "react";
 import { Spinner } from "../ui/spinner";
+import { cn } from "@/lib/utils";
 
 export default function LanguageMenuMobile() {
   const t = useTranslations();
@@ -29,7 +29,7 @@ export default function LanguageMenuMobile() {
             key={lang.code}
             type="button"
             onClick={() => changeLanguage(lang.code)}
-            className={clsx(
+            className={cn(
               "w-full text-left px-4 py-2 rounded-xl text-sm font-medium",
               locale === lang.code
                 ? "bg-active font-semibold text-dark"

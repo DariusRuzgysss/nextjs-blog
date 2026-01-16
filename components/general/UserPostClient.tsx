@@ -92,7 +92,7 @@ const UserPostClient = ({ id }: Props) => {
               <p>{t("General.recipe")}</p>
             </Button>
             <StarRating
-              post={post}
+              value={post.avgRating}
               {...(isLoggedIn && {
                 onChange: (value) =>
                   ratePostMutation.mutate({ id: post.id, data: value }),

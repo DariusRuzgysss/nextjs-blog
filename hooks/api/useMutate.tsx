@@ -35,7 +35,9 @@ export function useQueryMutate<TId, TData, TResponse>(
       onSuccess?.();
     },
     onError: (error: Error) => {
-      toast.error("Something wrong happened");
+      toast.error("Something wrong happened", {
+        description: error.message,
+      });
     },
   });
 }

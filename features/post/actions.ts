@@ -189,48 +189,28 @@ export const getPostsByUserId = async (userId: string) => {
 export const deletePost = async (post: Post): Promise<void> => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+
+  if (!user) throw new Error("Unauthorized");
+
   try {
-    const seenPosts = await prisma.postSeen.findMany({
-      where: { postId: post.id },
-    });
-
-    const favoritePosts = await prisma.favoritePost.findMany({
-      where: { postId: post.id },
-    });
-
-    const commentPosts = await prisma.comment.findMany({
-      where: { postId: post.id },
-    });
-
-    if (seenPosts?.length) {
-      for (const post of seenPosts) {
-        await prisma.postSeen.delete({
-          where: { id: post.id },
-        });
-      }
-    }
-
-    if (favoritePosts?.length) {
-      for (const favoritePost of favoritePosts) {
-        await prisma.favoritePost.delete({
-          where: { id: favoritePost.id },
-        });
-      }
-    }
-
-    if (commentPosts?.length) {
-      for (const commentPost of commentPosts) {
-        await prisma.comment.delete({
-          where: { id: commentPost.id },
-        });
-      }
-    }
     if (post.imageUrl) {
       await deleteImage(post.imageUrl);
     }
 
-    await prisma.blogPost.delete({
-      where: { id: post.id, authorId: user?.id },
+    await prisma.$transaction(async (tx) => {
+      await Promise.all([
+        tx.postSeen.deleteMany({ where: { postId: post.id } }),
+        tx.favoritePost.deleteMany({ where: { postId: post.id } }),
+        tx.comment.deleteMany({ where: { postId: post.id } }),
+        tx.rating.deleteMany({ where: { postId: post.id } }),
+      ]);
+
+      await tx.blogPost.delete({
+        where: {
+          id: post.id,
+          authorId: user.id,
+        },
+      });
     });
   } catch (error) {
     console.error("Error deleting post:", error);

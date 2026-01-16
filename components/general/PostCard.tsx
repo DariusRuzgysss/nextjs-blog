@@ -103,7 +103,7 @@ const PostCard = ({ post }: { post: Post }) => {
           src="/images/Vegan_tag.png"
           width={60}
           height={60}
-          className="absolute z-10 right-5 top-52"
+          className="absolute z-10 right-2 top-43 opacity-80"
         />
       )}
       {isLogged && (
@@ -114,7 +114,7 @@ const PostCard = ({ post }: { post: Post }) => {
                 ? "material-symbols-light:favorite-rounded"
                 : "material-symbols-light:favorite-outline-rounded"
             }`}
-            className={` text-(--primary-color-3) w-8 h-8  ${
+            className={` text-(--primary-color-3) w-9 h-9  ${
               favoringPostId === post.id ? "animate-spin transition-all" : ""
             }`}
             onClick={onClickFavorite}
@@ -142,7 +142,7 @@ const PostCard = ({ post }: { post: Post }) => {
             <h3 className="mb-2 mr-4 text-[24px] font-bold text-gray-900">
               {post.title}
             </h3>
-            <StarRating post={post} />
+            <StarRating value={post.avgRating} />
           </div>
           <p className="text-(--dark) text-[16px] font-light line-clamp-2 min-h-10">
             {post.content}
