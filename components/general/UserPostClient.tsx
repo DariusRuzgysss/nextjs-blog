@@ -20,6 +20,7 @@ import { QUERY_KEYS } from "@/utils/constants";
 import Link from "next/link";
 import AnimationWrapperClient from "./AnimationWrapperClient";
 import Calories from "./Calories";
+import ZoomImage from "./ImageZoom";
 
 type Props = {
   id: string;
@@ -125,13 +126,12 @@ const UserPostClient = ({ id }: Props) => {
             transition={{ duration: 0.7 }}
             className="relative w-full h-60 lg:h-120 rounded-lg overflow-hidden mt-5"
           >
-            <Image
+            <ZoomImage
               src={post.imageUrl || "/images/no image.jpg"}
               alt="post"
               loading="eager"
               fill
               className="object-cover"
-              priority
             />
           </AnimationWrapperClient>
         </div>

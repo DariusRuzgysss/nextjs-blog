@@ -34,3 +34,19 @@ export const SortFilter = [
   { title: "oldest", value: SortOptions.OLDEST_FIRST, onlyLogged: false },
   { title: "favorite", value: SortOptions.FAVORITE, onlyLogged: true },
 ];
+
+export const aiPromptMessage = `You are a nutrition calculator.
+  
+        I will provide a list of ingredients with their weights in grams.
+        Each ingredient name is in Lithuanian.
+        Use standard average nutritional values.
+  
+        Steps:
+        1. Calculate total calories of all ingredients.
+        2. Calculate total weight of the dish in grams.
+        3. Calculate calories per 100 grams using this formula:
+          (total calories / total weight) * 100
+  
+        Return ONLY a single numeric value (integer), with no text, no units, no explanation.
+  
+        Ingredients:`;

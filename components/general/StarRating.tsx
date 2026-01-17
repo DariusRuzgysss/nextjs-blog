@@ -4,6 +4,7 @@ import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import AnimationWrapperClient from "./AnimationWrapperClient";
+import { useTransition } from "react";
 
 type Props = {
   value: number;
@@ -11,9 +12,13 @@ type Props = {
 };
 
 export function StarRating({ value, onChange }: Props) {
+  const [isPending, startTransition] = useTransition();
+
   const handleClick = (star: number) => {
     if (!onChange) return;
-    onChange(star);
+    startTransition(() => {
+      onChange(star);
+    });
   };
 
   return (
@@ -36,6 +41,7 @@ export function StarRating({ value, onChange }: Props) {
                   star <= value
                     ? "fill-active text-active"
                     : "text-muted-foreground",
+                  isPending ? "animate-spin transition-all" : "",
                   onChange &&
                     "cursor-pointer hover:text-active active:bg-active lg:active:bg-transparent"
                 )}

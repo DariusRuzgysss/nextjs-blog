@@ -14,7 +14,7 @@ import { useQueryMutate } from "@/hooks/api/useMutate";
 import { useRouter } from "next/navigation";
 import { useProgress } from "@/providers/ProgressProvider";
 import { SelectField } from "./SelectField";
-import { recipeCategoryOptions } from "@/utils/constants";
+import { aiPromptMessage, recipeCategoryOptions } from "@/utils/constants";
 import IngredientsField from "./IngredientsField";
 import ProgressBar from "../general/ProgressBar";
 import { minutesToHours, stringArrayChangedNormalized } from "@/utils/helper";
@@ -121,22 +121,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
       )
     ) {
       progress.set(70);
-      const aiMessage = `You are a nutrition calculator.
-  
-        I will provide a list of ingredients with their weights in grams.
-        Each ingredient name is in Lithuanian.
-        Use standard average nutritional values.
-  
-        Steps:
-        1. Calculate total calories of all ingredients.
-        2. Calculate total weight of the dish in grams.
-        3. Calculate calories per 100 grams using this formula:
-          (total calories / total weight) * 100
-  
-        Return ONLY a single numeric value (integer), with no text, no units, no explanation.
-  
-        Ingredients:
-        ${dataCopy.ingredients.join("\n")}`;
+      const aiMessage = `${aiPromptMessage} ${dataCopy.ingredients.join("\n")}`;
       const aiCalories = await ask(aiMessage);
       kcalPer100g = Math.round(
         parseFloat(aiCalories.trim().replace(/[^\d.]/g, "")) || 0
