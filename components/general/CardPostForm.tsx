@@ -1,4 +1,4 @@
-import { PostFormType } from "@/app/types";
+import { PostFormType } from "@/types";
 import PostForm from "../rhf/PostForm";
 import {
   Card,

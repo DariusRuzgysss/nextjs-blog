@@ -5,10 +5,11 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { Icon } from "@iconify/react";
 import { Button } from "../ui/button";
-import { getErrorMessage, resizeImageWithCanvas } from "@/utils/helper";
 import { Activity, useRef, useTransition } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { IMAGE_SIZES } from "@/lib/constants";
+import { getErrorMessage, resizeImageWithCanvas } from "@/lib/helper";
 
 interface Props {
   name: string;
@@ -79,7 +80,7 @@ export const ImageField = ({ name, label }: Props) => {
                   <Icon
                     icon="mdi:trash"
                     fontSize={24}
-                    className="cursor-pointer text-red-600"
+                    className="cursor-pointer text-destructive"
                   />
                 </Button>
               ) : null}
@@ -91,8 +92,12 @@ export const ImageField = ({ name, label }: Props) => {
               <Image
                 src={URL.createObjectURL(imageFile)}
                 alt="Preview"
-                width={450}
-                height={300}
+                width={IMAGE_SIZES.THUMBNAIL.width}
+                height={IMAGE_SIZES.THUMBNAIL.height}
+                style={{
+                  width: "auto",
+                  height: "auto",
+                }}
                 className="object-contain"
               />
             )}

@@ -6,11 +6,11 @@ import { Suspense } from "react";
 import { usePostsQueryOptions } from "@/hooks/api/usePosts";
 import SkeletonLoader from "./Skeleton";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { FilterTypes } from "@/app/types";
+import { FilterTypes } from "@/types";
 import { AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 
-const PostsClient = ({ filter }: { filter: FilterTypes }) => {
+const PostList = ({ filter }: { filter: FilterTypes }) => {
   const t = useTranslations();
   const { data } = useSuspenseQuery(usePostsQueryOptions(filter));
   const { items, totalPages } = data;
@@ -32,4 +32,4 @@ const PostsClient = ({ filter }: { filter: FilterTypes }) => {
   );
 };
 
-export default PostsClient;
+export default PostList;

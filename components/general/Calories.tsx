@@ -1,17 +1,17 @@
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
 
-interface CaloriesProps {
+type CaloriesProps = {
   calories: number;
   className?: string;
-}
+};
 
 export default function Calories({ calories, className }: CaloriesProps) {
   return (
     <div
       className={cn(
         "shadow-lg shadow-black/30 flex justify-center items-center rounded bg-primaryColor1 p-1.5 gap-0.5 text-sm font-medium text-(--dark)/80",
-        className
+        className,
       )}
     >
       <Icon

@@ -1,5 +1,5 @@
 "use client";
-import { Post, RecipeCategory } from "@/app/types";
+import { Post, RecipeCategory } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
@@ -12,14 +12,14 @@ import {
 } from "@/features/post/actions";
 import { Icon } from "@iconify/react";
 import { useQueryMutate } from "@/hooks/api/useMutate";
-import { QUERY_KEYS } from "@/utils/constants";
 import { Timer } from "lucide-react";
-import { minutesToHours } from "@/utils/helper";
 import { PostMeta } from "./PostMeta";
 import { useTranslations } from "next-intl";
 import { StarRating } from "./StarRating";
 import AnimationWrapperClient from "./AnimationWrapperClient";
 import Calories from "./Calories";
+import { QUERY_KEYS, ROUTES } from "@/lib/constants";
+import { minutesToHours } from "@/lib/helper";
 
 const PostCard = ({ post }: { post: Post }) => {
   const t = useTranslations();
@@ -31,7 +31,7 @@ const PostCard = ({ post }: { post: Post }) => {
   const markPostAsSeenMutation = useQueryMutate<string, null, void>(
     undefined,
     markPostAsSeen,
-    [QUERY_KEYS.POSTS]
+    [QUERY_KEYS.POSTS],
   );
 
   const unmarkPostAsFavoriteMutation = useQueryMutate<string, null, void>(
@@ -39,7 +39,7 @@ const PostCard = ({ post }: { post: Post }) => {
     unmarkPostAsFavorite,
     [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS],
     undefined,
-    t("Toasts.recipeUnfavorited")
+    t("Toasts.recipeUnfavorited"),
   );
 
   const markPostAsFavoriteMutation = useQueryMutate<string, null, void>(
@@ -47,7 +47,7 @@ const PostCard = ({ post }: { post: Post }) => {
     markPostAsFavorite,
     [QUERY_KEYS.USER_POSTS, QUERY_KEYS.POSTS],
     undefined,
-    t("Toasts.recipeFavorited")
+    t("Toasts.recipeFavorited"),
   );
 
   const isNew = isLogged && !isAuthor && (post.postSeens?.length ?? 0) === 0;
@@ -62,7 +62,7 @@ const PostCard = ({ post }: { post: Post }) => {
     const hasSeen =
       user?.id &&
       !post.postSeens?.some(
-        (p) => p.postId === post.id && p.userId === user.id
+        (p) => p.postId === post.id && p.userId === user.id,
       );
     if (hasSeen) {
       markPostAsSeenMutation.mutateAsync({ id: post.id, data: null });
@@ -91,7 +91,7 @@ const PostCard = ({ post }: { post: Post }) => {
     <AnimationWrapperClient
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group relative overflow-hidden rounded-lg border border-(--dark)/16 bg-(--light) shadow-md transition-all hover:shadow-2xl"
+      className="group relative overflow-hidden rounded-lg border border-(--dark)/16 bg-(--white) shadow-md transition-all hover:shadow-2xl"
     >
       {isNew && (
         <Badge className="absolute z-10 left-1 top-1" variant="destructive">
@@ -130,7 +130,7 @@ const PostCard = ({ post }: { post: Post }) => {
         </div>
       )}
       <Link
-        href={`post/${post.id}`}
+        href={ROUTES.POST(post.id)}
         onClick={handleClick}
         className="block w-full h-full active:bg-active lg:active:bg-transparent"
       >
@@ -139,10 +139,11 @@ const PostCard = ({ post }: { post: Post }) => {
             src={post.imageUrl || "/images/no image.jpg"}
             alt="post"
             loading="eager"
+            fetchPriority="high"
             fill
             className="object-cover hover:scale-105 duration-300"
             priority
-            sizes="(max-width: 768px) 80vw, (max-width: 1200px) 40vw, 23vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
         <div className="p-4">

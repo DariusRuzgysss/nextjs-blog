@@ -2,17 +2,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const SkeletonLoader = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {Array.from({ length: 6 }).map((_, i) => (
         <div key={i} className="flex flex-col space-y-3">
-          <Skeleton className="h-[400px] w-full rounded-xl bg-gray-300" />
+          <Skeleton className="h-[400px] w-full rounded-xl bg-skeleton" />
           <div className="space-y-2">
-            <Skeleton className="h-4 w-5/6 bg-gray-300" />
-            <Skeleton className="h-4 w-4/5 bg-gray-200" />
+            <Skeleton className="h-4 w-5/6 bg-skeleton" />
+            <Skeleton className="h-4 w-4/5 bg-skeleton/50" />
           </div>
         </div>
       ))}
-    </div>
+    </main>
   );
 };
 

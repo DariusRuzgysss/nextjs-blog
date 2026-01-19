@@ -53,8 +53,8 @@
   --primaryColor1: #9FDC26;
   --primary-color-3: #EE6352;
   --primaryColor2: #F29C33;
+  --skeleton: oklch(87.2% 0.01 258.338);
   --destructive: oklch(0.577 0.245 27.325);
-  --light: #FFFBF2;
   --active: oklch(82.042% 0.15125 72.934);
   --foreground: oklch(0.13 0.028 261.692);
   --card: oklch(1 0 0);

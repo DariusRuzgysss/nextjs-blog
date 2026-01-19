@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTransition, useState } from "react";
 import { setCookieLocale } from "@/features/locale/actions";
-import { getInitialLocale } from "@/utils/helper";
+import { getInitialLocale } from "@/lib/helper";
 
 export function useLocaleSwitcher() {
   const router = useRouter();

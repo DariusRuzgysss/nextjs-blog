@@ -2,10 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
-import z from "zod";
 import { Button } from "../ui/button";
 import InputField from "./InputField";
-import { PostFormType } from "@/app/types";
+import { PostFormType } from "@/types";
 import { ImageField } from "./ImageField";
 import { deleteImage, uploadImage } from "@/features/cloudinary/actions";
 import { updatePost, createPost } from "@/features/post/actions";
@@ -14,40 +13,18 @@ import { useQueryMutate } from "@/hooks/api/useMutate";
 import { useRouter } from "next/navigation";
 import { useProgress } from "@/providers/ProgressProvider";
 import { SelectField } from "./SelectField";
-import { aiPromptMessage, recipeCategoryOptions } from "@/utils/constants";
 import IngredientsField from "./IngredientsField";
 import ProgressBar from "../general/ProgressBar";
-import { minutesToHours, stringArrayChangedNormalized } from "@/utils/helper";
 import { useTranslations } from "next-intl";
 import useAiClient from "@/hooks/useAiClient";
 import LoaderDots from "../general/LoaderDots";
-
-const postSchema = (t: ReturnType<typeof useTranslations>) =>
-  z.object({
-    title: z.string().trim().min(1, t("ManageRecipePage.requiredFields.title")),
-    content: z
-      .string()
-      .trim()
-      .min(1, t("ManageRecipePage.requiredFields.instructions")),
-    imageUrl: z.string(),
-    preparationTime: z.number().int(),
-    calories: z.number().int(),
-    category: z.string().min(1, t("ManageRecipePage.requiredFields.category")),
-    ingredients: z
-      .array(
-        z
-          .string()
-          .trim()
-          .nonempty(t("ManageRecipePage.requiredFields.emptyIngredient"))
-      )
-      .min(1, t("ManageRecipePage.requiredFields.ingredients")),
-    imageFile: z
-      .instanceof(File)
-      .refine((f) => f.size > 0, "Image file is required")
-      .optional(),
-  });
-
-export type PostFormData = z.infer<ReturnType<typeof postSchema>>;
+import { postFormSchema, PostFormSchema } from "@/lib/validations";
+import {
+  aiPromptMessage,
+  IMAGE_SIZES,
+  RECIPE_CATEGORY_OPTIONS,
+} from "@/lib/constants";
+import { minutesToHours, stringArrayChangedNormalized } from "@/lib/helper";
 
 const PostForm = ({ post }: { post?: PostFormType }) => {
   const t = useTranslations();
@@ -55,7 +32,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
   const progress = useProgress();
   const { ask } = useAiClient();
 
-  const methods = useForm<PostFormData>({
+  const methods = useForm<PostFormSchema>({
     defaultValues: {
       title: post?.title || "",
       content: post?.content || "",
@@ -66,7 +43,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
       imageFile: undefined,
       calories: post?.calories || 0,
     },
-    resolver: zodResolver(postSchema(t)),
+    resolver: zodResolver(postFormSchema(t)),
     mode: "onChange",
   });
 
@@ -78,23 +55,23 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
     name: "preparationTime",
   });
 
-  const updatePostMutation = useQueryMutate<string, PostFormData, void>(
+  const updatePostMutation = useQueryMutate<string, PostFormSchema, void>(
     undefined,
     updatePost,
     [],
     () => router.push(`/post/${post?.id}`),
-    t("Toasts.recipeUpdated")
+    t("Toasts.recipeUpdated"),
   );
 
-  const createPostMutation = useQueryMutate<null, PostFormData, void>(
+  const createPostMutation = useQueryMutate<null, PostFormSchema, void>(
     createPost,
     undefined,
     [],
     () => router.push("/dashboard"),
-    t("Toasts.recipeAdded")
+    t("Toasts.recipeAdded"),
   );
 
-  const onSubmit = async (data: PostFormData) => {
+  const onSubmit = async (data: PostFormSchema) => {
     progress.start();
     const dataCopy = { ...data };
     if (dataCopy.imageUrl && dataCopy.imageFile) {
@@ -117,14 +94,14 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
     if (
       stringArrayChangedNormalized(
         post?.ingredients || [],
-        dataCopy.ingredients
+        dataCopy.ingredients,
       )
     ) {
       progress.set(70);
       const aiMessage = `${aiPromptMessage} ${dataCopy.ingredients.join("\n")}`;
       const aiCalories = await ask(aiMessage);
       kcalPer100g = Math.round(
-        parseFloat(aiCalories.trim().replace(/[^\d.]/g, "")) || 0
+        parseFloat(aiCalories.trim().replace(/[^\d.]/g, "")) || 0,
       );
     }
     progress.set(80);
@@ -157,7 +134,10 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
         <SelectField
           name="category"
           label={t("ManageRecipePage.category") + " *"}
-          options={recipeCategoryOptions.slice(1, recipeCategoryOptions.length)}
+          options={RECIPE_CATEGORY_OPTIONS.slice(
+            1,
+            RECIPE_CATEGORY_OPTIONS.length,
+          )}
         />
         <IngredientsField />
         <InputField
@@ -189,8 +169,12 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
             <Image
               src={imageUrl}
               alt="Preview"
-              width={450}
-              height={300}
+              width={IMAGE_SIZES.THUMBNAIL.width}
+              height={IMAGE_SIZES.THUMBNAIL.height}
+              style={{
+                width: "auto",
+                height: "auto",
+              }}
               className="object-contain"
             />
           )}

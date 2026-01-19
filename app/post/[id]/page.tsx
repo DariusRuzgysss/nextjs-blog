@@ -1,9 +1,9 @@
-import { Params } from "@/app/types";
-import { getPostById } from "@/features/post/actions";
-import { getQueryClient } from "@/utils/getQueryClient";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import UserPostClient from "@/components/general/UserPostClient";
-import { QUERY_KEYS } from "@/utils/constants";
+import { Params } from "@/types";
+import { getPostById } from "@/lib/api/posts";
+import { QUERY_KEYS } from "@/lib/constants";
+import { getQueryClient } from "@/lib/utils";
 
 const PostRoute = async ({ params }: { params: Params }) => {
   const { id } = await params;

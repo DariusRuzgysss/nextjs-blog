@@ -1,10 +1,10 @@
 "use client";
-import { CategoryFilter } from "@/app/types";
-import { recipeCategoryOptions } from "@/utils/constants";
+import { CategoryFilter } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import AnimationWrapperClient from "./AnimationWrapperClient";
 import { useTranslations } from "next-intl";
+import { RECIPE_CATEGORY_OPTIONS } from "@/lib/constants";
 
 const Categories = () => {
   const t = useTranslations();
@@ -25,11 +25,11 @@ const Categories = () => {
       params.set("page", "1");
       replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
-    [pathname, replace, searchParams]
+    [pathname, replace, searchParams],
   );
 
   const categoryList = useCallback(() => {
-    return recipeCategoryOptions.map((recipe) => {
+    return RECIPE_CATEGORY_OPTIONS.map((recipe) => {
       const isActive =
         recipe.value === "all" ? category === null : category === recipe.value;
       return (
@@ -38,7 +38,7 @@ const Categories = () => {
           onClick={() => onSelect(recipe.value)}
           className={`uppercase cursor-pointer rounded-3xl border px-6 py-3 transition active:bg-active lg:active:bg-transparent ${
             isActive
-              ? "text-(--dark) bg-(--primaryColor1) border-(--dark)"
+              ? "text-(--dark) bg-primaryColor1 border-(--dark)"
               : "border-(--dark)/40  text-(--dark)/40 hover:text-(--dark)"
           } hover:border-(--dark)`}
         >

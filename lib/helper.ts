@@ -1,10 +1,23 @@
+import { PAGINATION } from "@/lib/constants";
+import { Post, UrlParams } from "@/types";
 import { FieldErrors, FieldValues, FieldError, get } from "react-hook-form";
+
+export const buildFilter = async (urlParams?: UrlParams) => {
+  const searchParams = await urlParams;
+  const query = searchParams?.query || "";
+  const sortBy = searchParams?.sort || "desc";
+  const category = searchParams?.category || "all";
+  const page = Number(searchParams?.page) || 1;
+  const pageSize = Number(searchParams?.limit) || PAGINATION.DEFAULT_PAGE_SIZE;
+
+  return { searchQuery: query, sortBy, page, pageSize, category };
+};
 
 export const resizeImageWithCanvas = (
   file: File,
   maxWidth = 1280,
   maxHeight = 1280,
-  quality = 0.8
+  quality = 0.8,
 ): Promise<File> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -47,7 +60,7 @@ export const resizeImageWithCanvas = (
           resolve(compressedFile);
         },
         "image/jpeg",
-        quality // 0–1
+        quality, // 0–1
       );
     };
 
@@ -58,7 +71,7 @@ export const resizeImageWithCanvas = (
 
 export const getErrorMessage = (
   errors: FieldErrors<FieldValues>,
-  name: string
+  name: string,
 ): string | undefined => {
   const error = get(errors, name) as FieldError | undefined;
   return error?.message;
@@ -103,9 +116,19 @@ function stringArrayChanged(prev: string[], next: string[]): boolean {
 
 export function stringArrayChangedNormalized(
   prev: string[],
-  next: string[]
+  next: string[],
 ): boolean {
   const normalize = (arr: string[]) => arr.map((s) => s.trim().toLowerCase());
 
   return stringArrayChanged(normalize(prev), normalize(next));
 }
+
+export const calculatePostRating = (
+  data: Omit<Post, "avgRating" | "totalRating">,
+) => {
+  if (data.ratings?.length) {
+    const total = data.ratings?.reduce((sum, r) => sum + r.value, 0);
+    return data.ratings?.length ? total / data.ratings.length : 0;
+  }
+  return 0;
+};

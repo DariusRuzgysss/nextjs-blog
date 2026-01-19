@@ -46,7 +46,7 @@ const IngredientsField = () => {
         className="flex items-center gap-2 w-full"
         onClick={() => append(" ")}
       >
-        <Plus className="text-[#EE6352]" />
+        <Plus className="text-(--primary-color-3)" />
         <span>{t("Actions.addIngredient")}</span>
       </Button>
     </div>

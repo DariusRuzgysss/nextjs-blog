@@ -1,13 +1,13 @@
 "use client";
 
-import { languages } from "@/utils/constants";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 import { useLocaleSwitcher } from "@/hooks/useLocaleSwitcher";
-import { Activity } from "react";
+import { Activity, memo } from "react";
 import { Spinner } from "../ui/spinner";
+import { LANGUAGES } from "@/lib/constants";
 
-export default function LanguageMenuMobile() {
+const LanguageMenuMobile = () => {
   const t = useTranslations();
   const { locale, isPending, changeLanguage } = useLocaleSwitcher();
 
@@ -23,7 +23,7 @@ export default function LanguageMenuMobile() {
       </div>
 
       <div className="space-y-2">
-        {languages.map((lang) => (
+        {LANGUAGES.map((lang) => (
           <Button
             key={lang.code}
             variant={locale === lang.code ? "ghost" : "default"}
@@ -36,4 +36,6 @@ export default function LanguageMenuMobile() {
       </div>
     </main>
   );
-}
+};
+
+export default memo(LanguageMenuMobile);

@@ -1,4 +1,4 @@
-import { getQueryClient } from "@/utils/getQueryClient";
+import { getQueryClient } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -9,7 +9,7 @@ export function useQueryMutate<TId, TData, TResponse>(
   updateFn?: (id: TId, data: TData) => Promise<TResponse>,
   queryKey?: readonly string[],
   onSuccess?: () => void,
-  successMessage?: string
+  successMessage?: string,
 ) {
   return useMutation<TResponse, Error, { id: TId; data: TData }>({
     mutationFn: (vars) => {

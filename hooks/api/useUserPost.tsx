@@ -1,5 +1,6 @@
-import { getPostById } from "@/features/post/actions";
-import { QUERY_KEYS } from "@/utils/constants";
+import { getPostById } from "@/lib/api/posts";
+import { QUERY_KEYS } from "@/lib/constants";
+
 import { queryOptions } from "@tanstack/react-query";
 
 export const useUserPostQueryOptions = (id: string) =>

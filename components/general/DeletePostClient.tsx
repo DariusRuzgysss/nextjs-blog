@@ -1,7 +1,7 @@
 "use client";
 import { deletePost } from "@/features/post/actions";
 import { CustomDialog } from "./Dialog";
-import { Post } from "@/app/types";
+import { Post } from "@/types";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useRouter } from "next/navigation";
@@ -21,7 +21,7 @@ const DeletePostClient = ({ post }: Props) => {
     undefined,
     [],
     () => router.push("/dashboard"),
-    t("Toasts.recipeDeleted")
+    t("Toasts.recipeDeleted"),
   );
   return (
     <CustomDialog

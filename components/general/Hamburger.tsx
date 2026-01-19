@@ -12,7 +12,6 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Logo from "./Logo";
-import { navItems } from "@/utils/constants";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
 import {
@@ -23,6 +22,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs";
 import { useTranslations } from "next-intl";
 import LanguageMenuMobile from "./LanguageMenuMobile";
+import { NAV_ITEMS } from "@/lib/constants";
 
 export function Hamburger() {
   const t = useTranslations();
@@ -50,7 +50,7 @@ export function Hamburger() {
           </SheetClose>
         </SheetHeader>
         <div className="grid flex-1 auto-rows-min gap-8 px-4">
-          {navItems.map((item) => {
+          {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href;
             return (
               <div key={item.href}>
@@ -59,13 +59,13 @@ export function Hamburger() {
                     href={item.href}
                     className={clsx(
                       "text-[18px] font-medium px-4 active:text-amber-200 lg:active:text-transparent",
-                      isActive ? "text-(--primary-color-3)" : "text-background"
+                      isActive ? "text-(--primary-color-3)" : "text-background",
                     )}
                   >
                     {t(`Navbar.${item.name}`).toUpperCase()}
                   </Link>
                 </SheetClose>
-                <div className="h-px bg-(--light)/16 mt-4" />
+                <div className="h-px bg-(--white)/16 mt-4" />
               </div>
             );
           })}
@@ -78,7 +78,7 @@ export function Hamburger() {
               <LogoutLink
                 className={clsx(
                   buttonVariants({ variant: "primary" }),
-                  "active:bg-active lg:active:bg-transparent"
+                  "active:bg-active lg:active:bg-transparent",
                 )}
               >
                 {t("Actions.logout")}
@@ -89,7 +89,7 @@ export function Hamburger() {
               <LoginLink
                 className={clsx(
                   buttonVariants({ variant: "default" }),
-                  "active:bg-active lg:active:bg-transparent"
+                  "active:bg-active lg:active:bg-transparent",
                 )}
               >
                 {t("Actions.login")}
@@ -98,7 +98,7 @@ export function Hamburger() {
               <RegisterLink
                 className={clsx(
                   buttonVariants({ variant: "primary" }),
-                  "active:bg-active lg:active:bg-transparent"
+                  "active:bg-active lg:active:bg-transparent",
                 )}
               >
                 {t("Actions.signUp")}

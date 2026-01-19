@@ -16,7 +16,7 @@ interface AnimationWrapperClientProps {
   transition?: { duration: number };
   className?: string;
   onClick?: () => void;
-  motionComponent?: ElementType; // <motion.div>, <motion.button>,
+  motionComponent?: ElementType;
 }
 
 export default function AnimationWrapperClient({

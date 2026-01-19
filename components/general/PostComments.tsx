@@ -1,5 +1,5 @@
 "use client";
-import { Post } from "@/app/types";
+import { Post } from "@/types";
 import { PostMeta } from "./PostMeta";
 import ManagePostComment from "./ManagePostComment";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";

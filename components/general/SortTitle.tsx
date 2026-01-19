@@ -1,5 +1,5 @@
 "use client";
-import { SortBy, SortOptions } from "@/app/types";
+import { SortBy, SortOptions } from "@/types";
 import { useTranslations } from "next-intl";
 
 import { useMemo } from "react";

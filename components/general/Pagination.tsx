@@ -11,12 +11,13 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useTranslations } from "next-intl";
+import { PAGINATION } from "@/lib/constants";
 
 type Props = {
   totalPages: number;
 };
 
-const pagesSizeOptions = [6, 12, 60, 120];
+const PAGE_SIZE_OPTIONS = [6, 12, 60, 120];
 
 const PaginationComponent = ({ totalPages }: Props) => {
   const t = useTranslations("General");
@@ -27,7 +28,7 @@ const PaginationComponent = ({ totalPages }: Props) => {
   const setUrlParams = (
     value: string,
     urlName: string,
-    isResetPage?: boolean
+    isResetPage?: boolean,
   ) => {
     const params = new URLSearchParams(searchParams);
     params.set(urlName, value);
@@ -65,14 +66,14 @@ const PaginationComponent = ({ totalPages }: Props) => {
 
       <Select
         onValueChange={(val) => setUrlParams(val, "limit", true)}
-        defaultValue="6"
+        defaultValue={PAGINATION.DEFAULT_PAGE_SIZE.toString()}
       >
         <SelectTrigger className="w-20 border-ring/20">
           <SelectValue placeholder="Posts per page" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {pagesSizeOptions.map((size) => (
+            {PAGE_SIZE_OPTIONS.map((size) => (
               <SelectItem key={size} value={size.toString()}>
                 {size}
               </SelectItem>

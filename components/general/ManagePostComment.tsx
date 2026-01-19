@@ -1,5 +1,5 @@
 "use client";
-import { Post } from "@/app/types";
+import { Post } from "@/types";
 import { deleteComment } from "@/features/post/actions";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
@@ -20,7 +20,7 @@ const ManagePostComment = ({ commentId, post }: Props) => {
     deleteComment,
     [],
     undefined,
-    t("Toasts.commentDeleted")
+    t("Toasts.commentDeleted"),
   );
 
   return (

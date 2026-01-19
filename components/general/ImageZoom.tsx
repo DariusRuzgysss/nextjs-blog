@@ -16,7 +16,7 @@ export default function ZoomImage(props: ZoomImageProps) {
 
   return (
     <>
-      <div className="cursor-pointer" onClick={() => setOpen(true)}>
+      <div className="cursor-pointer">
         <Image {...props} alt={props.alt} />
         <button
           onClick={() => setOpen(true)}
@@ -33,7 +33,6 @@ export default function ZoomImage(props: ZoomImageProps) {
           exit={{ opacity: 0, scale: 0.85 }}
           transition={{ duration: 0.5 }}
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
-          onClick={() => setOpen(false)}
         >
           <Image
             {...props}

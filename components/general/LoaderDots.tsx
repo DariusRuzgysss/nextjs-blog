@@ -15,7 +15,7 @@ export default function LoaderDots({
   dotCount = 3,
   dotSize = 8,
   dotColor = "#9FDC26",
-  dotSpacing = 8,
+  dotSpacing = 4,
 }: LoaderProps) {
   const dots = Array.from({ length: dotCount });
 
@@ -30,7 +30,9 @@ export default function LoaderDots({
   });
 
   return (
-    <div className={`flex items-center justify-center ${className}`}>
+    <main
+      className={`flex items-center justify-center gap-${dotSpacing} ${className}`}
+    >
       {dots.map((_, i) => (
         <motion.div
           key={i}
@@ -41,10 +43,9 @@ export default function LoaderDots({
             width: dotSize,
             height: dotSize,
             backgroundColor: dotColor,
-            marginLeft: i === 0 ? 0 : dotSpacing,
           }}
         />
       ))}
-    </div>
+    </main>
   );
 }

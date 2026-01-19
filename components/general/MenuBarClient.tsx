@@ -1,16 +1,16 @@
 "use client";
-import { navItems } from "@/utils/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";
+import { NAV_ITEMS } from "@/lib/constants";
 
 const MenuBar = () => {
   const t = useTranslations("Navbar");
   const pathname = usePathname();
   return (
     <div className="hidden lg:flex flex-row gap-6">
-      {navItems.map((item) => {
+      {NAV_ITEMS.map((item) => {
         const isActive = pathname === item.href;
         return (
           <Link
@@ -20,7 +20,7 @@ const MenuBar = () => {
               "text-[18px] font-medium",
               isActive
                 ? "text-(--dark) border-b-4 border-(--primary-color-3)"
-                : "text-(--dark)/24 hover:text-active"
+                : "text-(--dark)/24 hover:text-active",
             )}
           >
             {t(item.name)}

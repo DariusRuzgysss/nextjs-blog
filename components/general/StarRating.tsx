@@ -8,10 +8,11 @@ import { useTransition } from "react";
 
 type Props = {
   value: number;
+  totalRating?: number;
   onChange?: (rating: number) => void;
 };
 
-export function StarRating({ value, onChange }: Props) {
+export function StarRating({ value, totalRating, onChange }: Props) {
   const [isPending, startTransition] = useTransition();
 
   const handleClick = (star: number) => {
@@ -23,7 +24,7 @@ export function StarRating({ value, onChange }: Props) {
 
   return (
     <AnimatePresence mode="popLayout">
-      <div className="flex gap-0.5">
+      <div className="flex items-center gap-0.5">
         {[1, 2, 3, 4, 5].map((star) => (
           <AnimationWrapperClient key={star}>
             <motion.button
@@ -43,12 +44,21 @@ export function StarRating({ value, onChange }: Props) {
                     : "text-muted-foreground",
                   isPending ? "animate-spin transition-all" : "",
                   onChange &&
-                    "cursor-pointer hover:text-active active:bg-active lg:active:bg-transparent"
+                    "cursor-pointer hover:text-active active:bg-active lg:active:bg-transparent",
                 )}
               />
             </motion.button>
           </AnimationWrapperClient>
         ))}
+        {totalRating && (
+          <motion.div
+            initial={{ opacity: 0, y: 0, x: -100 }}
+            animate={{ opacity: 1, y: 0, x: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            ({totalRating})
+          </motion.div>
+        )}
       </div>
     </AnimatePresence>
   );

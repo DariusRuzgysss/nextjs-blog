@@ -3,118 +3,15 @@
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/prisma/seed";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { PostFormData } from "@/components/rhf/PostForm";
-import { BlogPostWhereInput } from "@/lib/generated/prisma/models";
-import { notFound } from "next/navigation";
-import { FilterTypes, Post } from "@/app/types";
 import { deleteImage } from "../cloudinary/actions";
 import { revalidatePath } from "next/cache";
-
-export const getPosts = async ({
-  sortBy,
-  page,
-  pageSize,
-  searchQuery,
-  category: selectedCategory,
-}: FilterTypes) => {
-  try {
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
-    const isAuthor = user ? { where: { userId: user.id } } : false;
-    const where: BlogPostWhereInput | undefined = (() => {
-      if (searchQuery) {
-        return {
-          OR: [
-            { title: { contains: searchQuery, mode: "insensitive" } },
-            { content: { contains: searchQuery, mode: "insensitive" } },
-          ],
-        };
-      } else if (sortBy === "favorites") {
-        return {
-          favoritePosts: { some: user ? { userId: user.id } : undefined },
-        };
-      } else if (selectedCategory !== "all") {
-        return {
-          category: selectedCategory,
-        };
-      } else {
-        return undefined;
-      }
-    })();
-
-    const [items, itemsCount] = await Promise.all([
-      prisma.blogPost.findMany({
-        skip: (page - 1) * pageSize,
-        take: pageSize,
-        include: {
-          postSeens: isAuthor,
-          favoritePosts: isAuthor,
-          ratings: true,
-        },
-        orderBy: {
-          createdAt: sortBy === "favorites" ? "desc" : sortBy,
-        },
-        where,
-      }),
-      prisma.blogPost.count({
-        where,
-      }),
-    ]);
-
-    const itemsWithRating = items.map((post) => {
-      const total = post.ratings.reduce((sum, r) => sum + r.value, 0);
-      const avg = post.ratings.length ? total / post.ratings.length : 0;
-
-      return {
-        ...post,
-        avgRating: avg,
-      };
-    });
-
-    return {
-      items: itemsWithRating,
-      totalPages: Math.ceil(itemsCount / pageSize) || 1,
-    };
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    throw error;
-  }
-};
-
-export const getPostById = async (id: string) => {
-  try {
-    const data = await prisma.blogPost.findUnique({
-      include: {
-        comments: {
-          orderBy: { createdAt: "desc" },
-        },
-        ratings: true,
-      },
-      where: {
-        id,
-      },
-    });
-
-    if (!data) {
-      return notFound();
-    }
-
-    const total = data.ratings.reduce((sum, r) => sum + r.value, 0);
-    const avg = data.ratings.length ? total / data.ratings.length : 0;
-
-    return {
-      ...data,
-      avgRating: avg,
-    };
-  } catch (error) {
-    console.error("Error fetching post by ID:", error);
-    throw error;
-  }
-};
+import { Post } from "@/types";
+import { RATING } from "@/lib/constants";
+import { PostFormSchema } from "@/lib/validations";
 
 export const updatePost = async (
   id: string,
-  post: PostFormData
+  post: PostFormSchema,
 ): Promise<void> => {
   try {
     await prisma.blogPost.update({
@@ -129,7 +26,7 @@ export const updatePost = async (
   }
 };
 
-export const createPost = async (data: PostFormData): Promise<void> => {
+export const createPost = async (data: PostFormSchema): Promise<void> => {
   try {
     const user = await requireUser();
     await prisma.blogPost.create({
@@ -148,41 +45,6 @@ export const createPost = async (data: PostFormData): Promise<void> => {
     });
   } catch (error) {
     console.error("Error creating post:", error);
-    throw error;
-  }
-};
-
-export const getPostsByUserId = async (userId: string) => {
-  try {
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
-
-    const data = await prisma.blogPost.findMany({
-      where: {
-        authorId: userId,
-      },
-      include: {
-        favoritePosts: user ? { where: { userId: user.id } } : false,
-        ratings: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    // rating average
-    const dataWithRating = data.map((post) => {
-      const total = post.ratings?.reduce((sum, r) => sum + r.value, 0) || 0;
-      const avg =
-        post.ratings && post.ratings.length ? total / post.ratings.length : 0;
-      return {
-        ...post,
-        avgRating: avg,
-      };
-    });
-
-    return dataWithRating;
-  } catch (error) {
-    console.error("Error fetching posts by user ID:", error);
     throw error;
   }
 };
@@ -308,7 +170,7 @@ export const deleteComment = async (commentId: string, postId: string) => {
 };
 
 export async function ratePost(postId: string, value: number) {
-  if (value < 1 || value > 5) {
+  if (value < RATING.MIN || value > RATING.MAX) {
     throw new Error("Invalid rating");
   }
 

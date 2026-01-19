@@ -1,11 +1,11 @@
-import { FormFieldProps } from "@/app/types";
 import { Input } from "../ui/input";
 import { Controller, useFormContext } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { getErrorMessage } from "@/utils/helper";
 import { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
+import { FormFieldProps } from "@/types";
+import { getErrorMessage } from "@/lib/helper";
 
 interface UnifiedFieldProps<TFormValues> extends FormFieldProps<TFormValues> {
   inputType: "input" | "textarea";

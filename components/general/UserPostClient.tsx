@@ -1,10 +1,9 @@
 "use client";
-import { minutesToHours } from "@/utils/helper";
+
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useQuery } from "@tanstack/react-query";
 import { Timer, Edit } from "lucide-react";
 import { Icon } from "@iconify/react";
-import Image from "next/image";
 import CommentsField from "../rhf/CommentsField";
 import { buttonVariants, Button } from "../ui/button";
 import { AppBreadcrumb } from "./AppBreadcrumb";
@@ -16,11 +15,12 @@ import { useUserPostQueryOptions } from "@/hooks/api/useUserPost";
 import { useTranslations } from "next-intl";
 import { ratePost } from "@/features/post/actions";
 import { useQueryMutate } from "@/hooks/api/useMutate";
-import { QUERY_KEYS } from "@/utils/constants";
 import Link from "next/link";
 import AnimationWrapperClient from "./AnimationWrapperClient";
 import Calories from "./Calories";
 import ZoomImage from "./ImageZoom";
+import { QUERY_KEYS, ROUTES } from "@/lib/constants";
+import { minutesToHours } from "@/lib/helper";
 
 type Props = {
   id: string;
@@ -38,7 +38,7 @@ const UserPostClient = ({ id }: Props) => {
     ratePost,
     [QUERY_KEYS.USER_POST, QUERY_KEYS.POSTS],
     undefined,
-    t("Toasts.ratingSubmitted")
+    t("Toasts.ratingSubmitted"),
   );
 
   if (!post) return null;
@@ -50,8 +50,8 @@ const UserPostClient = ({ id }: Props) => {
     <main className="flex flex-col gap-4">
       <AppBreadcrumb
         items={[
-          { label: "Navbar.home", href: "/" },
-          { label: "Navbar.myRecipes", href: "/dashboard" },
+          { label: "Navbar.home", href: ROUTES.HOME },
+          { label: "Navbar.myRecipes", href: ROUTES.DASHBOARD },
           { label: "General.recipe" },
         ]}
       />
@@ -77,7 +77,7 @@ const UserPostClient = ({ id }: Props) => {
             <div className="flex flex-row gap-3 items-center shrink-0">
               <Link
                 className={buttonVariants({ variant: "secondary" })}
-                href={`/post/${id}/edit`}
+                href={ROUTES.EDIT_POST(id)}
               >
                 <Edit />
               </Link>
@@ -95,6 +95,7 @@ const UserPostClient = ({ id }: Props) => {
             </Button>
             <StarRating
               value={post.avgRating}
+              totalRating={post.totalRating}
               {...(isLoggedIn && {
                 onChange: (value) =>
                   ratePostMutation.mutate({ id: post.id, data: value }),

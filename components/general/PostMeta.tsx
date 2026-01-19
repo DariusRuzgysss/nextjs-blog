@@ -17,10 +17,10 @@ export function PostMeta({
   showFullTime,
 }: PostMetaProps) {
   return (
-    <div
+    <main
       className={cn(
         "flex items-center gap-2 min-w-0 flex-wrap shrink",
-        className
+        className,
       )}
     >
       <div className="flex items-center space-x-2">
@@ -54,9 +54,9 @@ export function PostMeta({
                 year: "numeric",
                 month: "short",
                 day: "numeric",
-              }
+              },
         ).format(new Date(createdAt))}
       </time>
-    </div>
+    </main>
   );
 }
