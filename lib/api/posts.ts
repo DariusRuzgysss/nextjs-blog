@@ -6,6 +6,7 @@ import { BlogPostWhereInput } from "../generated/prisma/models";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { notFound } from "next/navigation";
 import { calculatePostRating } from "../helper";
+import { PREPARATION_TIME } from "../constants";
 
 export const getPosts = async ({
   sortBy,
@@ -13,30 +14,49 @@ export const getPosts = async ({
   pageSize,
   searchQuery,
   category: selectedCategory,
+  preparationTime,
 }: FilterTypes): Promise<{ items: Post[]; totalPages: number }> => {
   try {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
     const isAuthor = user ? { where: { userId: user.id } } : false;
     const where: BlogPostWhereInput | undefined = (() => {
+      const filters: BlogPostWhereInput = {};
       if (searchQuery) {
-        return {
-          OR: [
-            { title: { contains: searchQuery, mode: "insensitive" } },
-            { content: { contains: searchQuery, mode: "insensitive" } },
-          ],
-        };
-      } else if (sortBy === "favorites") {
-        return {
-          favoritePosts: { some: user ? { userId: user.id } : undefined },
-        };
-      } else if (selectedCategory !== "all") {
-        return {
-          category: selectedCategory,
-        };
-      } else {
-        return undefined;
+        filters.OR = [
+          { title: { contains: searchQuery, mode: "insensitive" } },
+          { content: { contains: searchQuery, mode: "insensitive" } },
+        ];
       }
+
+      if (sortBy === "favorites" && user) {
+        filters.favoritePosts = {
+          some: {
+            userId: user.id,
+          },
+        };
+      }
+
+      if (selectedCategory !== "all") {
+        filters.category = selectedCategory;
+      }
+
+      if (
+        preparationTime &&
+        (preparationTime[0] > PREPARATION_TIME.MIN ||
+          preparationTime[1] < PREPARATION_TIME.MAX)
+      ) {
+        filters.preparationTime = {
+          ...(preparationTime[0] > PREPARATION_TIME.MIN && {
+            gte: preparationTime[0],
+          }),
+          ...(preparationTime[1] < PREPARATION_TIME.MAX && {
+            lte: preparationTime[1],
+          }),
+        };
+      }
+
+      return Object.keys(filters).length ? filters : undefined;
     })();
 
     const [items, itemsCount] = await Promise.all([

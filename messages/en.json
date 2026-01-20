@@ -17,7 +17,8 @@
         "edit": "Edit",
         "addIngredient": "Add Ingredient",
         "tryAgain": "Try Again",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "clear": "Clear"
     },
     "General": {
         "loading": "Loading...",
@@ -43,7 +44,12 @@
         "oldest": "Oldest",
         "favorite": "Favorite",
         "searchPlaceholder": "Search recipes...",
-        "sortBy":"Sort by"
+        "sortBy":"Sort by",
+        "preparationTimeSort": "Preparation time",
+        "less15min": "< 15min.",
+        "1530min": "15–30min.",
+        "3060min": "30–60min.",
+        "1+h":"1+ h"
     },
     "Toasts": {
         "recipeAdded": "Successfully added!",

@@ -150,7 +150,7 @@ const PostCard = ({ post }: { post: Post }) => {
           <div className="flex flex-col items-end">
             <StarRating value={post.avgRating} />
           </div>
-          <h3 className="mb-2 mr-4 text-[24px] font-bold text-gray-900">
+          <h3 className="mb-2 min-h-16 mr-4 text-[24px] line-clamp-2 font-bold">
             {post.title}
           </h3>
           <p className="text-(--dark) text-[16px] font-light line-clamp-2 min-h-10">

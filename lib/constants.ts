@@ -60,6 +60,11 @@ export const RATING = {
   MAX: 5,
 } as const;
 
+export const PREPARATION_TIME = {
+  MIN: 0,
+  MAX: 250,
+} as const;
+
 export const aiPromptMessage = `You are a nutrition calculator.
   
         I will provide a list of ingredients with their weights in grams.

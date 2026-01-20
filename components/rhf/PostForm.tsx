@@ -22,6 +22,7 @@ import { postFormSchema, PostFormSchema } from "@/lib/validations";
 import {
   aiPromptMessage,
   IMAGE_SIZES,
+  PREPARATION_TIME,
   RECIPE_CATEGORY_OPTIONS,
 } from "@/lib/constants";
 import { minutesToHours, stringArrayChangedNormalized } from "@/lib/helper";
@@ -144,8 +145,8 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
           inputType="input"
           type="range"
           inputProps={{
-            min: 0,
-            max: 250,
+            min: PREPARATION_TIME.MIN,
+            max: PREPARATION_TIME.MAX,
             step: 5,
             disabled: isSubmitting,
           }}

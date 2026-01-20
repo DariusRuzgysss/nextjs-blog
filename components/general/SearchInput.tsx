@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { Input } from "../ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Label } from "../ui/label";
@@ -22,11 +22,18 @@ const SearchInput = ({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!searchParams.get("query") && inputRef.current) {
+      inputRef.current.value = "";
+    }
+  }, [searchParams]);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams);
     const value = e.target.value;
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       if (value) {
         params.set("page", "1");
         params.set("query", value);
@@ -35,12 +42,16 @@ const SearchInput = ({
       }
       replace(`${pathname}?${params.toString()}`, { scroll: false });
     }, debounce);
+    return () => {
+      clearTimeout(timer);
+    };
   };
 
   return (
     <>
       {label && <Label>{label}</Label>}
       <Input
+        ref={inputRef}
         type="search"
         placeholder={t(placeholder)}
         className={`border-gray-400 ${className}`}

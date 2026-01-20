@@ -17,7 +17,8 @@
         "new": "Naujas",
         "addIngredient": "Pridėti ingredientą",
         "tryAgain": "Bandykite dar kartą",
-        "cancel": "Atmesti"
+        "cancel": "Atmesti",
+        "clear": "Išvalyti"
     },
     "General": {
         "loading": "Kraunama...",
@@ -43,7 +44,12 @@
         "oldest": "Seniausi",
         "favorite": "Mėgstami",
         "searchPlaceholder": "Ieškoti receptų...",
-        "sortBy": "Rūšiuoti pagal"
+        "sortBy": "Rūšiuoti pagal",
+        "preparationTimeSort": "Pagaminimo laikas",
+        "less15min": "< 15min.",
+        "1530min": "15 – 30min.",
+        "3060min": "30 – 60min.",
+        "1+h":"1 + val."
     },
     "Toasts": {
         "recipeAdded": "Sėkmingai pridėta!",

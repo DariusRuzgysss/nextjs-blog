@@ -11,7 +11,7 @@ const SortSelect = () => {
   const t = useTranslations("Filters");
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const { push } = useRouter();
   const { user } = useKindeBrowserClient();
   const sort = searchParams.get("sort") ?? SortOptions.NEWEST_FIRST;
   const isLogged = !!user;
@@ -29,7 +29,7 @@ const SortSelect = () => {
       params.set("page", "1");
     }
 
-    replace(`${pathname}?${params}`, { scroll: false });
+    push(`${pathname}?${params}`, { scroll: false });
   };
 
   return (
@@ -43,7 +43,7 @@ const SortSelect = () => {
               key={sortItem.title}
               onClick={() => handleSort(sortItem.value)}
               className={cn(
-                `hover:${sort === sortItem.value && "bg-transparent"}`,
+                `cursor-pointer hover:${sort === sortItem.value && "bg-transparent"}`,
               )}
             >
               {t(sortItem.title)}

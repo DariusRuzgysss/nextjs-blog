@@ -1,16 +1,27 @@
-import { PAGINATION } from "@/lib/constants";
-import { Post, UrlParams } from "@/types";
+import { PAGINATION, PREPARATION_TIME } from "@/lib/constants";
+import { FilterTypes, Post, UrlParams } from "@/types";
 import { FieldErrors, FieldValues, FieldError, get } from "react-hook-form";
 
-export const buildFilter = async (urlParams?: UrlParams) => {
+export const buildFilter = async (
+  urlParams?: UrlParams,
+): Promise<FilterTypes> => {
   const searchParams = await urlParams;
   const query = searchParams?.query || "";
   const sortBy = searchParams?.sort || "desc";
   const category = searchParams?.category || "all";
+  const timeMin = Number(searchParams?.timeMin) || PREPARATION_TIME.MIN;
+  const timeMax = Number(searchParams?.timeMax) || PREPARATION_TIME.MAX;
   const page = Number(searchParams?.page) || 1;
   const pageSize = Number(searchParams?.limit) || PAGINATION.DEFAULT_PAGE_SIZE;
 
-  return { searchQuery: query, sortBy, page, pageSize, category };
+  return {
+    searchQuery: query,
+    sortBy,
+    page,
+    pageSize,
+    category,
+    preparationTime: [timeMin, timeMax],
+  };
 };
 
 export const resizeImageWithCanvas = (
@@ -132,3 +143,6 @@ export const calculatePostRating = (
   }
   return 0;
 };
+
+export const isSameRange = (a: [number, number], b: [number, number]) =>
+  a[0] === b[0] && a[1] === b[1];

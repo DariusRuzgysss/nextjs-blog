@@ -12,6 +12,7 @@ export type FilterTypes = {
   page: number;
   pageSize: number;
   category: string;
+  preparationTime: number[];
 };
 
 export type Params = Promise<{ id: string }>;
@@ -22,6 +23,8 @@ export type UrlParams = Promise<{
   page?: string;
   limit?: number;
   category?: string;
+  timeMin?: string;
+  timeMax?: string;
 }>;
 
 export type PaginatedResponse<T> = {
