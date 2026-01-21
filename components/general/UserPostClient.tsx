@@ -132,6 +132,7 @@ const UserPostClient = ({ id }: Props) => {
               alt="post"
               loading="eager"
               fill
+              unoptimized
               className="object-cover"
             />
           </AnimationWrapperClient>

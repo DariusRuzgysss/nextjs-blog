@@ -143,6 +143,7 @@ const PostCard = ({ post }: { post: Post }) => {
             fill
             className="object-cover hover:scale-105 duration-300"
             priority
+            unoptimized
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
