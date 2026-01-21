@@ -21,7 +21,7 @@ export function StarRating({ value, totalRating, onChange }: Props) {
       onChange(star);
     });
   };
-  console.log(totalRating);
+
   return (
     <AnimatePresence mode="popLayout">
       <div className="flex items-center gap-0.5">
