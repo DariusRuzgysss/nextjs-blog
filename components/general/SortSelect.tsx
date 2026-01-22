@@ -33,7 +33,7 @@ const SortSelect = () => {
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-[16px] font-semibold uppercase">{t("sortBy")}</h3>
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-[auto_1fr] lg:grid-cols-3 gap-2">
         {SORT_FILTER.filter((item) => isLogged || !item.onlyLogged).map(
           (sortItem) => (
             <Button
