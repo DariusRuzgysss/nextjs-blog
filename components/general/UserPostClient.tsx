@@ -95,7 +95,7 @@ const UserPostClient = ({ id }: Props) => {
             </Button>
             <StarRating
               value={post.avgRating}
-              totalRating={post.totalRating}
+              totalRating={post.ratings.length}
               {...(isLoggedIn && {
                 onChange: (value) =>
                   ratePostMutation.mutate({ id: post.id, data: value }),

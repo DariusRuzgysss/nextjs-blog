@@ -1,11 +1,13 @@
 "use server";
 import { prisma } from "@/prisma/seed";
-import { FilterTypes, Post } from "@/types";
+import { FilterTypes, Post, SortOptions } from "@/types";
 
-import { BlogPostWhereInput } from "../generated/prisma/models";
+import {
+  BlogPostOrderByWithRelationInput,
+  BlogPostWhereInput,
+} from "../generated/prisma/models";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { notFound } from "next/navigation";
-import { calculatePostRating } from "../helper";
 import { PREPARATION_TIME } from "../constants";
 
 export const getPosts = async ({
@@ -20,6 +22,19 @@ export const getPosts = async ({
     const { getUser } = getKindeServerSession();
     const user = await getUser();
     const isAuthor = user ? { where: { userId: user.id } } : false;
+
+    const orderBy: BlogPostOrderByWithRelationInput | undefined = (() => {
+      const order: BlogPostOrderByWithRelationInput = {};
+      if (sortBy === SortOptions.FAVORITE) {
+        order.createdAt = "desc";
+      } else if (sortBy === SortOptions.RATED) {
+        order.avgRating = "desc";
+      } else {
+        order.createdAt = sortBy === SortOptions.NEWEST_FIRST ? "desc" : "asc";
+      }
+      return Object.keys(order).length ? order : undefined;
+    })();
+
     const where: BlogPostWhereInput | undefined = (() => {
       const filters: BlogPostWhereInput = {};
       if (searchQuery) {
@@ -29,14 +44,13 @@ export const getPosts = async ({
         ];
       }
 
-      if (sortBy === "favorites" && user) {
+      if (sortBy === SortOptions.FAVORITE && user) {
         filters.favoritePosts = {
           some: {
             userId: user.id,
           },
         };
       }
-
       if (selectedCategory !== "all") {
         filters.category = selectedCategory;
       }
@@ -68,9 +82,8 @@ export const getPosts = async ({
           favoritePosts: isAuthor,
           ratings: true,
         },
-        orderBy: {
-          createdAt: sortBy === "favorites" ? "desc" : sortBy,
-        },
+        orderBy,
+
         where,
       }),
       prisma.blogPost.count({
@@ -78,18 +91,8 @@ export const getPosts = async ({
       }),
     ]);
 
-    const itemsWithRating = items.map((post) => {
-      const avg = calculatePostRating(post);
-
-      return {
-        ...post,
-        avgRating: avg,
-        totalRating: post.ratings.length,
-      };
-    });
-
     return {
-      items: itemsWithRating,
+      items,
       totalPages: Math.ceil(itemsCount / pageSize) || 1,
     };
   } catch (error) {
@@ -116,13 +119,7 @@ export const getPostById = async (id: string) => {
       return notFound();
     }
 
-    const avg = calculatePostRating(data);
-
-    return {
-      ...data,
-      avgRating: avg,
-      totalRating: data.ratings.length,
-    };
+    return data;
   } catch (error) {
     console.error("Error fetching post by ID:", error);
     throw error;
@@ -147,16 +144,7 @@ export const getUserPosts = async (userId: string) => {
       },
     });
 
-    const dataWithRating = data.map((post) => {
-      const avg = calculatePostRating(post);
-      return {
-        ...post,
-        avgRating: avg,
-        totalRating: post.ratings.length,
-      };
-    });
-
-    return dataWithRating;
+    return data;
   } catch (error) {
     console.error("Error fetching posts by user ID:", error);
     throw error;

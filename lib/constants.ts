@@ -38,9 +38,10 @@ export const RECIPE_CATEGORY_OPTIONS: {
 ] as const;
 
 export const SORT_FILTER = [
-  { title: "newest", value: SortOptions.NEWEST_FIRST, onlyLogged: false },
-  { title: "oldest", value: SortOptions.OLDEST_FIRST, onlyLogged: false },
-  { title: "favorite", value: SortOptions.FAVORITE, onlyLogged: true },
+  { title: "desc", value: SortOptions.NEWEST_FIRST, onlyLogged: false },
+  { title: "asc", value: SortOptions.OLDEST_FIRST, onlyLogged: false },
+  { title: "favorites", value: SortOptions.FAVORITE, onlyLogged: true },
+  { title: "rated", value: SortOptions.RATED, onlyLogged: false },
 ] as const;
 
 export const PAGINATION = {

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "BlogPost" ADD COLUMN     "avgRating" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "totalRating" INTEGER NOT NULL DEFAULT 0;

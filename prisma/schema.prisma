@@ -23,6 +23,8 @@ model BlogPost {
   authorImage     String
   category        String
   ingredients     String[]
+  avgRating       Int            @default(0)
+  totalRating     Int            @default(0)
   calories        Int            @default(0)
   preparationTime Int            @default(0)
   createdAt       DateTime       @default(now())

@@ -1,9 +1,10 @@
-export type SortBy = "desc" | "asc" | "favorites";
+export type SortBy = (typeof SortOptions)[keyof typeof SortOptions];
 
 export enum SortOptions {
   NEWEST_FIRST = "desc",
   OLDEST_FIRST = "asc",
   FAVORITE = "favorites",
+  RATED = "rated",
 }
 
 export type FilterTypes = {

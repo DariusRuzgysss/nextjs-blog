@@ -25,9 +25,7 @@ const SortSelect = () => {
       params.set("sort", value);
     }
 
-    if (value === SortOptions.FAVORITE) {
-      params.set("page", "1");
-    }
+    params.set("page", "1");
 
     push(`${pathname}?${params}`, { scroll: false });
   };

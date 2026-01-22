@@ -1,5 +1,5 @@
 import { PAGINATION, PREPARATION_TIME } from "@/lib/constants";
-import { FilterTypes, Post, UrlParams } from "@/types";
+import { FilterTypes, SortOptions, UrlParams } from "@/types";
 import { FieldErrors, FieldValues, FieldError, get } from "react-hook-form";
 
 export const buildFilter = async (
@@ -7,7 +7,7 @@ export const buildFilter = async (
 ): Promise<FilterTypes> => {
   const searchParams = await urlParams;
   const query = searchParams?.query || "";
-  const sortBy = searchParams?.sort || "desc";
+  const sortBy = searchParams?.sort || SortOptions.NEWEST_FIRST;
   const category = searchParams?.category || "all";
   const timeMin = Number(searchParams?.timeMin) || PREPARATION_TIME.MIN;
   const timeMax = Number(searchParams?.timeMax) || PREPARATION_TIME.MAX;
@@ -133,16 +133,6 @@ export function stringArrayChangedNormalized(
 
   return stringArrayChanged(normalize(prev), normalize(next));
 }
-
-export const calculatePostRating = (
-  data: Omit<Post, "avgRating" | "totalRating">,
-) => {
-  if (data.ratings?.length) {
-    const total = data.ratings?.reduce((sum, r) => sum + r.value, 0);
-    return data.ratings?.length ? total / data.ratings.length : 0;
-  }
-  return 0;
-};
 
 export const isSameRange = (a: [number, number], b: [number, number]) =>
   a[0] === b[0] && a[1] === b[1];

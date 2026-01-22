@@ -170,27 +170,56 @@ export const deleteComment = async (commentId: string, postId: string) => {
 };
 
 export async function ratePost(postId: string, value: number) {
-  if (value < RATING.MIN || value > RATING.MAX) {
-    throw new Error("Invalid rating");
-  }
+  try {
+    if (value < RATING.MIN || value > RATING.MAX) {
+      throw new Error("Invalid rating");
+    }
 
-  const user = await requireUser();
-  if (!user?.id) {
-    throw new Error("Unauthorized");
-  }
+    const user = await requireUser();
+    if (!user?.id) {
+      throw new Error("Unauthorized");
+    }
 
-  await prisma.rating.upsert({
-    where: {
-      userId_postId: {
+    await prisma.rating.upsert({
+      where: {
+        userId_postId: {
+          userId: user.id,
+          postId,
+        },
+      },
+      update: { value },
+      create: {
+        value,
         userId: user.id,
         postId,
       },
-    },
-    update: { value },
-    create: {
-      value,
-      userId: user.id,
-      postId,
-    },
-  });
+    });
+
+    const updatedRatings = await prisma.rating.findMany({
+      where: {
+        postId,
+      },
+    });
+
+    const postRatingCount = await prisma.rating.count({
+      where: {
+        postId,
+      },
+    });
+
+    const totalRatings = updatedRatings.reduce((sum, r) => sum + r.value, 0);
+    const avgRating = postRatingCount
+      ? Math.round(totalRatings / postRatingCount)
+      : 0;
+
+    await prisma.blogPost.update({
+      where: {
+        id: postId,
+      },
+      data: { avgRating },
+    });
+  } catch (error) {
+    console.error("Error updating rating:", error);
+    throw error;
+  }
 }
