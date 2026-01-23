@@ -11,6 +11,7 @@ import InputField from "./InputField";
 import { useQueryMutate } from "@/hooks/api/useMutate";
 import { createComment } from "@/features/post/actions";
 import { useTranslations } from "next-intl";
+import { sendEmail } from "@/features/resend/actions";
 
 type FormValues = {
   comment: string;
@@ -35,11 +36,12 @@ const CommentsField = ({ postId }: { postId: string }) => {
     createComment,
     [],
     undefined,
-    t("Toasts.commentAdded")
+    t("Toasts.commentAdded"),
   );
 
   const submitHandler: SubmitHandler<FormValues> = async (data) => {
     await createCommentMutation.mutateAsync({ id: postId, data: data.comment });
+    await sendEmail("hello", "o", "dariusfotor@gmail.com");
     methods.reset();
   };
 
