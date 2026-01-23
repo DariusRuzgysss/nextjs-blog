@@ -52,7 +52,7 @@ export default function TipTapEditor({ name, label }: RichTextEditorProps) {
       },
     },
     onUpdate: ({ editor }) => {
-      setValue(name, editor.getHTML(), {
+      setValue(name, editor.getHTML().replace(/<p>\s*<\/p>/g, ""), {
         shouldDirty: true,
         shouldTouch: true,
         shouldValidate: true,

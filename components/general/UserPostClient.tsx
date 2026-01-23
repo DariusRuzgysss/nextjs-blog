@@ -21,6 +21,7 @@ import Calories from "./Calories";
 import ZoomImage from "./ImageZoom";
 import { QUERY_KEYS, ROUTES } from "@/lib/constants";
 import { minutesToHours } from "@/lib/helper";
+import parse from "html-react-parser";
 
 type Props = {
   id: string;
@@ -156,7 +157,7 @@ const UserPostClient = ({ id }: Props) => {
               {t("PostPage.instructions")}
             </p>
             <p className="lg:text-[18px] text-[16px] font-light text-(--dark)/90 tracking-wider">
-              {post.content}
+              {parse(post.content)}
             </p>
           </div>
         </div>
