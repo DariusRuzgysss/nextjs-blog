@@ -136,3 +136,10 @@ export function stringArrayChangedNormalized(
 
 export const isSameRange = (a: [number, number], b: [number, number]) =>
   a[0] === b[0] && a[1] === b[1];
+
+export function stripHtml(html: string) {
+  return html
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .trim();
+}

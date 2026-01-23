@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { useTranslations } from "next-intl";
+import { stripHtml } from "./helper";
 
 export const postFormSchema = (t: ReturnType<typeof useTranslations>) =>
   z.object({
     title: z.string().trim().min(1, t("ManageRecipePage.requiredFields.title")),
-    content: z
-      .string()
-      .trim()
-      .min(1, t("ManageRecipePage.requiredFields.instructions")),
+    content: z.string().refine((value) => stripHtml(value).length > 0, {
+      message: t("ManageRecipePage.requiredFields.instructions"),
+    }),
     imageUrl: z.string(),
     preparationTime: z.number().int(),
     calories: z.number().int(),

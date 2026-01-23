@@ -155,9 +155,10 @@ const UserPostClient = ({ id }: Props) => {
             <p className="uppercase text-[24px] font-semibold">
               {t("PostPage.instructions")}
             </p>
-            <p className="lg:text-[18px] text-[16px] font-light text-(--dark)/90 tracking-wider">
-              {post.content}
-            </p>
+            <p
+              className="lg:text-[18px] text-[16px] font-light text-(--dark)/90 tracking-wider"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
           </div>
         </div>
         <div className="flex flex-col gap-6">

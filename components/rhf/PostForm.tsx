@@ -26,6 +26,7 @@ import {
   RECIPE_CATEGORY_OPTIONS,
 } from "@/lib/constants";
 import { minutesToHours, stringArrayChangedNormalized } from "@/lib/helper";
+import TipTapEditor from "./TipTapEditor";
 
 const PostForm = ({ post }: { post?: PostFormType }) => {
   const t = useTranslations();
@@ -155,8 +156,7 @@ const PostForm = ({ post }: { post?: PostFormType }) => {
           label={t("ManageRecipePage.preparationTime")}
           fieldValue={minutesToHours(preparationTime)}
         />
-        <InputField
-          inputType="textarea"
+        <TipTapEditor
           name="content"
           label={t("ManageRecipePage.instructions") + " *"}
         />
