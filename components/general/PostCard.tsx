@@ -20,7 +20,6 @@ import AnimationWrapperClient from "./AnimationWrapperClient";
 import Calories from "./Calories";
 import { QUERY_KEYS, ROUTES } from "@/lib/constants";
 import { minutesToHours } from "@/lib/helper";
-import parse from "html-react-parser";
 
 const PostCard = ({ post }: { post: Post }) => {
   const t = useTranslations();
@@ -155,9 +154,11 @@ const PostCard = ({ post }: { post: Post }) => {
           <h3 className="mb-2 min-h-16 mr-4 text-[24px] line-clamp-2 font-bold">
             {post.title}
           </h3>
-          <p className="text-(--dark) text-[16px] font-light line-clamp-2 min-h-10">
-            {parse(post.content)}
-          </p>
+          <div
+            className="text-(--dark) text-[16px] font-light line-clamp-2 min-h-10"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
 
           <div className="flex items-center justify-between mb-5 mt-5">
             {preparationTime ? (
