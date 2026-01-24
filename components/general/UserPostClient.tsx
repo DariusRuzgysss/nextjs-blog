@@ -137,13 +137,13 @@ const UserPostClient = ({ id }: Props) => {
             />
           </AnimationWrapperClient>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[auto_2fr] gap-10 pt-10 mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-10 pt-10 mb-10">
           <div className="grid gap-4 self-start p-6 bg-white rounded-lg border border-(--dark)/24">
             <p className="uppercase text-[24px] font-semibold text-(--primary-color-3)">
               {t("PostPage.ingredients")}
             </p>
 
-            <ul className="list-disc list-inside grid gap-2">
+            <ul className="list-disc list-outside pl-5 grid gap-2">
               {post.ingredients.map((ingredient, index) => (
                 <li className="lg:text-[18px] text-[16px]" key={index}>
                   {ingredient}
